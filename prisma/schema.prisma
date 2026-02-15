@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  email      String  @unique
+  password   String
+  provider   String?
+  providerId String?
+
+  startedTasks  UserStartedCodeTask[]
+  belongsToUser UserStartedTestTask[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Module {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  themes Theme[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Theme {
+  id Int @id @default(autoincrement())
+
+  title       String
+  description String
+  content     String
+
+  module   Module @relation(fields: [moduleId], references: [id])
+  moduleId Int
+
+  codeTasks CodeTask[]
+  testTasks TestTask[]
+
+  nextTheme   Theme? @relation("ThemeConnection", fields: [nextThemeId], references: [id])
+  prevTheme   Theme? @relation("ThemeConnection")
+  nextThemeId Int?   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CodeTask {
+  id Int @id @default(autoincrement())
+
+  title       String
+  description String
+  difficulty  Difficulty
+
+  theme   Theme @relation(fields: [themeId], references: [id])
+  themeId Int
+
+  belongsToUser UserStartedCodeTask[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserStartedCodeTask {
+  id Int @id @default(autoincrement())
+
+  isSolved Boolean
+  code     String
+  lang     Language
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  codeTask   CodeTask @relation(fields: [codeTaskId], references: [id])
+  codeTaskId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TestTask {
+  id Int @id @default(autoincrement())
+
+  title       String
+  description String
+  difficulty  Difficulty
+  body        Json
+
+  theme   Theme @relation(fields: [themeId], references: [id])
+  themeId Int
+
+  belongsToUser UserStartedTestTask[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserStartedTestTask {
+  id Int @id @default(autoincrement())
+
+  isSolved    Boolean
+  answersBody Json
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  testTask   TestTask @relation(fields: [testTaskId], references: [id])
+  testTaskId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum Language {
+  JAVASCRIPT
+  PYTHON
+}

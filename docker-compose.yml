@@ -1,0 +1,8 @@
+services:
+  code-forge:
+    image: code-forge
+    container_name: code-forge
+    ports:
+      - 5000:3000
+    restart: unless-stopped
+    volumes:
