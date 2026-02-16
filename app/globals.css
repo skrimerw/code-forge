@@ -132,7 +132,8 @@
 }
 
 html {
-  scroll-margin-top: 80px;
+  /* scroll-behavior: smooth; */
+  scroll-padding-top: 80px;
 }
 
 .article-container * {

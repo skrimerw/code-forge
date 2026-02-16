@@ -116,7 +116,7 @@ export default function TheoryPage() {
         <TableOfContents />
       </div>
       <section aria-label="heading_3">
-
+        <h2 id="heading_3"></h2>
       </section>
     </div>
   );

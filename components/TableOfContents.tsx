@@ -29,24 +29,20 @@ export default function TableOfContents({ className }: Props) {
   function intersectionCallback(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const entryId = entry.target.ariaLabel || "";
-        setActive(entryId);
-
+        const entryId = entry.target.ariaLabel || "";        
         const li = document.querySelector(`li[aria-label="${entryId}"]`);
-
         const height = li?.clientHeight || 0;
-
         const lis = document.querySelectorAll(".table-of-contents-list>li");
+        
         let top = 0;
-
+        
         for (const li of lis) {
-          if (li.ariaLabel == entryId) break;
-
-          top += li.clientHeight + 6;
+            if (li.ariaLabel == entryId) break;
+            
+            top += li.clientHeight + 6;
         }
-
-        console.log(top, height);
-
+        
+        setActive(entryId);
         setIndicator({ top, height });
 
         return;
@@ -93,7 +89,7 @@ export default function TableOfContents({ className }: Props) {
                 key={id}
                 className={cn(
                   "leading-[130%] transition-colors duration-200 hover:text-primary",
-                  active === id && "text-primary"
+                  active === id && "text-primary font-medium"
                 )}
                 aria-label={id}
               >
