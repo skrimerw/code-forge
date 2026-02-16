@@ -46,18 +46,19 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  --font-geist-mono: var(--font-geist-mono)
+  --font-geist-mono: var(--font-geist-mono);
+  --color-typography-secondary: var(--typography-secondary);
 }
 
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: #2D3436;
+  --foreground: #2d3436;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #343A40;
+  --primary: #343a40;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -82,6 +83,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --typography-secondary: #616a73;
 }
 
 .dark {
@@ -127,4 +129,36 @@
     @apply bg-background text-foreground;
     @apply bg-background text-foreground;
   }
+}
+
+html {
+  scroll-margin-top: 80px;
+}
+
+.article-container * {
+  margin: revert !important;
+  padding: revert !important;
+  box-sizing: revert !important;
+}
+
+.article-container ul {
+  list-style: decimal;
+}
+
+.article-container h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.article-container p {
+  font-size: 16px;
+}
+
+.article-container img {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.article-container *:first-child {
+  margin-top: 0 !important;
 }

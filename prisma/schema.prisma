@@ -32,6 +32,7 @@ model Module {
   id Int @id @default(autoincrement())
 
   title String
+  order Int
 
   themes Theme[]
 
@@ -45,16 +46,13 @@ model Theme {
   title       String
   description String
   content     String
+  order       Int
 
   module   Module @relation(fields: [moduleId], references: [id])
   moduleId Int
 
   codeTasks CodeTask[]
   testTasks TestTask[]
-
-  nextTheme   Theme? @relation("ThemeConnection", fields: [nextThemeId], references: [id])
-  prevTheme   Theme? @relation("ThemeConnection")
-  nextThemeId Int?   @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

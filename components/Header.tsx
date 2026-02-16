@@ -13,7 +13,7 @@ export default function Header({ className }: Props) {
     return (
         <header
             className={cn(
-                "bg-white rounded-b-lg shadow-[0_0_5px_0_rgba(0,0,0,0.1)] py-5",
+                "top-0 bg-white rounded-b-lg shadow-[0_0_5px_0_rgba(0,0,0,0.1)] py-5",
                 className,
             )}
         >
