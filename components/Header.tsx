@@ -17,7 +17,7 @@ export default function Header({ className }: Props) {
                 className,
             )}
         >
-            <Container className="flex items-center justify-between">
+            <Container className="flex items-center justify-between py-0">
                 <Logo />
                 <div className="flex items-center gap-8">
                     <Button variant={"ghost"} className="p-0! size-10! w-auto">
