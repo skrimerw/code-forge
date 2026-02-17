@@ -1,4 +1,3 @@
-import DifficultyBadge from "@/components/DifficultyBadge";
 import TableOfContents from "@/components/TableOfContents";
 import TaskCard from "@/components/TaskCard";
 import {
@@ -9,10 +8,8 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { DropdownMenu } from "radix-ui";
 import React from "react";
 
 const links = [
