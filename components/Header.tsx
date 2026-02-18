@@ -4,6 +4,7 @@ import Container from "./Container";
 import { Moon, User } from "lucide-react";
 import { Button } from "./ui/button";
 import Logo from "./Logo";
+import Link from "next/link";
 
 interface Props {
     className?: string;
@@ -19,6 +20,10 @@ export default function Header({ className }: Props) {
         >
             <Container className="flex items-center justify-between py-0">
                 <Logo />
+                <div className="flex gap-5">
+                    <Link className="hover:opacity-70" href={"/theory"}>TheoryPage</Link>
+                    <Link className="hover:opacity-70" href={"/theory/task"}>CodeEditor</Link>
+                </div>
                 <div className="flex items-center gap-8">
                     <Button variant={"ghost"} className="p-0! size-10! w-auto">
                         <Moon strokeWidth={1.7} className="size-7.5" />

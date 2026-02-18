@@ -32,7 +32,7 @@ const text = {
 
 export default function DifficultyBadge({ difficulty, className }: Props) {
     return (
-        <div className={cn("", variants({ difficulty }), className)}>
+        <div className={cn(variants({ difficulty }), className)}>
             {text[difficulty]}
         </div>
     );

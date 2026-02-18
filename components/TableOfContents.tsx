@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 
 interface Props {
     headings: {
-      id: string,
-      text: string
-    }[]
+        id: string;
+        text: string;
+    }[];
     className?: string;
 }
 
@@ -24,18 +24,19 @@ export default function TableOfContents({ className, headings }: Props) {
                 entry.isIntersecting
             ) {
                 const entryId = entry.target.ariaLabel || "";
-                const li = document.querySelector(
-                    `li[aria-label="${entryId}"]`,
-                );
-                const height = li?.clientHeight || 0;
                 const lis = document.querySelectorAll(
                     ".table-of-contents-list>li",
                 );
 
                 let top = 0;
+                let height = 0;
 
                 for (const li of lis) {
-                    if (li.ariaLabel == entryId) break;
+                    if (li.ariaLabel == entryId) {
+                        height = li.clientHeight;
+
+                        break;
+                    }
 
                     top += li.clientHeight + 8;
                 }
@@ -59,9 +60,7 @@ export default function TableOfContents({ className, headings }: Props) {
             options,
         );
 
-        const sections = document.querySelectorAll(
-            ".article-content section",
-        );
+        const sections = document.querySelectorAll(".article-content section");
 
         sections.forEach((section) => {
             observer.observe(section);
@@ -82,6 +81,7 @@ export default function TableOfContents({ className, headings }: Props) {
                             `absolute inline-block bg-primary w-full transition-all`,
                         )}
                         style={{
+                            opacity: active === "" ? 0 : 1,
                             top: indicator.top,
                             height: indicator.height,
                         }}
@@ -94,11 +94,14 @@ export default function TableOfContents({ className, headings }: Props) {
                                 key={id}
                                 className={cn(
                                     "leading-5 transition-colors duration-200 hover:text-foreground pl-4",
-                                    active === id && "text-foreground font-medium",
+                                    active === id &&
+                                        "text-foreground font-medium",
                                 )}
                                 aria-label={id}
                             >
-                                <a href={`#${id}`} className="block leading-5">{text}</a>
+                                <a href={`#${id}`} className="block leading-5">
+                                    {text}
+                                </a>
                             </li>
                         );
                     })}
