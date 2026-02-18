@@ -16,13 +16,9 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { BookOpenText, ChevronDown, Play } from "lucide-react";
+import { Editor } from "@monaco-editor/react";
+import { BookOpenText, ChevronDown, Loader2, Play } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -37,9 +33,12 @@ const languages = [
     },
 ];
 
+type TabValue = "description" | "output";
+
 export default function CodeEditorPage() {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState("javascript");
+    const [tabValue, setTabValue] = useState<TabValue>("description");
 
     function handleOptionClick(value: string) {
         setIsOpen(false);
@@ -88,12 +87,25 @@ export default function CodeEditorPage() {
                     <div className="flex items-center justify-between">
                         <div className="flex">
                             <Button
-                                variant={"secondary"}
-                                className="text-foreground bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8] h-10"
+                                onClick={() => setTabValue("description")}
+                                variant={"ghost"}
+                                className={cn(
+                                    "text-foreground  h-10",
+                                    tabValue === "description" &&
+                                        "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]",
+                                )}
                             >
                                 Описание
                             </Button>
-                            <Button variant={"ghost"} className="h-10">
+                            <Button
+                                onClick={() => setTabValue("output")}
+                                variant={"ghost"}
+                                className={cn(
+                                    "h-10",
+                                    tabValue === "output" &&
+                                        "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]",
+                                )}
+                            >
                                 Вывод
                             </Button>
                         </div>
@@ -107,8 +119,16 @@ export default function CodeEditorPage() {
 
                     {/* Область вывода */}
                     <div className="border rounded-md p-4 bg-white h-full">
-                        Напишите программу, которая ищет наибольшее элемент в
-                        массиве. На вход поступают массивы с числовым типом.
+                        {tabValue === "description" && (
+                            <div>
+                                Напишите программу, которая ищет наибольшее
+                                элемент в массиве. На вход поступают массивы с
+                                числовым типом.
+                            </div>
+                        )}
+                        {tabValue === "output" && (
+                            <div className="font-geist-mono">// Output</div>
+                        )}
                     </div>
                 </div>
 
@@ -123,7 +143,7 @@ export default function CodeEditorPage() {
                         <DropdownMenu modal={false} open={isOpen}>
                             <DropdownMenuTrigger asChild>
                                 <Button
-                                    className="w-40 justify-between"
+                                    className="w-40 h-10 justify-between"
                                     variant={"outline"}
                                     onClick={() => setIsOpen((prev) => !prev)}
                                 >
@@ -154,7 +174,11 @@ export default function CodeEditorPage() {
                                             asChild
                                         >
                                             <button
-                                                onClick={() => handleOptionClick(lang.value)}
+                                                onClick={() =>
+                                                    handleOptionClick(
+                                                        lang.value,
+                                                    )
+                                                }
                                                 className="w-full"
                                             >
                                                 {lang.label}
@@ -167,7 +191,20 @@ export default function CodeEditorPage() {
                     </div>
 
                     {/* Редактор кода */}
-                    <div className="border rounded-md p-4 bg-white h-full w-full"></div>
+                    <div className="border rounded-md bg-white h-full w-full overflow-hidden">
+                        <Editor
+                            language={selectedValue}
+                            loading={
+                                <div className="flex flex-col gap-2.5 items-center">
+                                    <Loader2
+                                        size={40}
+                                        className="animate-spin text-foreground"
+                                    />
+                                    <p>Загружаем Monaco Editor</p>
+                                </div>
+                            }
+                        />
+                    </div>
                 </div>
             </div>
         </div>
