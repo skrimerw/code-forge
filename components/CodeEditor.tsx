@@ -3,7 +3,7 @@
 import { useCodeEditor } from "@/contexts/useCodeEditor";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { Loader2 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Props {
     className?: string;
@@ -12,8 +12,14 @@ interface Props {
 export default function CodeEditor({ className }: Props) {
     const { lang, editorRef } = useCodeEditor();
 
-    function handleEditorDidMount(editor: Parameters<OnMount>[0]) {
+    function handleEditorDidMount(editor: Parameters<OnMount>[0], monaco: any) {
         editorRef.current = editor;
+
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+            document.dispatchEvent(
+                new KeyboardEvent("keydown", { key: "Enter", ctrlKey: true }),
+            );
+        });
     }
 
     return (

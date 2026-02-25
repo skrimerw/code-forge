@@ -9,14 +9,15 @@ import CodeEditor from "./CodeEditor";
 import RunCodeBtn from "./RunCodeBtn";
 
 interface Props {
+    description: string;
     className?: string;
 }
 
-export default function CodeEditorWrapper({ className }: Props) {
+export default function CodeEditorWrapper({ description, className }: Props) {
     return (
         <CodeEditorProvider>
             <div className={cn("flex gap-4 h-130", className)}>
-                <OutputArea />
+                <OutputArea description={description} />
 
                 <div className="flex flex-col gap-4 w-full">
                     {/* Кнопки над редактором кода */}
@@ -27,7 +28,7 @@ export default function CodeEditorWrapper({ className }: Props) {
                     </div>
 
                     {/* Редактор кода */}
-                    <div className="border rounded-md bg-white h-full w-full overflow-hidden">
+                    <div className="border-2 rounded-md bg-white h-full w-full overflow-hidden">
                         <CodeEditor />
                     </div>
                 </div>

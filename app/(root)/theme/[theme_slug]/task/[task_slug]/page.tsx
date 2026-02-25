@@ -1,4 +1,5 @@
 import CodeEditorWrapper from "@/components/CodeEditorWrapper";
+import Container from "@/components/Container";
 import DifficultyBadge from "@/components/DifficultyBadge";
 import {
     Breadcrumb,
@@ -8,12 +9,38 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import prisma from "@/prisma/prisma-client";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
-export default function CodeEditorPage() {
+export default async function CodeEditorPage({
+    params,
+}: {
+    params: Promise<{ task_slug: string; theme_slug: string }>;
+}) {
+    const task_id = (await params).task_slug;
+    const theme_id = (await params).theme_slug;
+
+    const task = await prisma.codeTask.findFirst({
+        where: {
+            slug: task_id,
+        },
+        include: {
+            theme: {
+                select: {
+                    title: true,
+                },
+            },
+        },
+    });
+
+    if (!task) {
+        notFound();
+    }
+
     return (
-        <div>
+        <Container>
             <Breadcrumb>
                 <BreadcrumbList className="gap-1!">
                     <BreadcrumbItem>
@@ -26,15 +53,18 @@ export default function CodeEditorPage() {
                     <BreadcrumbSeparator className="size-3" />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link href="/theory" className="text-base">
-                                Массивы
+                            <Link
+                                href={`/theme/${theme_id}`}
+                                className="text-base"
+                            >
+                                {task.theme.title}
                             </Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator className="size-3" />
                     <BreadcrumbItem>
                         <BreadcrumbPage className="text-base">
-                            Поиск наибольшего числа
+                            {task.title}
                         </BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
@@ -42,14 +72,12 @@ export default function CodeEditorPage() {
             <div className="my-10 flex items-center gap-4">
                 <DifficultyBadge
                     className="text-base border-2 px-3"
-                    difficulty="EASY"
+                    difficulty={task.difficulty}
                 />
-                <h1 className="text-3xl font-semibold">
-                    Поиск наибольшего элемента
-                </h1>
+                <h1 className="text-3xl font-semibold">{task.title}</h1>
             </div>
 
-            <CodeEditorWrapper />
-        </div>
+            <CodeEditorWrapper description={task.description} />
+        </Container>
     );
 }

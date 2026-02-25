@@ -45,7 +45,9 @@ model Theme {
   title       String
   description String
   content     String
+  imageUrl    String
   order       Int
+  slug        String @unique
 
   module   Module @relation(fields: [moduleId], references: [id])
   moduleId Int
@@ -63,6 +65,7 @@ model CodeTask {
   title       String
   description String
   difficulty  Difficulty
+  slug        String     @unique
 
   theme   Theme @relation(fields: [themeId], references: [id])
   themeId Int
@@ -97,6 +100,7 @@ model TestTask {
   description String
   difficulty  Difficulty
   body        Json
+  slug        String     @unique
 
   theme   Theme @relation(fields: [themeId], references: [id])
   themeId Int

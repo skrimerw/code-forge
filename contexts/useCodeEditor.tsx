@@ -5,10 +5,10 @@ type IStandaloneCodeEditor = Parameters<OnMount>[0];
 
 interface CodeEditorContextValue {
     lang: Language;
-    output: string;
+    output: Output | null;
     editorRef: RefObject<IStandaloneCodeEditor | null>;
     setLang: (lang: Language) => void;
-    setOutput: (output: string) => void;
+    setOutput: (output: Output | null) => void;
 }
 
 const CodeEditorContext = createContext<CodeEditorContextValue | null>(null);
@@ -19,7 +19,7 @@ export default function CodeEditorProvider({
     children: React.ReactNode;
 }) {
     const [lang, setLang] = useState<Language>("javascript");
-    const [output, setOutput] = useState("");
+    const [output, setOutput] = useState<Output | null>(null);
     const editorRef = useRef<IStandaloneCodeEditor>(null);
 
     return (

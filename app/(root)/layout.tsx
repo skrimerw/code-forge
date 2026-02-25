@@ -11,9 +11,7 @@ export default function Layout({ children }: Props) {
     return (
         <>
             <Header />
-            <main>
-                <Container>{children}</Container>
-            </main>
+            <main className="h-full">{children}</main>
             <Footer />
         </>
     );

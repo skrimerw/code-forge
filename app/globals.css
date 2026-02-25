@@ -46,6 +46,7 @@
     --radius-3xl: calc(var(--radius) + 12px);
     --radius-4xl: calc(var(--radius) + 16px);
 
+    --font-geist-sans: var(--font-geist-sans);
     --font-geist-mono: var(--font-geist-mono);
     --color-typography-secondary: var(--typography-secondary);
 
@@ -57,6 +58,8 @@
 
     --color-hard-foreground: var(--hard-foreground);
     --color-hard-background: var(--hard-background);
+
+    --color-error: var(--error);
 }
 
 :root {
@@ -103,6 +106,8 @@
 
     --hard-foreground: #e11d48;
     --hard-background: #fff5f7;
+
+    --error: #c05c48;
 }
 
 .dark {
@@ -181,4 +186,10 @@ html {
 
 .article-container *:first-child {
     margin-top: 0 !important;
+}
+
+.monaco-editor.no-user-select.showUnused.showDeprecated.vs,
+.overflow-guard {
+    width: 100% !important;
+    height: 100% !important;
 }

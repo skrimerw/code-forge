@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
-import fs from "fs";
-
-/**
- * {
- *      lang: string,
- *      code: string
- * }
- *
- */
+import redisClient from "@/lib/redis";
 
 const RunCodeSchema = z.object({
     lang: z
@@ -38,7 +30,40 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    eval(data.code)
+    try {
+        const job: QueueJob = {
+            id: Date.now(),
+            code: data.code,
+            lang: data.lang as Language,
+        };
+
+        await redisClient.lPush("docker-queue", JSON.stringify(job));
+
+        let result: Output;
+
+        while (true) {
+            const res: Output = (await redisClient.hGetAll(
+                `result:${job.id}`,
+            )) as unknown as Output;
+
+            if (Object.keys(res).length > 0) {
+                result = res;
+
+                await redisClient.del(`result:${job.id}`);
+
+                break;
+            }
+        }
+
+        return NextResponse.json<Output>({
+            ...result,
+            timedOut:
+                result.timedOut === ("1" as unknown as boolean) ? true : false,
+            code: Number(result.code),
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
     return NextResponse.json({});
 }
