@@ -1,7 +1,15 @@
 import { arraysArticle } from "./constants";
 import prisma from "./prisma-client";
+import bcrypt from "bcrypt";
 
 async function up() {
+    await prisma.user.create({
+        data: {
+            email: "user@test.ru",
+            password: bcrypt.hashSync("111111", 10),
+        },
+    });
+
     await prisma.module.create({
         data: {
             title: "Знакомство с алгоритмами",
@@ -34,6 +42,7 @@ async function up() {
 }
 
 async function down() {
+    await prisma.$queryRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
     await prisma.$queryRaw`TRUNCATE TABLE "Theme" RESTART IDENTITY CASCADE`;
     await prisma.$queryRaw`TRUNCATE TABLE "Module" RESTART IDENTITY CASCADE`;
     await prisma.$queryRaw`TRUNCATE TABLE "CodeTask" RESTART IDENTITY CASCADE`;

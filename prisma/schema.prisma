@@ -19,6 +19,7 @@ model User {
   password   String
   provider   String?
   providerId String?
+  role       Role    @default(USER)
 
   startedTasks  UserStartedCodeTask[]
   belongsToUser UserStartedTestTask[]
@@ -136,4 +137,9 @@ enum Difficulty {
 enum Language {
   JAVASCRIPT
   PYTHON
+}
+
+enum Role {
+  USER
+  ADMIN
 }

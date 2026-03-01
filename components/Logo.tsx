@@ -26,12 +26,12 @@ export default function Logo({ className }: Props) {
     }, []);
 
     return (
-        <Link href={"/"} className={cn("flex items-center gap-4", className)}>
+        <div className={cn("flex items-center gap-4", className)}>
             <img src="/img/logo.svg" alt="Logo" />
             <h3 className="text-xl font-[630] font-geist-mono">
                 {siteName.slice(0, count)}
                 <span className={cn("tracking-[-9px]", count >= siteName.length && "animate-pulse animation-duration-[1300ms]")}>__</span>
             </h3>
-        </Link>
+        </div>
     );
 }

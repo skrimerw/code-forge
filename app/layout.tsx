@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ToastContainer } from "react-toastify";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,20 +29,22 @@ export default function RootLayout({
             <body
                 className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-foreground min-h-screen grid grid-rows-[auto_1fr_auto]`}
             >
-                {children}
-                <ToastContainer
-                    position="top-center"
-                    draggable={true}
-                    stacked={true}
-                    autoClose={2000}
-                    limit={1}
-                />
-                <NextTopLoader
-                    showSpinner={false}
-                    color="var(--primary)"
-                    height={2}
-                    showForHashAnchor={false}
-                />
+                <SessionProvider>
+                    {children}
+                    <ToastContainer
+                        position="top-center"
+                        draggable={true}
+                        stacked={true}
+                        autoClose={2000}
+                        limit={1}
+                    />
+                    <NextTopLoader
+                        showSpinner={false}
+                        color="var(--primary)"
+                        height={2}
+                        showForHashAnchor={false}
+                    />
+                </SessionProvider>
             </body>
         </html>
     );

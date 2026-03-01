@@ -1,15 +1,20 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import Container from "./Container";
-import { Moon, User } from "lucide-react";
+import { Moon } from "lucide-react";
 import { Button } from "./ui/button";
 import Logo from "./Logo";
+import ProfileBtn from "./ProfileBtn";
+import { auth } from "@/auth";
+import Link from "next/link";
 
 interface Props {
     className?: string;
 }
 
-export default function Header({ className }: Props) {
+export default async function Header({ className }: Props) {
+    const session = await auth();
+
     return (
         <header
             className={cn(
@@ -18,14 +23,14 @@ export default function Header({ className }: Props) {
             )}
         >
             <Container className="flex items-center justify-between py-0">
-                <Logo />
+                <Link href={"/"}>
+                    <Logo />
+                </Link>
                 <div className="flex items-center gap-8">
                     <Button variant={"ghost"} className="p-0! size-10! w-auto">
                         <Moon strokeWidth={1.7} className="size-7.5" />
                     </Button>
-                    <Button>
-                        <User /> Профиль
-                    </Button>
+                    <ProfileBtn session={session} />
                 </div>
             </Container>
         </header>
