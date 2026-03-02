@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import Container from "@/components/Container";
 import TableOfContents from "@/components/TableOfContents";
 import TaskCard from "@/components/TaskCard";
@@ -37,13 +38,31 @@ export default async function TheoryPage({
 }) {
     const theme_slug = (await params).theme_slug;
 
+    const session = await auth();
+
     const theme = await prisma.theme.findFirst({
         where: {
             slug: theme_slug,
         },
         include: {
-            codeTasks: true,
-            testTasks: true,
+            codeTasks: {
+                include: {
+                    belongsToUser: {
+                        where: {
+                            userId: session?.user.id,
+                        },
+                    },
+                },
+            },
+            testTasks: {
+                include: {
+                    belongsToUser: {
+                        where: {
+                            userId: session?.user.id,
+                        },
+                    },
+                },
+            },
         },
     });
 
@@ -114,13 +133,28 @@ export default async function TheoryPage({
                                 </h3>
                                 <div className="flex flex-col gap-2">
                                     {theme.codeTasks.map(
-                                        ({ id, slug, title, difficulty }) => {
+                                        ({
+                                            id,
+                                            slug,
+                                            title,
+                                            difficulty,
+                                            belongsToUser,
+                                        }) => {
                                             return (
                                                 <TaskCard
                                                     key={id}
                                                     url={`/theme/${theme_slug}/task/${slug}`}
                                                     difficulty={difficulty}
                                                     title={title}
+                                                    isSolved={
+                                                        belongsToUser.length ===
+                                                        0
+                                                            ? false
+                                                            : belongsToUser[0]
+                                                                    .isSolved
+                                                              ? true
+                                                              : false
+                                                    }
                                                 />
                                             );
                                         },

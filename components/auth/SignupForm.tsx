@@ -1,29 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SignInSchema, SignInSchemaType } from "@/lib/schemas/auth";
-import { cn } from "@/lib/utils";
-import FormInput from "../form/FormInput";
-import { Button } from "../ui/button";
-import { signIn } from "next-auth/react";
-import GitHub from "../icons/GitHub";
-import OAuthBtn from "./OAuthBtn";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
-import Google from "../icons/Google";
-import { useTopLoader } from "nextjs-toploader";
 import Link from "next/link";
+import React, { useState } from "react";
+import OAuthBtn from "./OAuthBtn";
+import GitHub from "../icons/GitHub";
+import Google from "../icons/Google";
+import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import { Button } from "../ui/button";
+import FormInput from "../form/FormInput";
+import { FormProvider, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useTopLoader } from "nextjs-toploader";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { SignUpSchema, SignUpSchemaType } from "@/lib/schemas/auth";
+import { signUp } from "./actions";
 
 interface Props {
     className?: string;
 }
 
-export default function SigninForm({ className }: Props) {
+export default function SignupForm({ className }: Props) {
     const form = useForm({
-        resolver: zodResolver(SignInSchema),
+        resolver: zodResolver(SignUpSchema),
         defaultValues: {
             email: "",
             password: "",
@@ -38,19 +38,16 @@ export default function SigninForm({ className }: Props) {
         loader.start();
     }
 
-    async function onSubmit(data: SignInSchemaType) {
+    async function onSubmit(data: SignUpSchemaType) {
         try {
             setLoading(true);
 
-            const { error, code } = await signIn("credentials", {
-                ...data,
-                redirect: false,
-            });
+            const { ok, message } = await signUp(data);
 
-            if (error) {
-                toast.error(code);
+            if (!ok) {
+                toast.error(message);
 
-                return;
+                return
             }
 
             toast.success("Вы авторизованы!");
@@ -102,7 +99,7 @@ export default function SigninForm({ className }: Props) {
                                 loading && "translate-x-4",
                             )}
                         >
-                            Войти
+                            Зарегистрироваться
                         </span>
                     </Button>
                 </form>
@@ -131,12 +128,12 @@ export default function SigninForm({ className }: Props) {
             </div>
 
             <p className="text-center text-black/50 text-sm">
-                Впервые здесь?{" "}
+                Уже есть аккаунт?{" "}
                 <Link
-                    href={"/signup"}
+                    href={"/signin"}
                     className="underline transition-colors duration-300 hover:text-primary"
                 >
-                    Зарегистрироваться
+                    Войти
                 </Link>
             </p>
         </div>

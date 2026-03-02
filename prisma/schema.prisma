@@ -72,6 +72,20 @@ model CodeTask {
   themeId Int
 
   belongsToUser UserStartedCodeTask[]
+  variants      CodeTaskVariant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CodeTaskVariant {
+  id Int @id @default(autoincrement())
+
+  lang Language
+  test String
+
+  codeTask   CodeTask @relation(fields: [codeTaskId], references: [id])
+  codeTaskId Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

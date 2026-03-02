@@ -1,8 +1,12 @@
+import { auth } from "@/auth";
 import Container from "@/components/Container";
 import ThemeCard from "@/components/ThemeCard";
 import prisma from "@/prisma/prisma-client";
+import { Prisma } from "@prisma/client";
 
 export default async function Home() {
+    const session = await auth();
+
     const modules = await prisma.module.findMany({
         orderBy: {
             order: "asc",
@@ -12,9 +16,46 @@ export default async function Home() {
                 orderBy: {
                     order: "asc",
                 },
+                include: {
+                    codeTasks: {
+                        include: {
+                            belongsToUser: {
+                                where: {
+                                    userId: session?.user.id,
+                                    isSolved: true,
+                                },
+                            },
+                        },
+                    },
+
+                    testTasks: {
+                        include: {
+                            belongsToUser: {
+                                where: {
+                                    userId: session?.user.id,
+                                    isSolved: true,
+                                },
+                            },
+                        },
+                    },
+                },
             },
         },
     });
+
+    function countSolvedTasks(
+        tasks:
+            | Prisma.CodeTaskGetPayload<{
+                  include: { belongsToUser: true };
+              }>[]
+            | Prisma.TestTaskGetPayload<{
+                  include: { belongsToUser: true };
+              }>[],
+    ) {
+        return tasks.reduce((currentSum, task) => {
+            return currentSum + task.belongsToUser.length;
+        }, 0);
+    }
 
     return (
         <Container className="py-16">
@@ -42,14 +83,27 @@ export default async function Home() {
                                     slug,
                                     title,
                                     imageUrl,
+                                    codeTasks,
+                                    testTasks,
                                 }) => {
+                                    const solvedCodeTasks =
+                                        countSolvedTasks(codeTasks);
+                                    const solvedTestTasks =
+                                        countSolvedTasks(testTasks);
+                                    const totalSolved =
+                                        solvedCodeTasks + solvedTestTasks;
+                                    const totalTasks =
+                                        codeTasks.length + testTasks.length;
+
                                     return (
                                         <ThemeCard
                                             key={id}
                                             slug={slug}
                                             description={description}
                                             imageUrl={imageUrl}
-                                            progress={16}
+                                            progress={
+                                                (totalSolved / totalTasks) * 100
+                                            }
                                             title={title}
                                         />
                                     );
