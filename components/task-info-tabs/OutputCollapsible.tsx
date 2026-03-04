@@ -5,7 +5,7 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "./ui/collapsible";
+} from "../ui/collapsible";
 import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 
@@ -29,9 +29,18 @@ export default function OutputCollapsible({
         >
             <CollapsibleTrigger
                 onClick={() => setIsOpen((prev) => !prev)}
-                className={cn("flex items-center gap-1 text-xs font-bold p-2 w-full text-start", isOpen && "border-b")}
+                className={cn(
+                    "flex items-center gap-1 text-xs font-bold p-2 w-full text-start",
+                    isOpen && "border-b",
+                )}
             >
-                <ChevronRight size={14} className={cn("transition-transform", isOpen && "rotate-90")} />
+                <ChevronRight
+                    size={14}
+                    className={cn(
+                        "transition-transform",
+                        isOpen && "rotate-90",
+                    )}
+                />
                 {title}
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-x-auto">

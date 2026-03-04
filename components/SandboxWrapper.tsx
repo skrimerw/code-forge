@@ -1,24 +1,18 @@
 "use client";
 
 import CodeEditorProvider from "@/contexts/useCodeEditor";
-import React from "react";
-import OutputArea from "./OutputArea";
 import { cn } from "@/lib/utils";
+import React from "react";
+import RunCodeBtn from "./RunCodeBtn";
 import LanguageSelector from "./LanguageSelector";
 import CodeEditor from "./CodeEditor";
-import RunCodeBtn from "./RunCodeBtn";
-import TaskInfoTabs from "./task-info-tabs/TaskInfoTabs";
+import Output from "./task-info-tabs/Output";
 
-interface Props {
-    description: string;
-    className?: string;
-}
-
-export default function CodeEditorWrapper({ description, className }: Props) {
+export default function SandboxWrapper() {
     return (
         <CodeEditorProvider>
-            <div className={cn("flex gap-4 h-130", className)}>
-                <TaskInfoTabs description={description} />
+            <div className={cn("flex gap-4 h-130")}>
+                <Output className="max-w-sm w-full h-[calc(100%-56px)] mt-auto border-2 rounded-md overflow-hidden transition-colors bg-white" />
 
                 <div className="flex flex-col gap-4 w-full">
                     {/* Кнопки над редактором кода */}

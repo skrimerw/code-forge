@@ -23,9 +23,14 @@ export default async function Header({ className }: Props) {
             )}
         >
             <Container className="flex items-center justify-between py-0">
-                <Link href={"/"}>
+                <Link href={"/"} className="w-[170px]">
                     <Logo />
                 </Link>
+                <ul className="flex gap-10">
+                    <li className="transition-colors hover:text-primary/70">
+                        <Link href={"/sandbox"}>Редактор кода</Link>
+                    </li>
+                </ul>
                 <div className="flex items-center gap-8">
                     <Button variant={"ghost"} className="p-0! size-10! w-auto">
                         <Moon strokeWidth={1.7} className="size-7.5" />
