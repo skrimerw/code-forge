@@ -11,13 +11,15 @@ import { ChevronRight } from "lucide-react";
 
 interface Props {
     title: string;
-    content: string;
+    children: React.ReactNode;
+    isPassed: boolean;
     className?: string;
 }
 
-export default function OutputCollapsible({
-    content,
+export default function TestCollapsible({
+    children,
     title,
+    isPassed,
     className,
 }: Props) {
     const [isOpen, setIsOpen] = useState(true);
@@ -25,26 +27,28 @@ export default function OutputCollapsible({
     return (
         <Collapsible
             open={isOpen}
-            className={cn("border rounded-sm", className)}
+            className={cn(className)}
         >
             <CollapsibleTrigger
                 onClick={() => setIsOpen((prev) => !prev)}
                 className={cn(
-                    "flex items-center gap-1 text-xs font-bold p-2 w-full text-start font-geist-mono",
-                    isOpen && "border-b",
+                    "flex items-center gap-1 font-medium py-2 text-start",
+                    !isOpen && (isPassed ? "text-easy-foreground" : "text-error")
                 )}
             >
                 <ChevronRight
                     size={14}
+                    strokeWidth={3.5}
                     className={cn(
                         "transition-transform",
                         isOpen && "rotate-90",
+                        isPassed ? "text-easy-foreground" : "text-error"
                     )}
                 />
                 {title}
             </CollapsibleTrigger>
-            <CollapsibleContent className="overflow-x-auto">
-                <pre className="p-2 text-sm">{content}</pre>
+            <CollapsibleContent className="overflow-x-auto pl-5">
+                {children}
             </CollapsibleContent>
         </Collapsible>
     );

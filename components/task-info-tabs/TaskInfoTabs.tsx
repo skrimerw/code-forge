@@ -78,13 +78,10 @@ export default function TaskInfoTabs({ description, className }: Props) {
             {/* Область вывода */}
             <div
                 className={cn(
-                    "h-full border-2 rounded-md overflow-hidden transition-colors",
-                    output?.code === 1 &&
-                        tabValue === "output" &&
-                        "border-error",
+                    "h-full overflow-hidden",
                 )}
             >
-                <div className="rounded-md bg-white h-full overflow-y-auto">
+                <div className="rounded-md bg-white h-full">
                     {tabValue === "description" && (
                         <TaskDescription description={description} />
                     )}

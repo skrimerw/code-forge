@@ -18,6 +18,8 @@ export interface QueueCodeTaskJob extends QueueSandboxJob {
     test: string;
 }
 
+export interface OutputWithTests extends Output, TestRunResult {}
+
 export interface TestRunResult {
     stdout: string;
     stderr: string;
@@ -40,7 +42,13 @@ export interface TestCase {
 
 export interface TestError {
     message: string;
-    stack: string;
+    actual: number;
+    expected: number;
+    showDiff: boolean;
+    operator: string;
+    name: string;
+    ok: boolean;
+    stack: string
 }
 
 export type TestStatus = "passed" | "failed";

@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react";
 import React, { useCallback, useMemo } from "react";
 
 interface Props {
-    variants: Prisma.CodeTaskVariantGetPayload<{
+    variants?: Prisma.CodeTaskVariantGetPayload<{
         include: { codeTaskSolutions: true };
     }>[];
     className?: string;
@@ -27,7 +27,7 @@ export default function CodeEditor({ variants, className }: Props) {
     }
 
     const initialValue = useMemo(() => {
-        const variant = variants.find(
+        const variant = variants?.find(
             ({ lang: language }) => lang === language,
         );
         const userSolution = variant?.codeTaskSolutions;

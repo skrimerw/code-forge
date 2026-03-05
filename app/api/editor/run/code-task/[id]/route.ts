@@ -5,6 +5,7 @@ import prisma from "@/prisma/prisma-client";
 import { Language } from "@prisma/client";
 import { Output, QueueCodeTaskJob, TestRunResult, TestSuite } from "@/types";
 import { auth } from "@/auth";
+import { hasTestsPassed } from "@/lib/utils";
 
 const RunCodeSchema = z.object({
     lang: z
@@ -83,8 +84,6 @@ export async function POST(
             test: codeTaskVariant.test,
         };
 
-        console.log(job);
-
         await redisClient.lPush("code-task-queue", JSON.stringify(job));
 
         let result: TestRunResult & Output;
@@ -103,10 +102,10 @@ export async function POST(
             }
         }
 
+        const tests = JSON.parse(result.tests as unknown as string)
+        const allTestsPassed = hasTestsPassed(tests);
         const isSolved =
-            !result.stderr && !result.tests.length
-                ? false
-                : hasTestsPassed(result.tests);
+            !result.stderr && !tests.length ? false : allTestsPassed;
 
         if (codeTaskVariant.codeTaskSolutions.length) {
             await prisma.codeTaskSolution.update({
@@ -132,32 +131,14 @@ export async function POST(
 
         return NextResponse.json<TestRunResult & Output>({
             ...result,
-            tests: JSON.parse(result.tests as unknown as string),
+            tests,
             timedOut:
                 result.timedOut === ("1" as unknown as boolean) ? true : false,
-            code: Number(result.code),
+            code: !allTestsPassed ? 1 : Number(result.code),
         });
     } catch (e) {
         console.log(e);
     }
 
     return NextResponse.json({});
-}
-
-function hasTestsPassed(testSuites: TestSuite[]) {
-    if (typeof testSuites !== "object") return false;
-
-    if (!testSuites.length) return true;
-
-    for (const { tests, suites } of testSuites) {
-        for (const { status } of tests) {
-            if (status === "failed") return false;
-        }
-
-        if (!hasTestsPassed(suites)) {
-            return false;
-        }
-    }
-
-    return true;
 }
