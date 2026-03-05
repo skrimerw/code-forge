@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useCodeEditor } from "@/contexts/useCodeEditor";
+import { Language } from "@prisma/client";
 
 type LangObj = {
     label: string;
@@ -20,11 +21,11 @@ type LangObj = {
 const languages: LangObj[] = [
     {
         label: "JavaScript",
-        value: "javascript",
+        value: "JAVASCRIPT",
     },
     {
         label: "Python",
-        value: "python",
+        value: "PYTHON",
     },
 ];
 

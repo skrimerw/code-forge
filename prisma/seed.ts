@@ -37,6 +37,33 @@ async function up() {
             description: `Напишите программу, которая ищет наибольшее число в массиве.`,
             themeId: 1,
             slug: "biggest-number",
+            variants: {
+                create: [
+                    {
+                        starterCode: "function maxVal(arr) {\n\t//место для вашего кода\n\t\n}",
+                        lang: "JAVASCRIPT",
+                        test: `
+                                import { config, assert } from "chai";
+
+                                config.truncateThreshold = 0;
+
+                                describe("Test", () => {
+                                    it("middle", () => {
+                                        assert.strictEqual(maxVal([1,23]), 23);
+                                        assert.strictEqual(maxVal([1,-3, -23]), 1);
+                                    });
+                                });
+
+                                describe("random tests", () => {
+                                    it("middle", () => {
+                                        assert.strictEqual(maxVal([1,23]), 23);
+                                        assert.strictEqual(maxVal([1,-3, 3]), 3);
+                                    });
+                                });
+                            `,
+                    },
+                ],
+            },
         },
     });
 }
@@ -46,6 +73,7 @@ async function down() {
     await prisma.$queryRaw`TRUNCATE TABLE "Theme" RESTART IDENTITY CASCADE`;
     await prisma.$queryRaw`TRUNCATE TABLE "Module" RESTART IDENTITY CASCADE`;
     await prisma.$queryRaw`TRUNCATE TABLE "CodeTask" RESTART IDENTITY CASCADE`;
+    await prisma.$queryRaw`TRUNCATE TABLE "CodeTaskVariant" RESTART IDENTITY CASCADE`;
 }
 
 async function main() {

@@ -19,10 +19,14 @@ export default async function Home() {
                 include: {
                     codeTasks: {
                         include: {
-                            belongsToUser: {
-                                where: {
-                                    userId: session?.user.id,
-                                    isSolved: true,
+                            variants: {
+                                include: {
+                                    codeTaskSolutions: {
+                                        where: {
+                                            userId: session?.user.id,
+                                            isSolved: true,
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -30,7 +34,7 @@ export default async function Home() {
 
                     testTasks: {
                         include: {
-                            belongsToUser: {
+                            testTaskSolutions: {
                                 where: {
                                     userId: session?.user.id,
                                     isSolved: true,
@@ -43,17 +47,35 @@ export default async function Home() {
         },
     });
 
-    function countSolvedTasks(
-        tasks:
-            | Prisma.CodeTaskGetPayload<{
-                  include: { belongsToUser: true };
-              }>[]
-            | Prisma.TestTaskGetPayload<{
-                  include: { belongsToUser: true };
-              }>[],
+    function countSolvedTestTasks(
+        tasks: Prisma.TestTaskGetPayload<{
+            include: { testTaskSolutions: true };
+        }>[],
     ) {
         return tasks.reduce((currentSum, task) => {
-            return currentSum + task.belongsToUser.length;
+            return currentSum + task.testTaskSolutions.length;
+        }, 0);
+    }
+
+    function countSolvedCodeTasks(
+        tasks: Prisma.CodeTaskGetPayload<{
+            include: {
+                variants: {
+                    include: {
+                        codeTaskSolutions: true;
+                    };
+                };
+            };
+        }>[],
+    ) {
+        return tasks.reduce((currentSum, task) => {
+            const hasSolved = task.variants.find(({ codeTaskSolutions }) => {
+                return codeTaskSolutions.find(
+                    ({ isSolved }) => isSolved === true,
+                );
+            });
+
+            return currentSum + (hasSolved ? 1 : 0);
         }, 0);
     }
 
@@ -87,9 +109,9 @@ export default async function Home() {
                                     testTasks,
                                 }) => {
                                     const solvedCodeTasks =
-                                        countSolvedTasks(codeTasks);
+                                        countSolvedCodeTasks(codeTasks);
                                     const solvedTestTasks =
-                                        countSolvedTasks(testTasks);
+                                        countSolvedTestTasks(testTasks);
                                     const totalSolved =
                                         solvedCodeTasks + solvedTestTasks;
                                     const totalTasks =

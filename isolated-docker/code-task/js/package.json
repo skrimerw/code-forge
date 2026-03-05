@@ -1,0 +1,19 @@
+{
+  "name": "code-forge-mocha-test",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter json"
+  },
+  "devDependencies": {
+    "mocha": "^11.7.5"
+  },
+  "dependencies": {
+    "chai": "^6.2.2",
+    "sinon": "^21.0.1"
+  }
+}

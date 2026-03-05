@@ -1,4 +1,6 @@
+import { Output } from "@/types";
 import { OnMount } from "@monaco-editor/react";
+import { Language } from "@prisma/client";
 import { createContext, RefObject, useContext, useRef, useState } from "react";
 
 type IStandaloneCodeEditor = Parameters<OnMount>[0];
@@ -18,7 +20,7 @@ export default function CodeEditorProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [lang, setLang] = useState<Language>("javascript");
+    const [lang, setLang] = useState<Language>("JAVASCRIPT");
     const [output, setOutput] = useState<Output | null>(null);
     const editorRef = useRef<IStandaloneCodeEditor>(null);
 

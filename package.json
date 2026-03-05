@@ -14,6 +14,7 @@
         "docker:compose": "docker compose up -d",
         "isolated:python": "docker build -t isolated-python -f ./isolated-docker/Dockerfile.python ./isolated-docker",
         "isolated:javascript": "docker build -t isolated-javascript -f ./isolated-docker/Dockerfile.javascript ./isolated-docker",
+        "isolated:code-task:javascript": "docker build -t isolated-code-task-javascript -f ./isolated-docker/code-task/js/Dockerfile ./isolated-docker/code-task/js",
         "worker:dev": "tsx watch worker.ts"
     },
     "dependencies": {
@@ -38,6 +39,7 @@
         "react-hook-form": "^7.71.2",
         "react-toastify": "^11.0.5",
         "redis": "^5.11.0",
+        "rimraf": "^6.1.3",
         "tailwind-merge": "^3.4.1",
         "ts-node": "^10.9.2",
         "zod": "^4.3.6"

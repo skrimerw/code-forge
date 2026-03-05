@@ -9,10 +9,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 interface Props {
+    apiEndpoint: string;
     className?: string;
 }
 
-export default function RunCodeBtn({ className }: Props) {
+export default function RunCodeBtn({ apiEndpoint, className }: Props) {
     const [loading, setLoading] = useState(false);
     const { editorRef, setOutput, lang } = useCodeEditor();
 
@@ -21,15 +22,15 @@ export default function RunCodeBtn({ className }: Props) {
             const code = editorRef.current.getValue();
 
             if (code.length === 0) {
-                toast.error("Похоже, вы не добавили код")
-                
-                return
+                toast.error("Похоже, вы не добавили код");
+
+                return;
             }
 
             try {
                 setLoading(true);
 
-                const { data } = await axios.post("/api/editor/run", {
+                const { data } = await axios.post(apiEndpoint, {
                     lang,
                     code,
                 });

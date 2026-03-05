@@ -47,16 +47,20 @@ export default async function TheoryPage({
         include: {
             codeTasks: {
                 include: {
-                    belongsToUser: {
-                        where: {
-                            userId: session?.user.id,
+                    variants: {
+                        include: {
+                            codeTaskSolutions: {
+                                where: {
+                                    userId: session?.user.id,
+                                },
+                            },
                         },
                     },
                 },
             },
             testTasks: {
                 include: {
-                    belongsToUser: {
+                    testTaskSolutions: {
                         where: {
                             userId: session?.user.id,
                         },
@@ -138,7 +142,7 @@ export default async function TheoryPage({
                                             slug,
                                             title,
                                             difficulty,
-                                            belongsToUser,
+                                            variants,
                                         }) => {
                                             return (
                                                 <TaskCard
@@ -147,13 +151,20 @@ export default async function TheoryPage({
                                                     difficulty={difficulty}
                                                     title={title}
                                                     isSolved={
-                                                        belongsToUser.length ===
-                                                        0
-                                                            ? false
-                                                            : belongsToUser[0]
-                                                                    .isSolved
-                                                              ? true
-                                                              : false
+                                                        variants.find(
+                                                            ({
+                                                                codeTaskSolutions,
+                                                            }) => {
+                                                                return codeTaskSolutions.find(
+                                                                    ({
+                                                                        isSolved,
+                                                                    }) =>
+                                                                        isSolved ===
+                                                                        true,
+                                                                );
+                                                            },
+                                                        )?.codeTaskSolutions[0]
+                                                            .isSolved
                                                     }
                                                 />
                                             );

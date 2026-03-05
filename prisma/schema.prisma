@@ -21,8 +21,8 @@ model User {
   providerId String?
   role       Role    @default(USER)
 
-  startedTasks  UserStartedCodeTask[]
-  belongsToUser UserStartedTestTask[]
+  codeTaskSolutions CodeTaskSolution[]
+  testTaskSolutions TestTaskSolution[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,8 +71,7 @@ model CodeTask {
   theme   Theme @relation(fields: [themeId], references: [id])
   themeId Int
 
-  belongsToUser UserStartedCodeTask[]
-  variants      CodeTaskVariant[]
+  variants CodeTaskVariant[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,17 +80,22 @@ model CodeTask {
 model CodeTaskVariant {
   id Int @id @default(autoincrement())
 
-  lang Language
-  test String
+  lang        Language
+  test        String
+  starterCode String
 
   codeTask   CodeTask @relation(fields: [codeTaskId], references: [id])
   codeTaskId Int
 
+  codeTaskSolutions CodeTaskSolution[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([lang, test])
 }
 
-model UserStartedCodeTask {
+model CodeTaskSolution {
   id Int @id @default(autoincrement())
 
   isSolved Boolean
@@ -101,8 +105,8 @@ model UserStartedCodeTask {
   user   User @relation(fields: [userId], references: [id])
   userId Int
 
-  codeTask   CodeTask @relation(fields: [codeTaskId], references: [id])
-  codeTaskId Int
+  codeTaskVariant   CodeTaskVariant @relation(fields: [codeTaskVariantId], references: [id])
+  codeTaskVariantId Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -120,13 +124,13 @@ model TestTask {
   theme   Theme @relation(fields: [themeId], references: [id])
   themeId Int
 
-  belongsToUser UserStartedTestTask[]
+  testTaskSolutions TestTaskSolution[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model UserStartedTestTask {
+model TestTaskSolution {
   id Int @id @default(autoincrement())
 
   isSolved    Boolean

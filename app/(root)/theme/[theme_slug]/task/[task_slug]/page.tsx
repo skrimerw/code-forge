@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import CodeEditorWrapper from "@/components/CodeEditorWrapper";
 import Container from "@/components/Container";
 import DifficultyBadge from "@/components/DifficultyBadge";
@@ -21,6 +22,7 @@ export default async function CodeEditorPage({
 }) {
     const task_id = (await params).task_slug;
     const theme_id = (await params).theme_slug;
+    const session = await auth();
 
     const task = await prisma.codeTask.findFirst({
         where: {
@@ -30,6 +32,15 @@ export default async function CodeEditorPage({
             theme: {
                 select: {
                     title: true,
+                },
+            },
+            variants: {
+                include: {
+                    codeTaskSolutions: {
+                        where: {
+                            userId: session?.user.id,
+                        },
+                    },
                 },
             },
         },
@@ -77,7 +88,11 @@ export default async function CodeEditorPage({
                 <h1 className="text-3xl font-semibold">{task.title}</h1>
             </div>
 
-            <CodeEditorWrapper description={task.description} />
+            <CodeEditorWrapper
+                taskId={task.id}
+                variants={task.variants}
+                description={task.description}
+            />
         </Container>
     );
 }

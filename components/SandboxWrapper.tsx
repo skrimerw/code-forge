@@ -17,7 +17,7 @@ export default function SandboxWrapper() {
                 <div className="flex flex-col gap-4 w-full">
                     {/* Кнопки над редактором кода */}
                     <div className="flex justify-between items-center">
-                        <RunCodeBtn />
+                        <RunCodeBtn apiEndpoint="/api/editor/run" />
 
                         <LanguageSelector />
                     </div>

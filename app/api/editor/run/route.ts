@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 import redisClient from "@/lib/redis";
+import { Output, QueueSandboxJob } from "@/types";
+import { Language } from "@prisma/client";
 
 const RunCodeSchema = z.object({
     lang: z
@@ -18,6 +20,14 @@ const RunCodeSchema = z.object({
     code: z.string().nonempty("'code' option is required"),
 });
 
+/**
+ * Запускает произвольный код пользователя
+ * без проведения тестирования кода
+ *
+ * @param req
+ * @returns
+ */
+
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
@@ -31,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const job: QueueJob = {
+        const job: QueueSandboxJob = {
             id: Date.now(),
             code: data.code,
             lang: data.lang as Language,
