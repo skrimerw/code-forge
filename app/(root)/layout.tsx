@@ -16,10 +16,10 @@ export default async function Layout({ children }: Props) {
     }
 
     return (
-        <div className="grid grid-rows-[auto_1fr_auto]">
+        <>
             <Header />
             <main className="h-full">{children}</main>
             <Footer />
-        </div>
+        </>
     );
 }
