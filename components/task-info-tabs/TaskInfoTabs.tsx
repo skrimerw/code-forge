@@ -8,15 +8,17 @@ import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import TaskDescription from "./TaskDescription";
 import Output from "./Output";
+import TheoryButton from "./TheoryButton";
 
 type TabValue = "description" | "output";
 
 interface Props {
+    themeContent: string
     description: string;
     className?: string;
 }
 
-export default function TaskInfoTabs({ description, className }: Props) {
+export default function TaskInfoTabs({themeContent, description, className }: Props) {
     const [tabValue, setTabValue] = useState<TabValue>("description");
     const { output } = useCodeEditor();
     const firstLoaded = useRef(true);
@@ -67,12 +69,7 @@ export default function TaskInfoTabs({ description, className }: Props) {
                         Вывод
                     </Button>
                 </div>
-                <Button
-                    variant={"secondary"}
-                    className="text-foreground bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8] p-2.5 flex items-center justify-center"
-                >
-                    <BookOpenText />
-                </Button>
+                <TheoryButton className="ml-auto" content={themeContent} />
             </div>
 
             {/* Область вывода */}

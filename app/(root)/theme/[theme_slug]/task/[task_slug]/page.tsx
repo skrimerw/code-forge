@@ -11,6 +11,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import prisma from "@/prisma/prisma-client";
+import { Check } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -32,6 +33,7 @@ export default async function CodeEditorPage({
             theme: {
                 select: {
                     title: true,
+                    content: true,
                 },
             },
             variants: {
@@ -80,15 +82,24 @@ export default async function CodeEditorPage({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div className="my-10 flex items-center gap-4">
+            <div className="my-10 flex items-center gap-3">
                 <DifficultyBadge
                     className="text-base border-2 px-3"
                     difficulty={task.difficulty}
                 />
-                <h1 className="text-3xl font-semibold">{task.title}</h1>
+                <h1 className="flex items-center gap-3 text-3xl font-semibold">
+                    {task.title}
+
+                    {task.variants.find((variant) =>
+                        variant.codeTaskSolutions.find(
+                            (solution) => solution.isSolved,
+                        ),
+                    ) && <Check />}
+                </h1>
             </div>
 
             <CodeEditorWrapper
+                themeContent={task.theme.content}
                 taskId={task.id}
                 variants={task.variants}
                 description={task.description}

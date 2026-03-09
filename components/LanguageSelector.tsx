@@ -6,35 +6,22 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useCodeEditor } from "@/contexts/useCodeEditor";
 import { Language } from "@prisma/client";
-
-type LangObj = {
-    label: string;
-    value: Language;
-};
-
-const languages: LangObj[] = [
-    {
-        label: "JavaScript",
-        value: "JAVASCRIPT",
-    },
-    {
-        label: "Python",
-        value: "PYTHON",
-    },
-];
+import { LangObj } from "@/types";
 
 interface Props {
+    availableLangs: LangObj[];
     className?: string;
 }
 
-export default function LanguageSelector({ className }: Props) {
+export default function LanguageSelector({ availableLangs, className }: Props) {
     const [isOpen, setIsOpen] = useState(false);
+    const [hasLangLoaded, setHasLangLoaded] = useState(false);
     const { lang: selectedLanguage, setLang } = useCodeEditor();
 
     function handleOptionClick(value: Language) {
@@ -42,22 +29,42 @@ export default function LanguageSelector({ className }: Props) {
         setLang(value);
     }
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setHasLangLoaded(true);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, []);
+
     return (
         <DropdownMenu modal={false} open={isOpen}>
             <DropdownMenuTrigger asChild>
                 <Button
-                    className={cn("w-40 h-10 justify-between", className)}
+                    className={cn(
+                        "relative w-40 h-10 justify-between",
+                        className,
+                    )}
                     variant={"outline"}
                     onClick={() => setIsOpen((prev) => !prev)}
                 >
-                    {
-                        languages.filter(
+                    {hasLangLoaded ? (
+                        availableLangs.filter(
                             (lang) => lang.value === selectedLanguage,
                         )[0].label
-                    }
+                    ) : (
+                        <div
+                            className={cn(
+                                "absolute left-3 rounded-full bg-secondary animate-pulse h-5 w-[100px] transition-[visibility] visible",
+                                hasLangLoaded && "invisible",
+                            )}
+                        ></div>
+                    )}
                     <ChevronDown
                         className={cn(
-                            "transition-transform duration-300",
+                            "transition-transform duration-300 ml-auto",
                             isOpen && "rotate-180",
                         )}
                     />
@@ -68,7 +75,7 @@ export default function LanguageSelector({ className }: Props) {
                     width: "var(--radix-dropdown-menu-trigger-width)",
                 }}
             >
-                {languages.map((lang) => {
+                {availableLangs.map((lang) => {
                     return (
                         <DropdownMenuItem
                             key={lang.value}

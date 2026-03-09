@@ -25,7 +25,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="ru">
+        <html lang="ru" data-scroll-behavior="smooth">
             <body
                 className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-foreground min-h-screen grid grid-rows-[auto_1fr_auto]`}
             >

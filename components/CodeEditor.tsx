@@ -2,18 +2,15 @@
 
 import { useCodeEditor } from "@/contexts/useCodeEditor";
 import { Editor, OnMount } from "@monaco-editor/react";
-import { Prisma } from "@prisma/client";
 import { Loader2 } from "lucide-react";
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 
 interface Props {
-    variants?: Prisma.CodeTaskVariantGetPayload<{
-        include: { codeTaskSolutions: true };
-    }>[];
+    initialValue?: string
     className?: string;
 }
 
-export default function CodeEditor({ variants, className }: Props) {
+export default function CodeEditor({ initialValue = "", className }: Props) {
     const { lang, editorRef } = useCodeEditor();
 
     function handleEditorDidMount(editor: Parameters<OnMount>[0], monaco: any) {
@@ -25,17 +22,6 @@ export default function CodeEditor({ variants, className }: Props) {
             );
         });
     }
-
-    const initialValue = useMemo(() => {
-        const variant = variants?.find(
-            ({ lang: language }) => lang === language,
-        );
-        const userSolution = variant?.codeTaskSolutions;
-
-        return userSolution?.length
-            ? userSolution[0].code
-            : variant?.starterCode;
-    }, [lang]);
 
     return (
         <Editor

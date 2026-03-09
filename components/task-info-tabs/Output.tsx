@@ -19,8 +19,6 @@ export default function Output({ className }: Props) {
         return hasTestsPassed(output?.tests || []);
     }, [output]);
 
-    console.log(allTestsPassed);
-
     return (
         <div
             className={cn(

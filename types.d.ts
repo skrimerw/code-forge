@@ -48,7 +48,12 @@ export interface TestError {
     operator: string;
     name: string;
     ok: boolean;
-    stack: string
+    stack: string;
 }
 
 export type TestStatus = "passed" | "failed";
+
+export type LangObj = {
+    label: string;
+    value: Language;
+};
