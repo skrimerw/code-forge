@@ -13,80 +13,81 @@ import TheoryButton from "./TheoryButton";
 type TabValue = "description" | "output";
 
 interface Props {
-    themeContent: string
-    description: string;
-    className?: string;
+  themeTitle: string;
+  themeContent: string;
+  description: string;
+  className?: string;
 }
 
-export default function TaskInfoTabs({themeContent, description, className }: Props) {
-    const [tabValue, setTabValue] = useState<TabValue>("description");
-    const { output } = useCodeEditor();
-    const firstLoaded = useRef(true);
-    const pathname = usePathname();
+export default function TaskInfoTabs({
+  themeTitle,
+  themeContent,
+  description,
+  className,
+}: Props) {
+  const [tabValue, setTabValue] = useState<TabValue>("description");
+  const { output } = useCodeEditor();
+  const firstLoaded = useRef(true);
+  const pathname = usePathname();
 
-    useEffect(() => {
-        firstLoaded.current = true;
-    }, [pathname]);
+  useEffect(() => {
+    firstLoaded.current = true;
+  }, [pathname]);
 
-    useEffect(() => {
-        if (!firstLoaded.current) {
-            setTabValue("output");
-        } else {
-            firstLoaded.current = false;
-        }
-    }, [output]);
+  useEffect(() => {
+    if (!firstLoaded.current) {
+      setTabValue("output");
+    } else {
+      firstLoaded.current = false;
+    }
+  }, [output]);
 
-    return (
-        <div
+  return (
+    <div
+      className={cn("flex flex-col gap-4 max-w-sm w-full h-full", className)}
+    >
+      {/* Кнопки над областью вывода */}
+      <div className="flex items-center justify-between">
+        <div className="flex">
+          <Button
+            onClick={() => setTabValue("description")}
+            variant={"ghost"}
             className={cn(
-                "flex flex-col gap-4 max-w-sm w-full h-full",
-                className,
+              "text-foreground  h-10",
+              tabValue === "description" &&
+                "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]"
             )}
-        >
-            {/* Кнопки над областью вывода */}
-            <div className="flex items-center justify-between">
-                <div className="flex">
-                    <Button
-                        onClick={() => setTabValue("description")}
-                        variant={"ghost"}
-                        className={cn(
-                            "text-foreground  h-10",
-                            tabValue === "description" &&
-                                "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]",
-                        )}
-                    >
-                        Описание
-                    </Button>
-                    <Button
-                        onClick={() => setTabValue("output")}
-                        variant={"ghost"}
-                        className={cn(
-                            "h-10",
-                            tabValue === "output" &&
-                                "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]",
-                        )}
-                    >
-                        Вывод
-                    </Button>
-                </div>
-                <TheoryButton className="ml-auto" content={themeContent} />
-            </div>
-
-            {/* Область вывода */}
-            <div
-                className={cn(
-                    "h-full overflow-hidden",
-                )}
-            >
-                <div className="rounded-md bg-white h-full">
-                    {tabValue === "description" && (
-                        <TaskDescription description={description} />
-                    )}
-                    {tabValue === "output" && (
-                       <Output />
-                    )}
-                </div>
-            </div>
+          >
+            Описание
+          </Button>
+          <Button
+            onClick={() => setTabValue("output")}
+            variant={"ghost"}
+            className={cn(
+              "h-10",
+              tabValue === "output" &&
+                "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]"
+            )}
+          >
+            Вывод
+          </Button>
         </div>
-    );
+        <TheoryButton
+          title={themeTitle}
+          className="ml-auto"
+          content={themeContent}
+        />
+      </div>
+
+      {/* Область вывода */}
+      <div className={cn("h-full overflow-hidden")}>
+        <div className="rounded-md bg-white h-full">
+          {tabValue === "description" && (
+            <TaskDescription description={description} />
+          )}
+          {tabValue === "output" && <Output />}
+        </div>
+      </div>
+    </div>
+  );
 }
