@@ -86,14 +86,13 @@ export default function MockTestPage() {
         >
           {testBodyMock.map(({ id: questionId, answers, type, title }) => {
             if (type === "singular") {
-              form.setValue(`${questionId}`, answers[0].id);
+              form.setValue(`${questionId}`, -1);
 
               return (
                 <div key={questionId}>
                   <h2 className="font-medium mb-1">{title}</h2>
                   <RadioGroup
                     className="gap-2"
-                    defaultValue={String(answers[0].id)}
                     onValueChange={(value) =>
                       form.setValue(`${questionId}`, Number(value))
                     }
