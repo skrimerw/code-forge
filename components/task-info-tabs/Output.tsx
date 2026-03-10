@@ -1,5 +1,5 @@
 import { useCodeEditor } from "@/contexts/useCodeEditor";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import OutputCollapsible from "./OutputCollapsible";
 import { cn, hasTestsPassed } from "@/lib/utils";
 import TestCollapsible from "./TestCollapsible";
@@ -14,6 +14,7 @@ interface Props {
 export default function Output({ className }: Props) {
     const { output } = useCodeEditor();
     const { setOpen, isSolved, setIsSolved } = useSuccessModal();
+    const firstRender = useRef(true);
 
     const allTestsPassed = useMemo(() => {
         if (output?.tests === undefined || output?.tests.length === 0)
@@ -25,15 +26,22 @@ export default function Output({ className }: Props) {
     }, [output]);
 
     useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
+
         if (allTestsPassed && !isSolved) {
             setOpen(true);
             setIsSolved(true);
+
+            return
         }
 
-        if (allTestsPassed && isSolved) {
+        if (allTestsPassed) {
             toast.success("Задание выполнено! 🎉");
         }
-    }, [allTestsPassed, isSolved]);
+    }, [output, allTestsPassed]);
 
     return (
         <div

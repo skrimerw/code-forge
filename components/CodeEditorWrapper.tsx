@@ -42,33 +42,35 @@ export default function CodeEditorWrapper({
     }, []);
 
     return (
-        <CodeEditorProvider>
-            <div className={cn("flex gap-4 h-130", className)}>
-                <SuccessModalProvider isSolvedInitial={isSolved}>
+        <SuccessModalProvider isSolvedInitial={isSolved}>
+            <CodeEditorProvider>
+                <div className={cn("flex gap-4 h-130", className)}>
                     <SuccessModal />
                     <TaskInfoTabs
                         themeTitle={themeTitle}
                         themeContent={themeContent}
                         description={description}
                     />
-                </SuccessModalProvider>
 
-                <div className="flex flex-col gap-4 w-full">
-                    {/* Кнопки над редактором кода */}
-                    <div className="flex justify-between items-center">
-                        <RunCodeBtn
-                            apiEndpoint={`/api/editor/run/code-task/${taskId}`}
-                        />
+                    <div className="flex flex-col gap-4 w-full">
+                        {/* Кнопки над редактором кода */}
+                        <div className="flex justify-between items-center">
+                            <RunCodeBtn
+                                apiEndpoint={`/api/editor/run/code-task/${taskId}`}
+                            />
 
-                        <LanguageSelector availableLangs={availableTaskLangs} />
-                    </div>
+                            <LanguageSelector
+                                availableLangs={availableTaskLangs}
+                            />
+                        </div>
 
-                    {/* Редактор кода */}
-                    <div className="border-2 rounded-md bg-white h-full w-full overflow-hidden">
-                        <CodeTaskEditor variants={variants} />
+                        {/* Редактор кода */}
+                        <div className="border-2 rounded-md bg-white h-full w-full overflow-hidden">
+                            <CodeTaskEditor variants={variants} />
+                        </div>
                     </div>
                 </div>
-            </div>
-        </CodeEditorProvider>
+            </CodeEditorProvider>
+        </SuccessModalProvider>
     );
 }
