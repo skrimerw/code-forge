@@ -3,7 +3,7 @@
 import { useCodeEditor } from "@/contexts/useCodeEditor";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { Loader2 } from "lucide-react";
-import React, { useMemo } from "react";
+import React from "react";
 
 interface Props {
     initialValue?: string

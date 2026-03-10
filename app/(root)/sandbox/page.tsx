@@ -4,7 +4,7 @@ import React from "react";
 
 export default function SandBoxPage() {
     return (
-        <Container>
+        <Container className="py-16">
             <SandboxWrapper />
         </Container>
     );
