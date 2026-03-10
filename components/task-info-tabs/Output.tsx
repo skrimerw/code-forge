@@ -1,9 +1,11 @@
 import { useCodeEditor } from "@/contexts/useCodeEditor";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import OutputCollapsible from "./OutputCollapsible";
 import { cn, hasTestsPassed } from "@/lib/utils";
 import TestCollapsible from "./TestCollapsible";
 import { CircleAlert } from "lucide-react";
+import { useSuccessModal } from "@/contexts/useSuccessModal";
+import { toast } from "react-toastify";
 
 interface Props {
     className?: string;
@@ -11,13 +13,27 @@ interface Props {
 
 export default function Output({ className }: Props) {
     const { output } = useCodeEditor();
+    const { setOpen, isSolved, setIsSolved } = useSuccessModal();
 
     const allTestsPassed = useMemo(() => {
         if (output?.tests === undefined || output?.tests.length === 0)
             return false;
 
-        return hasTestsPassed(output?.tests || []);
+        const hasPassed = hasTestsPassed(output?.tests || []);
+
+        return hasPassed;
     }, [output]);
+
+    useEffect(() => {
+        if (allTestsPassed && !isSolved) {
+            setOpen(true);
+            setIsSolved(true);
+        }
+
+        if (allTestsPassed && isSolved) {
+            toast.success("Задание выполнено! 🎉");
+        }
+    }, [allTestsPassed, isSolved]);
 
     return (
         <div
