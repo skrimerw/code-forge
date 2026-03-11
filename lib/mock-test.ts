@@ -15,11 +15,6 @@ export type Answer = {
   label: string;
 };
 
-/* export type UserAnswer = {
-  id: number;
-  answer: number | number[];
-}; */
-
 export type UserAnswers = Record<string, number | number[]>;
 
 export const testBodyMock: TestBody = [
@@ -61,17 +56,6 @@ export const testBodyMock: TestBody = [
   },
 ];
 
-/* export const userAnswersMock: UserAnswer[] = [
-  {
-    id: 1,
-    answer: 1,
-  },
-  {
-    id: 2,
-    answer: [1, 2],
-  },
-];
- */
 export const userAnswersMock: UserAnswers = {
   "1": 1,
   "2": [1, 2],

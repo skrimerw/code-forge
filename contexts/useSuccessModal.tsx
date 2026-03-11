@@ -35,7 +35,7 @@ export function useSuccessModal() {
     const ctx = useContext(SuccessModalContext);
 
     if (!ctx) {
-        throw new Error("useCodeEditor must be used within CodeEditorProvider");
+        throw new Error("useSuccessModal must be used within SuccessModalProvider");
     }
 
     return ctx;
