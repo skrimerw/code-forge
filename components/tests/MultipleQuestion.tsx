@@ -47,22 +47,34 @@ export default function MultipleQuestion({ title }: Props) {
     }
   }
 
+  function getDefaultValue(id: number) {
+    const userAnswer = userAnswers[String(questionId)];
+
+    if (userAnswer instanceof Array) {
+      return userAnswer.includes(id);
+    }
+
+    return undefined;
+  }
+
   return (
     <div>
-      {" "}
       <h2 className="font-medium mb-1">{title}</h2>
       <div className="flex flex-col gap-2">
         {answers.map(({ id, label }) => {
           return (
-            <div key={id} className="flex gap-2 items-center">
+            <Label
+              key={id}
+              htmlFor={`checkbox-${id}`}
+              className="font-normal p-4 rounded-md border border-border max-w-sm transition-colors has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:bg-gray-100"
+            >
               <Checkbox
                 id={`checkbox-${id}`}
+                defaultChecked={getDefaultValue(id)}
                 onCheckedChange={(checked) => onCheckboxChange(checked, id)}
               />
-              <Label htmlFor={`checkbox-${id}`} className="font-normal">
-                {label}
-              </Label>
-            </div>
+              {label}
+            </Label>
           );
         })}
       </div>

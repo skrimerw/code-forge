@@ -4,17 +4,22 @@ import MultipleQuestion from "./MultipleQuestion";
 import { useTestTask } from "./context/useTestTask";
 
 interface Props {
+  questionNumber: number;
   className?: string;
 }
 
-export default function Question() {
+export default function Question({ questionNumber, className }: Props) {
   const { step, testBody } = useTestTask();
 
-  const { type, title } = testBody[step - 1];
+  const { type, title } = testBody[questionNumber - 1];
 
-  return type === "singular" ? (
-    <SingularQuestion title={title} />
-  ) : (
-    <MultipleQuestion title={title} />
+  return (
+    <div className={className}>
+      {type === "singular" ? (
+        <SingularQuestion title={title} />
+      ) : (
+        <MultipleQuestion title={title} />
+      )}
+    </div>
   );
 }

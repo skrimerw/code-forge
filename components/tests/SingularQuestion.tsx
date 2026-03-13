@@ -2,6 +2,7 @@ import React from "react";
 import { RadioGroupItem, RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { useTestTask } from "./context/useTestTask";
+import { cn } from "@/lib/utils";
 
 interface Props {
   title: string;
@@ -12,11 +13,22 @@ export default function SingularQuestion({ title }: Props) {
   const { setUserAnswers, userAnswers, testBody, step } = useTestTask();
   const { id: questionId, answers } = testBody[step - 1];
 
+  function getDefaultValue() {
+    const userAnswer = userAnswers[String(questionId)];
+
+    if (typeof userAnswer === "number") {
+      return String(userAnswer);
+    }
+
+    return undefined;
+  }
+
   return (
     <div>
       <h2 className="font-medium mb-1">{title}</h2>
       <RadioGroup
         className="gap-2"
+        defaultValue={getDefaultValue()}
         onValueChange={(value) =>
           setUserAnswers({
             ...userAnswers,
@@ -26,12 +38,16 @@ export default function SingularQuestion({ title }: Props) {
       >
         {answers.map(({ id, label }) => {
           return (
-            <div key={id} className="flex gap-2 items-center">
+            <Label
+              key={id}
+              htmlFor={`answer-${id}`}
+              className={cn(
+                "font-normal p-4 rounded-md border border-border max-w-sm transition-colors has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:bg-gray-100"
+              )}
+            >
               <RadioGroupItem value={String(id)} id={`answer-${id}`} />
-              <Label htmlFor={`answer-${id}`} className="font-normal">
-                {label}
-              </Label>
-            </div>
+              {label}
+            </Label>
           );
         })}
       </RadioGroup>
