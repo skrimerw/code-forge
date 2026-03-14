@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import Container from "@/components/Container";
 import TableOfContents from "@/components/TableOfContents";
 import TaskCard from "@/components/TaskCard";
+import TestTaskCard from "@/components/TestTaskCard";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,6 +11,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { TestBody } from "@/lib/mock-test";
 import prisma from "@/prisma/prisma-client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -114,14 +116,24 @@ export default async function TheoryPage({
                                 </h3>
                                 <div className="flex flex-col gap-2">
                                     {theme.testTasks.map(
-                                        ({ id, title, slug, difficulty }) => {
+                                        ({
+                                            id,
+                                            title,
+                                            difficulty,
+                                            testTaskSolutions,
+                                            body,
+                                        }) => {
                                             return (
-                                                <TaskCard
+                                                <TestTaskCard
                                                     key={id}
-                                                    url={`/theme/${theme_slug}/task/${slug}`}
+                                                    id={id}
+                                                    testBody={body as TestBody}
                                                     difficulty={difficulty}
                                                     title={title}
-                                                    isSolved
+                                                    isSolved={
+                                                        testTaskSolutions?.[0]
+                                                            ?.isSolved
+                                                    }
                                                 />
                                             );
                                         },

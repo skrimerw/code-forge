@@ -16,12 +16,13 @@ export default function TableOfContents({ className, headings }: Props) {
     const [indicator, setIndicator] = useState({ top: 0, height: 0 });
 
     function intersectionCallback(entries: IntersectionObserverEntry[]) {
+        console.log(entries)
         entries.forEach((entry) => {
             if (
                 entry.intersectionRect.height /
                     (entry.rootBounds?.height || 1) >
                     0.5 &&
-                entry.isIntersecting
+                entry.isIntersecting || entry.intersectionRatio === 1
             ) {
                 const entryId = entry.target.ariaLabel || "";
                 const lis = document.querySelectorAll(

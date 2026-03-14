@@ -1,3 +1,4 @@
+import { testBodyMock } from "@/lib/mock-test";
 import { arraysArticle } from "./constants";
 import prisma from "./prisma-client";
 import bcrypt from "bcrypt";
@@ -40,7 +41,8 @@ async function up() {
             variants: {
                 create: [
                     {
-                        starterCode: "function maxVal(arr) {\n\t//место для вашего кода\n\t\n}",
+                        starterCode:
+                            "function maxVal(arr) {\n\t//место для вашего кода\n\t\n}",
                         lang: "JAVASCRIPT",
                         test: `
                                 import { config, assert } from "chai";
@@ -64,6 +66,15 @@ async function up() {
                     },
                 ],
             },
+        },
+    });
+
+    await prisma.testTask.create({
+        data: {
+            body: testBodyMock,
+            difficulty: "EASY",
+            title: "Массивы и связные списки",
+            themeId: 1,
         },
     });
 }

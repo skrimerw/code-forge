@@ -81,7 +81,7 @@ export default function TheoryButton({ title, content, className }: Props) {
         </DialogClose>
         <div
           onScroll={handleScrollContent}
-          className="dialog-content overflow-auto p-6 scroll-smooth"
+          className="dialog-content overflow-auto p-6 pb-16 scroll-smooth"
         >
           <h1 className="text-3xl font-semibold my-8">{title}</h1>
 

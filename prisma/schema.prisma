@@ -115,11 +115,9 @@ model CodeTaskSolution {
 model TestTask {
   id Int @id @default(autoincrement())
 
-  title       String
-  description String
-  difficulty  Difficulty
-  body        Json
-  slug        String     @unique
+  title      String
+  difficulty Difficulty
+  body       Json
 
   theme   Theme @relation(fields: [themeId], references: [id])
   themeId Int
@@ -144,6 +142,8 @@ model TestTaskSolution {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, testTaskId])
 }
 
 enum Difficulty {

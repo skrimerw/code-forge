@@ -7,6 +7,7 @@ import Logo from "./Logo";
 import ProfileBtn from "./ProfileBtn";
 import { auth } from "@/auth";
 import Link from "next/link";
+import ColorThemeBtn from "./ColorThemeBtn";
 
 interface Props {
   className?: string;
@@ -30,14 +31,9 @@ export default async function Header({ className }: Props) {
           <li className="transition-colors hover:text-primary/70">
             <Link href={"/sandbox"}>Редактор кода</Link>
           </li>
-          <li className="transition-colors hover:text-primary/70">
-            <Link href={"/mock-test"}>MockTest</Link>
-          </li>
         </ul>
         <div className="flex items-center gap-8">
-          <Button variant={"ghost"} className="p-0! size-10! w-auto">
-            <Moon strokeWidth={1.7} className="size-7.5" />
-          </Button>
+          <ColorThemeBtn />
           <ProfileBtn session={session} />
         </div>
       </Container>

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function Question({ questionNumber, className }: Props) {
-  const { step, testBody } = useTestTask();
+  const { testBody } = useTestTask();
 
   const { type, title } = testBody[questionNumber - 1];
 
