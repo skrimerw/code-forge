@@ -55,7 +55,7 @@ export default function SuccessModal() {
                 <div className="flex flex-col items-center p-10 pt-0">
                     <span
                         className={cn(
-                            "block absolute inset-0 -z-1 bg-linear-180 from-easy-foreground/35 to-50% to-white",
+                            "block absolute inset-0 -z-1 bg-linear-180 from-easy-foreground/35 to-50% to-white datk:to-bg-1",
                         )}
                     ></span>
                     

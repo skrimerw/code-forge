@@ -63,7 +63,7 @@ export default function TheoryButton({ title, content, className }: Props) {
         <Button
           variant={"secondary"}
           className={cn(
-            "text-foreground bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8] p-2.5 flex items-center justify-center",
+            "text-foreground bg-white dark:bg-bg-2 shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8] dark:hover:bg-secondary p-2.5 flex items-center justify-center",
             className
           )}
         >
@@ -76,7 +76,7 @@ export default function TheoryButton({ title, content, className }: Props) {
       >
         <DialogTitle className="absolute" />
         <DialogDescription className="absolute"></DialogDescription>
-        <DialogClose className="absolute right-6 top-6 rounded-full bg-white cursor-pointer shadow-[0_0_8px_0px_rgba(0,0,0,0.15)] hover:shadow-[0_0_10px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:scale-105 active:scale-95 p-2">
+        <DialogClose className="absolute right-6 top-6 rounded-full bg-bg-2 cursor-pointer shadow-[0_0_8px_0px_rgba(0,0,0,0.15)] hover:shadow-[0_0_10px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:scale-105 active:scale-95 p-2">
           <X />
         </DialogClose>
         <div

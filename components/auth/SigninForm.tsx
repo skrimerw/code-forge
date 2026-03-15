@@ -108,7 +108,7 @@ export default function SigninForm({ className }: Props) {
                 </form>
                 <div className="relative">
                     <hr />
-                    <span className="absolute left-1/2 -top-4 -translate-x-1/2 bg-primary-foreground text-typography-secondary p-1">
+                    <span className="absolute left-1/2 -top-4 -translate-x-1/2 bg-bg-1 text-typography-secondary p-1">
                         или
                     </span>
                 </div>
@@ -130,11 +130,11 @@ export default function SigninForm({ className }: Props) {
                 </OAuthBtn>
             </div>
 
-            <p className="text-center text-black/50 text-sm">
+            <p className="text-center text-typography-secondary text-sm">
                 Впервые здесь?{" "}
                 <Link
                     href={"/signup"}
-                    className="underline transition-colors duration-300 hover:text-primary"
+                    className="underline transition-colors duration-300 hover:text-foreground"
                 >
                     Зарегистрироваться
                 </Link>

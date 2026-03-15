@@ -27,7 +27,7 @@ export default function Logo({ className }: Props) {
 
     return (
         <div className={cn("flex items-center gap-4", className)}>
-            <img src="/img/logo.svg" alt="Logo" />
+            <img src="/img/logo.svg" alt="Logo" className="rounded-sm transition-shadow dark:shadow-[0_0_12px_5px_rgb(108,75,253,0.2)]" />
             <h3 className="text-xl font-[630] font-geist-mono">
                 {siteName.slice(0, count)}
                 <span className={cn("tracking-[-9px]", count >= siteName.length && "animate-pulse animation-duration-[1300ms]")}>__</span>

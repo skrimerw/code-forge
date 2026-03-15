@@ -76,10 +76,10 @@ export default function TableOfContents({ className, headings }: Props) {
         >
             <h2 className="text-xl font-medium">В этой статье:</h2>
             <div className="flex">
-                <div className="w-0.75 bg-[#D9D9D9] relative">
+                <div className="w-0.75 bg-[#D9D9D9] dark:bg-bg-secondary relative">
                     <span
                         className={cn(
-                            `absolute inline-block bg-primary w-full transition-all`,
+                            `absolute inline-block bg-primary dark:bg-foreground w-full transition-all`,
                         )}
                         style={{
                             opacity: active === "" ? 0 : 1,

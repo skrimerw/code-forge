@@ -172,7 +172,7 @@ export default function Output({ className }: Props) {
                                                                                 }
                                                                             </p>
                                                                         ))}
-                                                                    <p className="text-xs text-black/30 font-bold">
+                                                                    <p className="text-xs text-typography-secondary font-bold">
                                                                         Completed
                                                                         in{" "}
                                                                         {

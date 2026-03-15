@@ -57,7 +57,7 @@ export default function TaskInfoTabs({
                         className={cn(
                             "text-foreground  h-10",
                             tabValue === "description" &&
-                                "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]",
+                                "bg-white dark:bg-bg-2 shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8] dark:hover:bg-secondary",
                         )}
                     >
                         Описание
@@ -68,7 +68,7 @@ export default function TaskInfoTabs({
                         className={cn(
                             "h-10",
                             tabValue === "output" &&
-                                "bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8]",
+                                "bg-white dark:bg-bg-2 shadow-[0_1px_2px_0_rgba(0,0,0,0.1)] hover:bg-[#f8f8f8] dark:hover:bg-secondary",
                         )}
                     >
                         Вывод
@@ -83,7 +83,7 @@ export default function TaskInfoTabs({
 
             {/* Область вывода */}
             <div className={cn("h-full overflow-hidden")}>
-                <div className="rounded-md bg-white h-full">
+                <div className="rounded-md bg-white dark:bg-bg-2 h-full">
                     {tabValue === "description" && (
                         <TaskDescription description={description} />
                     )}

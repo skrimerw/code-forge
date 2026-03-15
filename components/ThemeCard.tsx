@@ -25,7 +25,7 @@ export default function ThemeCard({
     return (
         <div
             className={cn(
-                "flex flex-col gap-4 w-full basis-1/3 bg-white p-4 pb-6 rounded-md shadow-[0_0_4px_0_rgba(0,0,0,0.1)]",
+                "flex flex-col gap-4 w-full basis-1/3 bg-bg-2 p-4 pb-6 rounded-md shadow-[0_0_4px_0_rgba(0,0,0,0.1)]",
                 className,
             )}
         >

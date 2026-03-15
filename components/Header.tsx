@@ -19,7 +19,7 @@ export default async function Header({ className }: Props) {
   return (
     <header
       className={cn(
-        "top-0 bg-white rounded-b-lg shadow-[0_0_5px_0_rgba(0,0,0,0.1)] py-5 h-fit",
+        "top-0 bg-bg-2 rounded-b-lg shadow-[0_0_5px_0_rgba(0,0,0,0.1)] py-5 h-fit",
         className
       )}
     >
@@ -28,7 +28,7 @@ export default async function Header({ className }: Props) {
           <Logo />
         </Link>
         <ul className="flex gap-10">
-          <li className="transition-colors hover:text-primary/70">
+          <li className="transition-opacity hover:opacity-70">
             <Link href={"/sandbox"}>Редактор кода</Link>
           </li>
         </ul>

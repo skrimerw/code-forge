@@ -65,7 +65,7 @@ export default function CodeEditorWrapper({
                         </div>
 
                         {/* Редактор кода */}
-                        <div className="border-2 rounded-md bg-white h-full w-full overflow-hidden">
+                        <div className="border-2 rounded-md bg-bg-2 h-full w-full overflow-hidden">
                             <CodeTaskEditor variants={variants} />
                         </div>
                     </div>

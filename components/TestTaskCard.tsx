@@ -37,7 +37,7 @@ export default function TestTaskCard({
             <DialogTrigger>
                 <div
                     className={cn(
-                        "flex items-center justify-between rounded-lg bg-white p-4 pl-6 cursor-pointer transition-all duration-300 hover:scale-101 hover:shadow",
+                        "flex items-center justify-between rounded-lg bg-bg-2 p-4 pl-6 cursor-pointer transition-all duration-300 hover:scale-101 hover:shadow",
                         className,
                     )}
                 >
@@ -58,11 +58,11 @@ export default function TestTaskCard({
             >
                 <div className="relative">
                     <DialogClose className="absolute -right-14" asChild>
-                        <Button className="size-10 flex items-center justify-center bg-white shadow-md rounded-full cursor-pointer text-primary hover:bg-secondary">
+                        <Button className="size-10 flex items-center justify-center bg-bg-2 shadow-md rounded-full cursor-pointer hover:bg-secondary">
                             <X />
                         </Button>
                     </DialogClose>
-                    <div className="rounded-xl overflow-hidden">
+                    <div className="rounded-md overflow-hidden">
                         <TestModal testId={id} testBody={testBody} />
                     </div>
                 </div>

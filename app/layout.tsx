@@ -4,6 +4,8 @@ import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
+import { Theme, ThemeProvider } from "@/contexts/useTheme";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -19,32 +21,43 @@ export const metadata: Metadata = {
     title: "CodeForge",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const cookieStore = await cookies();
+
+    let theme: Theme = cookieStore.get("theme")?.value as never;
+
+    if (!theme || !["light", "dark"].includes(theme)) {
+        theme = "light";
+    }
+
     return (
-        <html lang="ru" data-scroll-behavior="smooth">
+        <html lang="ru">
             <body
-                className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-primary-foreground min-h-screen grid grid-rows-[auto_1fr_auto]`}
+                className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-bg-1 min-h-screen grid grid-rows-[auto_1fr_auto] ${theme === "light" ? "" : "dark"}`}
             >
-                <SessionProvider>
-                    {children}
-                    <ToastContainer
-                        position="top-center"
-                        draggable={true}
-                        stacked={true}
-                        autoClose={2000}
-                        limit={1}
-                    />
-                    <NextTopLoader
-                        showSpinner={false}
-                        color="var(--primary)"
-                        height={2}
-                        showForHashAnchor={false}
-                    />
-                </SessionProvider>
+                <ThemeProvider initialTheme={theme}>
+                    <SessionProvider>
+                        {children}
+                        <ToastContainer
+                            position="top-center"
+                            draggable={true}
+                            stacked={true}
+                            autoClose={2000}
+                            limit={1}
+                            theme={theme}
+                        />
+                        <NextTopLoader
+                            showSpinner={false}
+                            color="var(--top-loader)"
+                            height={2}
+                            showForHashAnchor={false}
+                        />
+                    </SessionProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

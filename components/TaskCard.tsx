@@ -24,7 +24,7 @@ export default function TaskCard({
         <Link
         href={url}
             className={cn(
-                "flex items-center justify-between rounded-lg bg-white p-4 pl-6 cursor-pointer transition-all duration-300 hover:scale-101 hover:shadow",
+                "flex items-center justify-between rounded-lg bg-bg-2 p-4 pl-6 cursor-pointer transition-all duration-300 hover:scale-101 hover:shadow",
                 className,
             )}
         >

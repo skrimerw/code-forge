@@ -1,14 +1,13 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import { createContext, useContext, useState } from "react";
 
-interface SuccesModalrContextValue {
+interface SuccesModalContextValue {
     isSolved: boolean;
     open: boolean;
     setOpen: (val: boolean) => void;
     setIsSolved: (val: boolean) => void;
 }
 
-const SuccessModalContext = createContext<SuccesModalrContextValue | null>(
+const SuccessModalContext = createContext<SuccesModalContextValue | null>(
     null,
 );
 

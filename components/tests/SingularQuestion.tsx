@@ -42,7 +42,7 @@ export default function SingularQuestion({ title, className }: Props) {
                             key={id}
                             htmlFor={`answer-${id}`}
                             className={cn(
-                                "font-normal p-4 rounded-md border border-border transition-colors has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:bg-gray-100",
+                                "font-normal p-4 rounded-md border border-border transition-colors has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:bg-gray-100 dark:has-[button[data-state=checked]]:bg-bg-2",
                             )}
                         >
                             <RadioGroupItem

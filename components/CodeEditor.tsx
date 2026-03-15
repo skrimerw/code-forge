@@ -1,17 +1,19 @@
 "use client";
 
 import { useCodeEditor } from "@/contexts/useCodeEditor";
+import { useTheme } from "@/contexts/useTheme";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { Loader2 } from "lucide-react";
 import React from "react";
 
 interface Props {
-    initialValue?: string
+    initialValue?: string;
     className?: string;
 }
 
 export default function CodeEditor({ initialValue = "", className }: Props) {
     const { lang, editorRef } = useCodeEditor();
+    const { theme } = useTheme();
 
     function handleEditorDidMount(editor: Parameters<OnMount>[0], monaco: any) {
         editorRef.current = editor;
@@ -29,6 +31,7 @@ export default function CodeEditor({ initialValue = "", className }: Props) {
             className={className}
             language={lang.toLowerCase()}
             value={initialValue}
+            theme={theme === "dark" ? "vs-dark" : "light"}
             loading={
                 <div className="flex flex-col gap-2.5 items-center">
                     <Loader2

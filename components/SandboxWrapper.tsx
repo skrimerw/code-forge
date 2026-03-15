@@ -27,7 +27,7 @@ export default function SandboxWrapper() {
       <CodeEditorProvider>
         <SandboxLocalStorageHandler />
         <div className={cn("flex gap-4 h-130")}>
-          <Output className="max-w-sm w-full h-[calc(100%-56px)] mt-auto border-2 rounded-md overflow-hidden transition-colors bg-white" />
+          <Output className="max-w-sm w-full h-[calc(100%-56px)] mt-auto border-2 rounded-md overflow-hidden transition-colors bg-white dark:bg-bg-2" />
 
           <div className="flex flex-col gap-4 w-full">
             {/* Кнопки над редактором кода */}
@@ -38,7 +38,7 @@ export default function SandboxWrapper() {
             </div>
 
             {/* Редактор кода */}
-            <div className="border-2 rounded-md bg-white h-full w-full overflow-hidden">
+            <div className="border-2 rounded-md bg-white dark:bg-bg-2 h-full w-full overflow-hidden">
               <CodeEditor initialValue={initialValue} />
             </div>
           </div>

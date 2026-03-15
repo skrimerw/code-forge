@@ -70,7 +70,7 @@ export default function ResultScreen({ className }: Props) {
                     </Button>
                     <Button
                         onClick={() => setShowAnswers((prev) => !prev)}
-                        className="text-sm"
+                        className="text-sm dark:bg-accent/30 dark:hover:bg-accent/50"
                         variant={"secondary"}
                     >
                         {showAnswers ? "Скрыть" : "Показать"} ответы

@@ -14,9 +14,9 @@ export default function StepProgressbar({ className }: Props) {
     return (
         <div className={className}>
             <div className="mb-2">
-                <div className="relative h-1 w-full bg-gray-200 overflow-hidden rounded-full">
+                <div className="relative h-1 w-full bg-secondary overflow-hidden rounded-full">
                     <span
-                        className="absolute top-0 left-0 inline-block h-1 bg-primary transition-[width] duration-300"
+                        className="absolute top-0 left-0 inline-block h-1 bg-primary dark:bg-foreground transition-[width] duration-300"
                         style={{
                             width: `${(step / totalSteps) * 100}%`,
                         }}

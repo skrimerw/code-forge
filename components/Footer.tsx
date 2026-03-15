@@ -9,7 +9,7 @@ export default function Footer({ className }: Props) {
     return (
         <footer
             className={cn(
-                "bg-primary text-center py-2.5 text-white font-medium text-sm",
+                "bg-primary dark:bg-bg-2 text-center py-2.5 text-white font-medium text-sm",
                 className,
             )}
         >

@@ -60,6 +60,10 @@
     --color-hard-background: var(--hard-background);
 
     --color-error: var(--error);
+
+    --color-bg-1: var(--bg-1);
+    --color-bg-2: var(--bg-2);
+    --color-bg-secondary: var(--bg-secondary);
 }
 
 :root {
@@ -108,17 +112,25 @@
     --hard-background: #fff5f7;
 
     --error: #c05c48;
+
+    --bg-1: oklch(0.985 0 0);
+    --bg-2: white;
+    --bg-secondary: rgb(244, 244, 244);
+    --top-loader: #343a40;
+
+    --scrollbar-thumb: #888;
+    --scrollbar-track: #f1f1f1;
 }
 
 .dark {
     --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
+    --foreground: #eaeaea;
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.205 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
+    --primary: rgb(45, 45, 45);
+    --primary-foreground: #eaeaea;
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.269 0 0);
@@ -142,6 +154,27 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+
+    --typography-secondary: #b3b3b3;
+
+    --easy-foreground: #7ec6ae;
+    --easy-background: #293531;
+
+    --medium-foreground: #b98c1b;
+    --medium-background: #3c312b;
+
+    --hard-foreground: #f39191;
+    --hard-background: #3c2c2c;
+
+    --error: #c05c48;
+
+    --bg-1: #161617;
+    --bg-2: #212121;
+    --bg-secondary: rgb(45, 45, 45);
+    --top-loader: #eaeaea;
+
+    --scrollbar-thumb: #555;
+    --scrollbar-track: #222;
 }
 
 @layer base {
@@ -159,14 +192,25 @@ html {
     scroll-padding-top: 80px;
 }
 
+html:has(body.dark) {
+    scrollbar-color: #555 #222;
+}
+
+* {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
 .article-container * {
     margin: revert !important;
     padding: revert !important;
     box-sizing: revert !important;
 }
 
-.article-container ul {
+.article-container ol {
     list-style: decimal;
+}
+
+.dark .article-container ol > li {
+    color: var(--typography-secondary);
 }
 
 .article-container h2 {
@@ -176,6 +220,10 @@ html {
 
 .article-container p {
     font-size: 16px;
+}
+
+.dark .article-container p {
+    color: var(--typography-secondary);
 }
 
 .article-container img {
@@ -194,19 +242,19 @@ html {
 }
 
 .gauge svg {
-  width: 300px;
+    width: 300px;
 }
 
 .bg {
-  fill: none;
-  stroke: #d9d9d9;
-  stroke-width: 30;
-  stroke-linecap: round;
+    fill: none;
+    stroke: #d9d9d9;
+    stroke-width: 30;
+    stroke-linecap: round;
 }
 
 .progress {
-  fill: none;
-  stroke: #59b36b;
-  stroke-width: 30;
-  stroke-linecap: round;
+    fill: none;
+    stroke: #59b36b;
+    stroke-width: 30;
+    stroke-linecap: round;
 }

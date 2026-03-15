@@ -66,7 +66,7 @@ export default function MultipleQuestion({ title }: Props) {
             <Label
               key={id}
               htmlFor={`checkbox-${id}`}
-              className="font-normal p-4 rounded-md border border-border transition-colors has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:bg-gray-100"
+              className="font-normal p-4 rounded-md border border-border transition-colors has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:bg-gray-100 dark:has-[button[data-state=checked]]:bg-bg-2"
             >
               <Checkbox
                 id={`checkbox-${id}`}
