@@ -58,7 +58,7 @@ export default function TestTaskCard({
             >
                 <div className="relative">
                     <DialogClose className="absolute -right-14" asChild>
-                        <Button className="size-10 flex items-center justify-center bg-bg-2 shadow-md rounded-full cursor-pointer hover:bg-secondary">
+                        <Button variant={"secondary"} className="size-10 flex items-center justify-center bg-bg-2 shadow-md rounded-full cursor-pointer hover:bg-secondary text-foreground">
                             <X />
                         </Button>
                     </DialogClose>

@@ -48,7 +48,7 @@ export default function FormInput({
                     className={cn(
                         "text-base",
                         errorMsg &&
-                            "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-200",
+                            "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-200 dark:focus-visible:ring-red-500/30",
                         initialType === "password" && "pr-9",
                     )}
                     {...register(name)}

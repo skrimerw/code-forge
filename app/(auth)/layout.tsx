@@ -22,7 +22,7 @@ export default async function AuthLayout({
                 )}
                 {children}
             </div>
-            <div className="overflow-hidden h-full w-1/2 bg-[url(/img/auth-hero.jpg)] bg-cover bg-left ml-auto flex-1"></div>
+            <div className="overflow-hidden h-full w-1/2 bg-[url(/img/auth-hero.jpg)] dark:bg-[url(/img/auth-hero-dark.png)] bg-cover bg-left ml-auto flex-1"></div>
         </main>
     );
 }
