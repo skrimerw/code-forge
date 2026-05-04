@@ -57,3 +57,21 @@ export type LangObj = {
     label: string;
     value: Language;
 };
+
+export type Period = "week" | "month" | "year" | "all";
+
+export type RangeData = Record<string, number>;
+
+export type ActivityData = {
+    week: RangeData;
+    month: RangeData;
+    year: RangeData;
+    all: RangeData;
+};
+
+export interface ActivityData2 {
+    week: { date: string; count: number }[];
+    month: { date: string; count: number }[];
+    year: { date: string; count: number }[];
+    all: { date: string; count: number }[];
+}

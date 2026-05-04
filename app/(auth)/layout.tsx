@@ -11,8 +11,8 @@ export default async function AuthLayout({
     const session = await auth();
 
     return (
-        <main className="flex min-h-screen justify-center items-center">
-            <div className="py-10 ml-auto w-1/2 flex flex-col items-center">
+        <main className="flex min-h-screen justify-center">
+            <div className="py-20 ml-auto w-1/2 flex flex-col items-center">
                 {session?.user ? (
                     <Link href={"/"}>
                         <Logo className="w-42.5 mb-4 cursor-pointer" />

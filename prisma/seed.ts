@@ -8,10 +8,13 @@ async function up() {
         data: {
             email: "user@test.ru",
             password: bcrypt.hashSync("111111", 10),
+            isVerified: true
         },
     });
 
-    await prisma.module.create({
+    
+
+    /* await prisma.module.create({
         data: {
             title: "Знакомство с алгоритмами",
             order: 1,
@@ -76,7 +79,7 @@ async function up() {
             title: "Массивы и связные списки",
             themeId: 1,
         },
-    });
+    }); */
 }
 
 async function down() {

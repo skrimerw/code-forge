@@ -7,33 +7,28 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
-import { useCodeEditor } from "@/contexts/useCodeEditor";
-import { Language } from "@prisma/client";
-import { LangObj } from "@/types";
+import { CourseStatus } from "@prisma/client";
+import { Button } from "../ui/button";
+
+type Filters = "ALL" | CourseStatus;
 
 interface Props {
-    availableLangs: LangObj[];
+    initialStatus: Filters;
     className?: string;
 }
 
-export default function LanguageSelector({ availableLangs, className }: Props) {
+export default function SelectStatus({ initialStatus, className }: Props) {
+    const [status, setStatus] = useState(initialStatus);
     const [isOpen, setIsOpen] = useState(false);
-    const [hasLangLoaded, setHasLangLoaded] = useState(false);
-    const { lang: selectedLanguage, setLang } = useCodeEditor();
 
-    function handleOptionClick(value: Language) {
+    function handleOptionClick(status: Filters) {
         setIsOpen(false);
-        setLang(value);
+        setStatus(status);
     }
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            setHasLangLoaded(true);
-        }, 1000);
-
         function handleClick(e: PointerEvent) {
             const target = e.target as Element;
 
@@ -45,7 +40,6 @@ export default function LanguageSelector({ availableLangs, className }: Props) {
         document.addEventListener("click", handleClick);
 
         return () => {
-            clearTimeout(timeout);
             document.removeEventListener("click", handleClick);
         };
     }, [isOpen]);
@@ -61,18 +55,7 @@ export default function LanguageSelector({ availableLangs, className }: Props) {
                     variant={"outline"}
                     onClick={() => setIsOpen((prev) => !prev)}
                 >
-                    {hasLangLoaded ? (
-                        availableLangs.filter(
-                            (lang) => lang.value === selectedLanguage,
-                        )[0].label
-                    ) : (
-                        <div
-                            className={cn(
-                                "absolute left-3 rounded-full bg-secondary animate-pulse h-5 w-[100px] transition-[visibility] visible",
-                                hasLangLoaded && "invisible",
-                            )}
-                        ></div>
-                    )}
+                    {status}
                     <ChevronDown
                         className={cn(
                             "transition-transform duration-300 ml-auto",
@@ -87,18 +70,20 @@ export default function LanguageSelector({ availableLangs, className }: Props) {
                     width: "var(--radix-dropdown-menu-trigger-width)",
                 }}
             >
-                {availableLangs.map((lang) => {
+                {["ALL", ...Object.keys(CourseStatus)].map((courseStatus) => {
                     return (
                         <DropdownMenuItem
-                            key={lang.value}
+                            key={courseStatus}
                             className="text-base text-foreground"
                             asChild
                         >
                             <button
-                                onClick={() => handleOptionClick(lang.value)}
+                                onClick={() =>
+                                    handleOptionClick(courseStatus as Filters)
+                                }
                                 className="w-full"
                             >
-                                {lang.label}
+                                {courseStatus}
                             </button>
                         </DropdownMenuItem>
                     );

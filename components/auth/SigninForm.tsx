@@ -16,6 +16,7 @@ import { Loader2 } from "lucide-react";
 import Google from "../icons/Google";
 import { useTopLoader } from "nextjs-toploader";
 import Link from "next/link";
+import SigninVerifiedAlert from "./SigninVerifiedAlert";
 
 interface Props {
     className?: string;
@@ -65,6 +66,7 @@ export default function SigninForm({ className }: Props) {
 
     return (
         <div className="flex flex-col gap-5 max-w-sm w-full">
+            <SigninVerifiedAlert />
             <FormProvider {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -75,16 +77,19 @@ export default function SigninForm({ className }: Props) {
                         name="email"
                         label="Email"
                         placeholder="Введите ваш email"
-                        disabled={loading}
                     />
-                    <FormInput
-                        type="password"
-                        name="password"
-                        label="Пароль"
-                        placeholder="Введите ваш пароль"
-                        autoComplete="off"
-                        disabled={loading}
-                    />
+                    <div className="relative">
+                        <Link href={"/password-reset"} className="absolute top-0 right-0 p-0 font-medium text-primary/50 hover:text-primary hover:no-underline">
+                            Забыли пароль?
+                        </Link>
+                        <FormInput
+                            type="password"
+                            name="password"
+                            label="Пароль"
+                            placeholder="Введите ваш пароль"
+                            autoComplete="off"
+                        />
+                    </div>
                     <Button className="gap-0" disabled={loading}>
                         <div className="relative">
                             <span

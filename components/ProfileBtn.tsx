@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { LogOut, User } from "lucide-react";
+import { ChartColumnBigIcon, LogOut, User } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 import { useTopLoader } from "nextjs-toploader";
+import Link from "next/link";
 
 interface Props {
     session: Session | null;
@@ -56,6 +58,13 @@ export default function ProfileBtn({ session, className }: Props) {
                     width: "var(--radix-dropdown-menu-trigger-width)",
                 }}
             >
+                <DropdownMenuItem asChild>
+                    <Link href={"/stats"}>
+                        <ChartColumnBigIcon className="size-5!" />
+                        <span className="text-base">Прогресс</span>
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem
                     className="group text-base text-red-500"
                     onClick={handleClick}

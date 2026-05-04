@@ -6,7 +6,7 @@ export default function SigninPage() {
         <>
             <div className="flex flex-col gap-1 mb-16">
                 <h1 className="font-semibold text-[32px]">Добро пожаловать!</h1>
-                <h2 className="text-center text-typography-secondary font-medium">
+                <h2 className="text-center text-typography-secondary font-normal">
                     Вход
                 </h2>
             </div>
