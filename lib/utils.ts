@@ -23,3 +23,5 @@ export function hasTestsPassed(testSuites: TestSuite[]) {
 
     return true;
 }
+
+

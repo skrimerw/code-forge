@@ -31,6 +31,13 @@ export default async function CodeEditorPage({
         },
         include: {
             theme: {
+                include: {
+                    module: {
+                        include: {
+                            course: true,
+                        },
+                    },
+                },
                 select: {
                     title: true,
                     content: true,
@@ -56,6 +63,8 @@ export default async function CodeEditorPage({
         variant.codeTaskSolutions.find((solution) => solution.isSolved),
     );
 
+    const course = task.theme.module.course;
+
     return (
         <Container>
             <Breadcrumb>
@@ -63,7 +72,18 @@ export default async function CodeEditorPage({
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link href="/" className="text-base">
-                                Темы
+                                Курсы
+                            </Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator className="size-3" />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link
+                                href={`/course/${course?.id}`}
+                                className="text-base"
+                            >
+                                {course?.title}
                             </Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>

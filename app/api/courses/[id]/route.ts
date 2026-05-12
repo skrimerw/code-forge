@@ -61,12 +61,12 @@ export async function PUT(
         );
     }
 
-    await prisma.course.update({
+    const updatedCourse = await prisma.course.update({
         where: {
             id: Number(id),
         },
         data: data,
     });
 
-    return NextResponse.json({});
+    return NextResponse.json(updatedCourse);
 }

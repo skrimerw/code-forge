@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 export const metadata: Metadata = {
-    title: "Not Found - Melodify",
+    title: "Страница не найдена - CodeForge",
 };
 
 export default function NotFound() {

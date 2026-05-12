@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -25,6 +26,7 @@ import {
     DialogTrigger,
 } from "../ui/dialog";
 import { useRouter } from "next/navigation";
+import CourseCover from "../icons/CourseCover";
 
 interface Props {
     course: Course;
@@ -61,15 +63,17 @@ export default function CourseCard({
             )}
         >
             <Link href={`/my-courses/${id}`} className="absolute inset-0 z-0" />
-            <div className="flex items-center gap-3">
-                <div className="size-16 rounded-md overflow-hidden object-cover">
-                    <img
-                        src={
-                            imageUrl ||
-                            "https://stepik.org/static/frontend/course_cover.png"
-                        }
-                        className="size-full"
-                    />
+            <div className="flex items-center gap-3 w-full">
+                <div className="flex items-center size-16 rounded-md overflow-hidden object-cover">
+                    {imageUrl ? (
+                        <img
+                            className="object-cover size-full"
+                            src={imageUrl}
+                            alt="Preview"
+                        />
+                    ) : (
+                        <CourseCover />
+                    )}
                 </div>
                 <div className="flex flex-col mb-2">
                     <Link
@@ -79,6 +83,20 @@ export default function CourseCard({
                         {title}
                     </Link>
                     <Status status={status} />
+                </div>
+                <div className="flex gap-3 mt-auto ml-auto text-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+                    <Link
+                        className="relative z-1 hover:underline text-blue-500 dark:text-blue-500/80"
+                        href={`/my-courses/${id}`}
+                    >
+                        Описание
+                    </Link>
+                    <Link
+                        className="relative z-1 hover:underline text-blue-500 dark:text-blue-500/80"
+                        href={`/my-courses/${id}/content`}
+                    >
+                        Содержание
+                    </Link>
                 </div>
             </div>
             <Dialog>
@@ -115,12 +133,14 @@ export default function CourseCard({
                         </h2>
                     </DialogHeader>
                     <p className="mb-6">
-                        Все уроки из этого курса будут безвозвратно удалены
+                        Все темы из этого курса будут безвозвратно удалены
                     </p>
                     <DialogFooter>
-                        <Button disabled={loading} variant={"outline"}>
-                            Отмена
-                        </Button>
+                        <DialogClose asChild>
+                            <Button disabled={loading} variant={"outline"}>
+                                Отмена
+                            </Button>
+                        </DialogClose>
                         <Button disabled={loading} onClick={deleteCourse}>
                             {loading ? (
                                 <Loader2 className="animate-spin" />

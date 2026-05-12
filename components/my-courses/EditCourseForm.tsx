@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Course } from "@prisma/client";
 import { Loader2, Save } from "lucide-react";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -12,6 +11,7 @@ import FormInput from "../form/FormInput";
 import FormTextarea from "../form/FormTextarea";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useCourseData } from "@/contexts/useCourseData";
 
 export const EditCourseSchema = z.object({
     title: z.string().nonempty("Пожалуйста введите название"),
@@ -19,18 +19,18 @@ export const EditCourseSchema = z.object({
 });
 
 interface Props {
-    initialData: Course;
     className?: string;
 }
 
-export default function EditCourseForm({ initialData, className }: Props) {
+export default function EditCourseForm({ className }: Props) {
+    const { course, setCourse } = useCourseData();
     const [loading, setLoading] = useState(false);
 
     const form = useForm({
         resolver: zodResolver(EditCourseSchema),
         defaultValues: {
-            description: initialData.description || "",
-            title: initialData.title,
+            description: course.description || "",
+            title: course.title,
         },
     });
 
@@ -38,7 +38,12 @@ export default function EditCourseForm({ initialData, className }: Props) {
         try {
             setLoading(true);
 
-            await axios.put(`/api/courses/${initialData.id}`, data);
+            const { data: respData } = await axios.put(
+                `/api/courses/${course.id}`,
+                data,
+            );
+
+            setCourse(respData);
 
             toast.success("Данные сохранены");
         } catch (e) {
@@ -58,14 +63,17 @@ export default function EditCourseForm({ initialData, className }: Props) {
                 <FormInput
                     name="title"
                     label="Название"
-                    defaultValue={initialData.title}
+                    placeholder="Введите название"
+                    defaultValue={course.title}
                 />
                 <FormTextarea
                     name="description"
                     label="Краткое описание"
-                    defaultValue={initialData.description || ""}
+                    placeholder="Введите краткое описание"
+                    defaultValue={course.description || ""}
                     className="[&>div>textarea]:min-h-[150px]"
                 />
+
                 <Button disabled={loading}>
                     {loading ? <Loader2 className="animate-spin" /> : <Save />}
                     Сохранить

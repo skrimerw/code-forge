@@ -1,7 +1,10 @@
+import Container from "@/components/Container";
+import CourseCover from "@/components/icons/CourseCover";
+import Sidebar from "@/components/my-courses/Sidebar";
 import SidebarLink from "@/components/my-courses/SidebarLink";
 import Status from "@/components/my-courses/Status";
+import { CourseDataProvider } from "@/contexts/useCourseData";
 import prisma from "@/prisma/prisma-client";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -24,46 +27,15 @@ export default async function Layout({
         notFound();
     }
 
-    console.log((await params).id);
     return (
-        <div className="flex h-full">
-            <aside className="flex flex-col border-r min-w-[250px] p-5 pr-10 h-full">
-                <div className="ml-auto">
-                    <div className="size-16 rounded-md overflow-hidden object-cover">
-                        <img
-                            src={
-                                course.imageUrl ||
-                                "https://stepik.org/static/frontend/course_cover.png"
-                            }
-                            className="size-full"
-                        />
-                    </div>
-                    <h2 className="font-semibold mt-5">{course.title}</h2>
-                    <Status status={course.status} className="mt-1" />
-                    <ul className="flex flex-col mt-10">
-                        <li>
-                            <SidebarLink
-                                label="Описание"
-                                url={`/my-courses/${id}`}
-                            />
-                        </li>
-                        <li>
-                            <SidebarLink
-                                label="Содержание"
-                                url={`/my-courses/${id}/content`}
-                            />
-                        </li>
-                        <li>
-                            <SidebarLink
-                                label="Чек-лист"
-                                url={`/my-courses/${id}/check-list`}
-                            />
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+        <Container className="p-0 h-full">
+            <CourseDataProvider initialData={course}>
+                <div className="flex h-full">
+                    <Sidebar className="mr-auto w-full ml-0" />
 
-            <div className="p-5 pl-10 w-full max-w-3xl">{children}</div>
-        </div>
+                    <div className="p-5 pl-10 pr-0 w-full">{children}</div>
+                </div>
+            </CourseDataProvider>
+        </Container>
     );
 }

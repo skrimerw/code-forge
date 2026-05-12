@@ -49,10 +49,6 @@ export default function SignupPage() {
         }
     }
 
-    useEffect(() => {
-        console.log(form.getValues("email"));
-    }, [form.watch("email")]);
-
     return (
         <FormProvider {...form}>
             {step === "verification" && (

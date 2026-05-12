@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ProgressBar from "./ProgressBar";
+import CourseCover from "./icons/CourseCover";
 
 interface Props {
     slug: string;
@@ -29,12 +30,16 @@ export default function ThemeCard({
                 className,
             )}
         >
-            <div className="aspect-2/1 rounded-md overflow-hidden">
-                <img
-                    className="object-cover size-full"
-                    src={imageUrl}
-                    alt="Preview"
-                />
+            <div className="flex items-center aspect-2/1 rounded-md overflow-hidden">
+                {imageUrl ? (
+                    <img
+                        className="object-cover size-full"
+                        src={imageUrl}
+                        alt="Preview"
+                    />
+                ) : (
+                    <CourseCover />
+                )}
             </div>
             <h3 className="font-medium text-xl">{title}</h3>
             <div>
@@ -42,7 +47,7 @@ export default function ThemeCard({
                 <p className="text-typography-secondary">{description}</p>
             </div>
             <Button asChild>
-                <Link href={`/theme/${slug}`} className="group gap-0">
+                <Link href={`/theme/${slug}`} className="group gap-0 mt-auto">
                     <span>Перейти</span>
                     <ChevronRight className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>

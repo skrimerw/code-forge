@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
 import { Theme, ThemeProvider } from "@/contexts/useTheme";
 import { cookies } from "next/headers";
+import "./globals.css";
+import ToastWrapper from "@/components/ToastWrapper";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -42,14 +43,7 @@ export default async function RootLayout({
                 <ThemeProvider initialTheme={theme}>
                     <SessionProvider>
                         {children}
-                        <ToastContainer
-                            position="top-center"
-                            draggable={true}
-                            stacked={true}
-                            autoClose={2000}
-                            limit={1}
-                            theme={theme}
-                        />
+                        <ToastWrapper />
                         <NextTopLoader
                             showSpinner={false}
                             color="var(--top-loader)"

@@ -11,27 +11,14 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getTableOfContentsFromHTML } from "@/lib/getToC";
 import { TestBody } from "@/lib/mock-test";
 import prisma from "@/prisma/prisma-client";
+import { Theme } from "@prisma/client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
-
-const links = [
-    {
-        id: "heading_1",
-        text: "Что такое массив в программировании",
-    },
-    {
-        id: "heading_2",
-        text: "Как создать массив и наполнить его данными",
-    },
-    {
-        id: "heading_3",
-        text: "Задания",
-    },
-];
 
 export default async function TheoryPage({
     params,
@@ -47,6 +34,7 @@ export default async function TheoryPage({
             slug: theme_slug,
         },
         include: {
+            module: true,
             codeTasks: {
                 include: {
                     variants: {
@@ -76,6 +64,37 @@ export default async function TheoryPage({
         notFound();
     }
 
+    const course = await prisma.course.findFirst({
+        where: {
+            id: theme.module.courseId,
+        },
+        include: {
+            modules: {
+                include: {
+                    themes: true,
+                },
+            },
+        },
+    });
+
+    const themes: Theme[] = [];
+
+    course?.modules.forEach((module) => themes.push(...module.themes));
+
+    const currentThemeIndex = themes.findIndex(({ id }) => theme.id === id);
+
+    const prev = themes[currentThemeIndex - 1];
+    const next = themes[currentThemeIndex + 1];
+
+    const { html, toc: links } = await getTableOfContentsFromHTML(
+        theme.content,
+    );
+
+    links.push({
+        id: "tasks",
+        text: "Задания",
+    });
+
     return (
         <Container>
             <Breadcrumb>
@@ -83,7 +102,18 @@ export default async function TheoryPage({
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link href="/" className="text-base">
-                                Темы
+                                Курсы
+                            </Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator className="size-3" />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link
+                                href={`/course/${course?.id}`}
+                                className="text-base"
+                            >
+                                {course?.title}
                             </Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
@@ -101,14 +131,14 @@ export default async function TheoryPage({
                     <article
                         className="article-container"
                         dangerouslySetInnerHTML={{
-                            __html: theme.content,
+                            __html: html || "",
                         }}
                     ></article>
                     <section
-                        aria-label="heading_3"
+                        aria-label="tasks"
                         className="py-10 border-t border-b mt-10"
                     >
-                        <h2 id="heading_3"></h2>
+                        <h2 id="tasks"></h2>
                         {theme.testTasks.length > 0 && (
                             <div className="mb-6">
                                 <h3 className="font-medium text-xl mb-3">
@@ -186,35 +216,39 @@ export default async function TheoryPage({
                             </div>
                         )}
                     </section>
-                    <div className="flex items-center justify-between mt-7">
-                        <Link
-                            className="group flex items-center gap-3 transition-colors rounded-lg py-2 pr-4 pl-2 hover:bg-secondary"
-                            href={"#"}
-                        >
-                            <ChevronLeft className="size-6!" />
-                            <div className="flex flex-col">
-                                <p className="text-xs text-typography-secondary w-fit">
-                                    НАЗАД
-                                </p>
-                                <p className="group-hover:underline underline-offset-2 text-medium">
-                                    О-Большое
-                                </p>
-                            </div>
-                        </Link>
-                        <Link
-                            className="group flex items-center gap-3 transition-colors rounded-lg py-2 pr-2 pl-4 hover:bg-secondary"
-                            href={"#"}
-                        >
-                            <div className="flex flex-col">
-                                <p className="text-xs text-typography-secondary w-fit ml-auto">
-                                    ДАЛЕЕ
-                                </p>
-                                <p className="group-hover:underline underline-offset-2 text-medium">
-                                    Сортировки
-                                </p>
-                            </div>
-                            <ChevronRight className="size-6!" />
-                        </Link>
+                    <div className="grid grid-cols-2 gap-4 items-center justify-between mt-7">
+                        {prev && (
+                            <Link
+                                className="mr-auto col-start-1 w-full group flex items-center gap-3 transition-colors rounded-lg py-6 px-5 hover:bg-secondary max-w-xs"
+                                href={`/theme/${prev.slug}`}
+                            >
+                                <ChevronLeft className="size-6!" />
+                                <div className="flex flex-col">
+                                    <p className="text-xs text-typography-secondary w-fit">
+                                        НАЗАД
+                                    </p>
+                                    <p className="group-hover:underline underline-offset-2 text-medium">
+                                        {prev?.title}
+                                    </p>
+                                </div>
+                            </Link>
+                        )}
+                        {next && (
+                            <Link
+                                className="ml-auto col-start-2 w-full group flex items-center justify-end gap-3 transition-colors rounded-lg py-6 px-5 hover:bg-secondary max-w-xs"
+                                href={`/theme/${next.slug}`}
+                            >
+                                <div className="flex flex-col">
+                                    <p className="text-xs text-typography-secondary w-fit ml-auto">
+                                        ДАЛЕЕ
+                                    </p>
+                                    <p className="group-hover:underline underline-offset-2 text-medium">
+                                        {next?.title}
+                                    </p>
+                                </div>
+                                <ChevronRight className="size-6!" />
+                            </Link>
+                        )}
                     </div>
                 </div>
                 <TableOfContents headings={links} />

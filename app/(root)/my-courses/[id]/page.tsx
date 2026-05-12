@@ -20,5 +20,5 @@ export default async function CoursePage({
         notFound();
     }
 
-    return <EditCourseForm initialData={course} />;
+    return <EditCourseForm className="max-w-3xl" />;
 }

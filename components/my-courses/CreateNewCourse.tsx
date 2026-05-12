@@ -73,6 +73,7 @@ export default function CreateNewCourse({ className }: Props) {
                         <FormInput
                             name="title"
                             label="Название курса"
+                            placeholder="Введите название курса"
                             required
                         />
                         <Button className="gap-0 w-fit px-8" disabled={loading}>

@@ -3,7 +3,6 @@ import Container from "@/components/Container";
 import CacheHandler from "@/components/my-courses/CacheHandler";
 import CourseCard from "@/components/my-courses/CourseCard";
 import CreateNewCourse from "@/components/my-courses/CreateNewCourse";
-import SelectStatus from "@/components/my-courses/SelectStatus";
 import prisma from "@/prisma/prisma-client";
 import React from "react";
 
@@ -36,9 +35,6 @@ export default async function MyCoursesPage() {
                         <h1 className="font-semibold text-4xl">Мои курсы</h1>
                         <CreateNewCourse />
                     </div>
-                    {/* <div className="flex gap-4 mb-4">
-                        <SelectStatus initialStatus="ALL" />
-                    </div> */}
                     <div className="flex flex-col gap-2">
                         {courses.map((course) => {
                             return (
