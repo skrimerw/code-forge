@@ -129,7 +129,7 @@ model CodeTaskVariant {
   test        String
   starterCode String
 
-  codeTask   CodeTask @relation(fields: [codeTaskId], references: [id])
+  codeTask   CodeTask @relation(fields: [codeTaskId], references: [id], onDelete: Cascade)
   codeTaskId Int
 
   codeTaskSolutions CodeTaskSolution[]
@@ -147,7 +147,7 @@ model CodeTaskSolution {
   code     String
   lang     Language
 
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
 
   codeTaskVariant   CodeTaskVariant @relation(fields: [codeTaskVariantId], references: [id])
@@ -182,7 +182,7 @@ model TestTaskSolution {
   user   User @relation(fields: [userId], references: [id])
   userId Int
 
-  testTask   TestTask @relation(fields: [testTaskId], references: [id])
+  testTask   TestTask @relation(fields: [testTaskId], references: [id], onDelete: Cascade)
   testTaskId Int
 
   createdAt DateTime @default(now())

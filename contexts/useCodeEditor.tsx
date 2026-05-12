@@ -3,7 +3,7 @@ import { OnMount } from "@monaco-editor/react";
 import { Language } from "@prisma/client";
 import { createContext, RefObject, useContext, useRef, useState } from "react";
 
-type IStandaloneCodeEditor = Parameters<OnMount>[0];
+export type IStandaloneCodeEditor = Parameters<OnMount>[0];
 
 interface CodeEditorContextValue {
     lang: Language;

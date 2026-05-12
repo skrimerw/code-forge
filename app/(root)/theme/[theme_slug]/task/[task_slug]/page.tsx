@@ -38,10 +38,6 @@ export default async function CodeEditorPage({
                         },
                     },
                 },
-                select: {
-                    title: true,
-                    content: true,
-                },
             },
             variants: {
                 include: {
@@ -108,7 +104,7 @@ export default async function CodeEditorPage({
             </Breadcrumb>
             <div className="my-10 flex items-center gap-3">
                 <DifficultyBadge
-                    className="text-base border-2 px-3"
+                    className="text-base border-2 px-3 w-[90px]"
                     difficulty={task.difficulty}
                 />
                 <h1 className="flex items-center gap-3 text-3xl font-semibold">

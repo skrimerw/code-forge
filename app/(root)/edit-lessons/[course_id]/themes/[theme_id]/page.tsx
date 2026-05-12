@@ -24,6 +24,9 @@ export default async function EditThemePage({
         where: {
             themeId,
         },
+        orderBy: {
+            createdAt: "asc",
+        },
     });
 
     return (

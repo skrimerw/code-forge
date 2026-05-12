@@ -28,6 +28,7 @@ import {
 } from "../ui/dropdown-menu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 interface Props {
     codeTasks: CodeTask[];
@@ -132,7 +133,10 @@ export default function EditLessonForm({
         <FormProvider {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className={cn("flex flex-col gap-4 w-full max-w-3xl", className)}
+                className={cn(
+                    "flex flex-col gap-4 w-full max-w-3xl",
+                    className,
+                )}
             >
                 <FormInput
                     name="title"
@@ -158,182 +162,212 @@ export default function EditLessonForm({
 
                 <div className="mt-10">
                     <h2 className="font-medium mb-2 text-2xl">Задания</h2>
-
-                    <div className="flex flex-col gap-2 mb-4">
-                        {fields.map(({ id, fakeId, title }, i) => {
-                            return (
-                                <div
-                                    key={id}
-                                    className="flex items-center border shadow-xs rounded-md bg-bg-2 p-2 pl-5"
-                                >
-                                    {deletedIds.includes(fakeId) ? (
-                                        <div className="flex justify-between items-center gap-4 py-2.5 pr-3 w-full">
-                                            <p className="text-primary/50 dark:text-white/60">
-                                                Задание «
-                                                <span className="font-bold">
-                                                    {form.getValues(
-                                                        `codeTasks.${i}.title`,
-                                                    )}
-                                                </span>
-                                                » будет удалено после сохранения
-                                            </p>
-                                            <Button
-                                                className="p-0 text-blue-500 dark:text-blue-500/80"
-                                                type="button"
-                                                onClick={() => {
-                                                    setDeletedIds((prev) =>
-                                                        prev.filter(
-                                                            (delId) =>
-                                                                delId !==
-                                                                fakeId,
-                                                        ),
-                                                    );
-                                                }}
-                                                variant={"link"}
-                                            >
-                                                Восстановить
-                                            </Button>
-                                        </div>
-                                    ) : (
-                                        <div className="flex gap-3 w-full items-center">
-                                            <span className="font-mono mr-1">
-                                                {i + 1}.
-                                            </span>
-                                            <Controller
-                                                name={`codeTasks.${i}.title`}
-                                                render={({ fieldState }) => {
-                                                    const errorMsg =
-                                                        fieldState.error
-                                                            ?.message;
-                                                    return (
-                                                        <div className="w-full relative mr-4">
-                                                            <Input
-                                                                defaultValue={
-                                                                    title
-                                                                }
-                                                                className={cn(
-                                                                    "text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30",
-                                                                    errorMsg &&
-                                                                        "focus-visible:ring-red-600",
-                                                                )}
-                                                                {...form.register(
-                                                                    `codeTasks.${i}.title`,
-                                                                )}
-                                                            />
-                                                            <span
-                                                                className={cn(
-                                                                    "text-sm text-red-600",
-                                                                )}
-                                                            >
-                                                                {errorMsg}
-                                                            </span>
-                                                        </div>
-                                                    );
-                                                }}
-                                            />
-
-                                            <DropdownMenu modal={false}>
-                                                <DropdownMenuTrigger className="focus-visible:outline-0!">
-                                                    <DifficultyBadge
-                                                        className="block w-[70px]! flex-none text-center rounded-sm ml-auto px-2 cursor-pointer hover:brightness-95 transition-all"
-                                                        difficulty={
-                                                            form.watch(
-                                                                `codeTasks.${i}.difficulty`,
-                                                            ) as Difficulty
-                                                        }
-                                                    />
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    {Object.keys(
-                                                        Difficulty,
-                                                    ).map((diff) => {
-                                                        return (
-                                                            <DropdownMenuItem
-                                                                key={diff}
-                                                                onClick={() =>
-                                                                    changeDifficulty(
-                                                                        i,
-                                                                        diff as Difficulty,
-                                                                    )
-                                                                }
-                                                            >
-                                                                <DifficultyBadge
-                                                                    className="w-full block bg-transparent border-0 rounded-sm ml-auto px-2 cursor-pointer hover:brightness-95 transition-all text-base font-normal"
-                                                                    difficulty={
-                                                                        diff as Difficulty
-                                                                    }
-                                                                />
-                                                            </DropdownMenuItem>
-                                                        );
-                                                    })}
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                            {fakeId !== -1 && (
-                                                <Button
-                                                    type="button"
-                                                    variant={"secondary"}
-                                                    asChild
-                                                >
-                                                    <Link
-                                                        href={`${pathname}/code-tasks/${fakeId}`}
-                                                    >
-                                                        Редактировать
-                                                    </Link>
-                                                </Button>
-                                            )}
-                                            <Button
-                                                onClick={() => {
-                                                    if (fakeId !== -1) {
-                                                        setDeletedIds(
-                                                            (prev) => [
-                                                                ...prev,
-                                                                fakeId,
-                                                            ],
-                                                        );
-                                                    } else {
-                                                        remove(i);
-                                                    }
-                                                }}
-                                                type="button"
-                                                variant={"ghost"}
-                                                className="size-10.5! p-0"
-                                            >
-                                                <X />
-                                            </Button>
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="flex gap-5">
-                        <div className="size-16 overflow-hidden object-cover flex-none">
-                            <CourseCover className="size-full" />
+                    <Tabs defaultValue="codeTasks">
+                        <div className="border-b">
+                            <TabsList>
+                                <TabsTrigger value="codeTasks">
+                                    Программирование
+                                </TabsTrigger>
+                                <TabsTrigger value="testTasks">
+                                    Тесты
+                                </TabsTrigger>
+                            </TabsList>
                         </div>
-                        <Input
-                            value={newCodeTask}
-                            onChange={(e) => setNewCodeTask(e.target.value)}
-                            placeholder="Введите название нового задания и нажмите Enter"
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.stopPropagation();
+                        <TabsContent value="codeTasks" className="mt-4">
+                            <div className="flex flex-col gap-2 mb-4">
+                                {fields.map(({ id, fakeId, title }, i) => {
+                                    return (
+                                        <div
+                                            key={id}
+                                            className="flex items-center border shadow-xs rounded-md bg-bg-2 p-2 pl-5"
+                                        >
+                                            {deletedIds.includes(fakeId) ? (
+                                                <div className="flex justify-between items-center gap-4 py-2.5 pr-3 w-full">
+                                                    <p className="text-primary/50 dark:text-white/60">
+                                                        Задание «
+                                                        <span className="font-bold">
+                                                            {form.getValues(
+                                                                `codeTasks.${i}.title`,
+                                                            )}
+                                                        </span>
+                                                        » будет удалено после
+                                                        сохранения
+                                                    </p>
+                                                    <Button
+                                                        className="p-0 text-blue-500 dark:text-blue-500/80"
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setDeletedIds(
+                                                                (prev) =>
+                                                                    prev.filter(
+                                                                        (
+                                                                            delId,
+                                                                        ) =>
+                                                                            delId !==
+                                                                            fakeId,
+                                                                    ),
+                                                            );
+                                                        }}
+                                                        variant={"link"}
+                                                    >
+                                                        Восстановить
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <div className="flex gap-3 w-full items-center">
+                                                    <span className="font-mono mr-1">
+                                                        {i + 1}.
+                                                    </span>
+                                                    <Controller
+                                                        name={`codeTasks.${i}.title`}
+                                                        render={({
+                                                            fieldState,
+                                                        }) => {
+                                                            const errorMsg =
+                                                                fieldState.error
+                                                                    ?.message;
+                                                            return (
+                                                                <div className="w-full relative mr-4">
+                                                                    <Input
+                                                                        defaultValue={
+                                                                            title
+                                                                        }
+                                                                        className={cn(
+                                                                            "text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30",
+                                                                            errorMsg &&
+                                                                                "focus-visible:ring-red-600",
+                                                                        )}
+                                                                        {...form.register(
+                                                                            `codeTasks.${i}.title`,
+                                                                        )}
+                                                                    />
+                                                                    <span
+                                                                        className={cn(
+                                                                            "text-sm text-red-600",
+                                                                        )}
+                                                                    >
+                                                                        {
+                                                                            errorMsg
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            );
+                                                        }}
+                                                    />
 
-                                    if (newCodeTask.length > 0) {
-                                        appendNewCodeTask();
+                                                    <DropdownMenu modal={false}>
+                                                        <DropdownMenuTrigger className="focus-visible:outline-0!">
+                                                            <DifficultyBadge
+                                                                className="block w-[70px]! flex-none text-center rounded-sm ml-auto px-2 cursor-pointer hover:brightness-95 transition-all"
+                                                                difficulty={
+                                                                    form.watch(
+                                                                        `codeTasks.${i}.difficulty`,
+                                                                    ) as Difficulty
+                                                                }
+                                                            />
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end">
+                                                            {Object.keys(
+                                                                Difficulty,
+                                                            ).map((diff) => {
+                                                                return (
+                                                                    <DropdownMenuItem
+                                                                        key={
+                                                                            diff
+                                                                        }
+                                                                        onClick={() =>
+                                                                            changeDifficulty(
+                                                                                i,
+                                                                                diff as Difficulty,
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <DifficultyBadge
+                                                                            className="w-full block bg-transparent border-0 rounded-sm ml-auto px-2 cursor-pointer hover:brightness-95 transition-all text-base font-normal"
+                                                                            difficulty={
+                                                                                diff as Difficulty
+                                                                            }
+                                                                        />
+                                                                    </DropdownMenuItem>
+                                                                );
+                                                            })}
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                    {fakeId !== -1 && (
+                                                        <Button
+                                                            type="button"
+                                                            variant={
+                                                                "secondary"
+                                                            }
+                                                            asChild
+                                                        >
+                                                            <Link
+                                                                href={`${pathname}/code-tasks/${fakeId}`}
+                                                            >
+                                                                Редактировать
+                                                            </Link>
+                                                        </Button>
+                                                    )}
+                                                    <Button
+                                                        onClick={() => {
+                                                            if (fakeId !== -1) {
+                                                                setDeletedIds(
+                                                                    (prev) => [
+                                                                        ...prev,
+                                                                        fakeId,
+                                                                    ],
+                                                                );
+                                                            } else {
+                                                                remove(i);
+                                                            }
+                                                        }}
+                                                        type="button"
+                                                        variant={"ghost"}
+                                                        className="size-10.5! p-0"
+                                                    >
+                                                        <X />
+                                                    </Button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <div className="flex gap-5">
+                                <div className="size-16 overflow-hidden object-cover flex-none">
+                                    <CourseCover className="size-full" />
+                                </div>
+                                <Input
+                                    value={newCodeTask}
+                                    onChange={(e) =>
+                                        setNewCodeTask(e.target.value)
                                     }
-                                }
-                            }}
-                        />
-                        <Button
-                            className="h-fit"
-                            type="button"
-                            onClick={appendNewCodeTask}
-                            disabled={newCodeTask.length === 0}
-                        >
-                            <PlusCircle />
-                            Создать задание
-                        </Button>
-                    </div>
+                                    placeholder="Введите название нового задания и нажмите Enter"
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            e.stopPropagation();
+
+                                            if (newCodeTask.length > 0) {
+                                                appendNewCodeTask();
+                                            }
+                                        }
+                                    }}
+                                />
+                                <Button
+                                    className="h-fit"
+                                    type="button"
+                                    onClick={appendNewCodeTask}
+                                    disabled={newCodeTask.length === 0}
+                                >
+                                    <PlusCircle />
+                                    Создать задание
+                                </Button>
+                            </div>
+                        </TabsContent>
+                        <TabsContent value="testTasks">
+                            Change your password here.
+                        </TabsContent>
+                    </Tabs>
                 </div>
 
                 <Button

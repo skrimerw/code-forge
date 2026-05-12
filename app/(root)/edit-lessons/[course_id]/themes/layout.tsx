@@ -30,8 +30,8 @@ export default async function Layout({
 
     return (
         <Container className="flex py-0 h-full">
-            <aside className="pr-4 border-r py-4 h-full max-w-[250px] w-full">
-                <div className="sticky top-4">
+            <aside className="border-r h-full max-w-[250px] w-full">
+                <div className="sticky top-0 max-h-[calc(100dvh)] overflow-auto py-4 pr-4">
                     <h2 className="flex font-bold mb-5">
                         <Link
                             href={`/my-courses/${courseId}/content`}
