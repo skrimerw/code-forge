@@ -4,7 +4,7 @@ export type Question = {
     id: number;
     title: string;
     type: QuestionType;
-    actualAnswer: number | number[];
+    actualAnswer: number | number[] ;
     explanation?: string;
     answers: Answer[];
 };

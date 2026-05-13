@@ -31,7 +31,7 @@ export default function Themes({
     const [newTheme, setNewTheme] = useState("");
     const [show, setShow] = useState(true);
 
-    const { fields, append, move, remove, swap } = useFieldArray({
+    const { fields, append, move, remove } = useFieldArray({
         name: `modules.${index}.themes`,
         control: form.control,
     });
@@ -68,12 +68,11 @@ export default function Themes({
                     )}
                 >
                     <DragDropContext
-                        onDragEnd={(args) =>
-                            swap(
-                                args.source.index,
-                                args.destination?.index || 0,
-                            )
-                        }
+                        onDragEnd={(args) => {
+                            if (!args.destination) return;
+
+                            move(args.source.index, args.destination.index);
+                        }}
                     >
                         <Droppable droppableId="themes">
                             {(provided) => (

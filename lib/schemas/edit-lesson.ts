@@ -20,6 +20,18 @@ export const EditLessonSchema = z.object({
                 ),
         }),
     ),
+    testTasks: z.array(
+        z.object({
+            fakeId: z.number(),
+            title: z.string().nonempty("Придумайте название задания"),
+            difficulty: z
+                .string()
+                .refine(
+                    (val) => Object.keys(Difficulty).includes(val),
+                    "Выберите корректную сложность",
+                ),
+        }),
+    ),
 });
 
 export type EditLessonType = z.infer<typeof EditLessonSchema>;

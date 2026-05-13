@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CodeTask, Difficulty } from "@prisma/client";
+import { CodeTask } from "@prisma/client";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import FormInput from "../form/FormInput";
@@ -12,15 +12,9 @@ import { ArrowLeft, Loader2, Save } from "lucide-react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { EditCodeTaskSchema, EditCodeTaskType } from "@/lib/schemas/code-task";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import DifficultyBadge from "../DifficultyBadge";
 import Link from "next/link";
 import CodeEditor from "./CodeEditor";
+import DifficultyDropdown from "../DifficultyDropdown";
 
 interface Props {
     themeTitle: string;
@@ -69,7 +63,7 @@ export default function EditCodeTaskForm({
         <div>
             <Link
                 href={".."}
-                className="flex items-center hover:underline gap-2 mb-5"
+                className="flex items-center hover:underline gap-2 mb-5 w-fit"
             >
                 <ArrowLeft size={18} /> {themeTitle}
             </Link>
@@ -86,36 +80,7 @@ export default function EditCodeTaskForm({
                             placeholder="Введите название"
                             className="w-full"
                         />
-                        <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger className="focus-visible:outline-0!">
-                                <DifficultyBadge
-                                    className="w-[120px]! text-base h-10.5 items-center flex capitalize flex-none text-center rounded-sm ml-auto px-2 cursor-pointer hover:brightness-95 transition-all"
-                                    difficulty={
-                                        form.watch("difficulty") as Difficulty
-                                    }
-                                />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {Object.keys(Difficulty).map((diff) => {
-                                    return (
-                                        <DropdownMenuItem
-                                            key={diff}
-                                            onClick={() =>
-                                                form.setValue(
-                                                    "difficulty",
-                                                    diff,
-                                                )
-                                            }
-                                        >
-                                            <DifficultyBadge
-                                                className="w-full block bg-transparent border-0 rounded-sm ml-auto px-2 cursor-pointer hover:brightness-95 transition-all text-base font-normal"
-                                                difficulty={diff as Difficulty}
-                                            />
-                                        </DropdownMenuItem>
-                                    );
-                                })}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <DifficultyDropdown form={form} />
                     </div>
                     <FormTextarea
                         name="description"

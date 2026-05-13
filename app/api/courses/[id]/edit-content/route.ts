@@ -2,7 +2,6 @@ import { ContentSchema } from "@/lib/schemas/course-content";
 import { toSlug } from "@/lib/toSlug";
 import prisma from "@/prisma/prisma-client";
 import { Theme } from "@prisma/client";
-import { randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
@@ -17,7 +16,14 @@ export async function GET(
             courseId: id,
         },
         include: {
-            themes: true,
+            themes: {
+                orderBy: {
+                    order: "asc",
+                },
+            },
+        },
+        orderBy: {
+            order: "asc",
         },
     });
 

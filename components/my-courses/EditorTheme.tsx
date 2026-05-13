@@ -123,7 +123,7 @@ export default function EditorTheme({
                                                     <div className="w-full relative">
                                                         <Input
                                                             className={cn(
-                                                                "text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30",
+                                                                "text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30 dark:focus-visible:ring-white/50",
                                                                 errorMsg &&
                                                                     "focus-visible:ring-red-600",
                                                             )}

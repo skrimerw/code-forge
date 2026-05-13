@@ -20,7 +20,14 @@ export default async function Layout({
         },
         include: {
             course: true,
-            themes: true,
+            themes: {
+                orderBy: {
+                    order: "asc",
+                },
+            },
+        },
+        orderBy: {
+            order: "asc",
         },
     });
 

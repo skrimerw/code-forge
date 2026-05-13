@@ -29,11 +29,24 @@ export default async function EditThemePage({
         },
     });
 
+    const testTasks = await prisma.testTask.findMany({
+        where: {
+            themeId,
+        },
+        orderBy: {
+            createdAt: "asc",
+        },
+    });
+
     return (
         <div className="w-full">
             <h1 className="text-3xl font-medium mb-6">Настройки темы</h1>
 
-            <EditLessonForm initialData={theme} codeTasks={codeTasks} />
+            <EditLessonForm
+                initialData={theme}
+                codeTasks={codeTasks}
+                testTasks={testTasks}
+            />
         </div>
     );
 }
