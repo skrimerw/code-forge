@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { ContentSchema } from "@/lib/schemas/course-content";
 import { toSlug } from "@/lib/toSlug";
 import prisma from "@/prisma/prisma-client";
@@ -10,6 +11,22 @@ export async function GET(
     ctx: RouteContext<"/api/courses/[id]">,
 ) {
     const id = Number((await ctx.params).id);
+    const user = (await auth())?.user;
+
+    if (isNaN(id)) {
+        return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+    }
+
+    const findCourse = await prisma.course.findFirst({
+        where: {
+            id,
+            userId: user?.id,
+        },
+    });
+
+    if (!findCourse) {
+        return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+    }
 
     const modules = await prisma.module.findMany({
         where: {

@@ -10,6 +10,10 @@ export default async function CoursePage({
 }) {
     const id = (await params).id;
 
+    if (isNaN(Number(id))) {
+        notFound();
+    }
+
     const course = await prisma.course.findFirst({
         where: {
             id: Number(id),

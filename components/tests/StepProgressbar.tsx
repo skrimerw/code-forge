@@ -18,7 +18,12 @@ export default function StepProgressbar({ className }: Props) {
                     <span
                         className="absolute top-0 left-0 inline-block h-1 bg-primary dark:bg-foreground transition-[width] duration-300"
                         style={{
-                            width: `${(step / totalSteps) * 100}%`,
+                            width: `${(
+                                (step / totalSteps) *
+                                100
+                            ).toLocaleString("ru-RU", {
+                                maximumFractionDigits: 2,
+                            })}%`,
                         }}
                     ></span>
                 </div>

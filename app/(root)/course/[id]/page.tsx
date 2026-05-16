@@ -22,6 +22,10 @@ export default async function CoursePage({
     const session = await auth();
     const id = Number((await params).id);
 
+    if (isNaN(id)) {
+        notFound();
+    }
+
     const modules = await prisma.module.findMany({
         where: {
             courseId: id,

@@ -126,8 +126,8 @@ export default async function TheoryPage({
                 </BreadcrumbList>
             </Breadcrumb>
             <h1 className="text-3xl font-semibold my-10">{theme.title}</h1>
-            <div className="flex gap-14">
-                <div className="article-content">
+            <div className="flex gap-14 w-full">
+                <div className="article-content w-full">
                     <article
                         className="article-container"
                         dangerouslySetInnerHTML={{

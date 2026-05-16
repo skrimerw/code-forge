@@ -39,8 +39,8 @@ export default function CreateNewCourse({ className }: Props) {
 
             const { data: resp } = await axios.post("/api/courses/new", data);
 
-            router.prefetch(`/my-courses/${resp.id}`);
-            router.push(`/my-courses/${resp.id}`);
+            router.prefetch(`/my-courses/${resp.id}/description`);
+            router.push(`/my-courses/${resp.id}/description`);
         } catch (e) {
             console.log(e);
         } finally {

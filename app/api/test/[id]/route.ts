@@ -1,13 +1,7 @@
 import { auth } from "@/auth";
 import { TestBody, UserAnswers } from "@/lib/mock-test";
 import prisma from "@/prisma/prisma-client";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
-import z from "zod";
-
-const UserAnswersSchema = z.object({
-    answers: z.map(z.string(), z.number().or(z.array(z.number()))),
-});
 
 export async function POST(
     req: NextRequest,

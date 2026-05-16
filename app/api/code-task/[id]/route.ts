@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { EditCodeTaskSchema } from "@/lib/schemas/code-task";
 import prisma from "@/prisma/prisma-client";
 import { Difficulty } from "@prisma/client";
@@ -10,6 +11,7 @@ export async function POST(
 ) {
     const body = await req.json();
     const id = Number((await ctx.params).id);
+    const user = (await auth())?.user;
 
     if (isNaN(id)) {
         return NextResponse.json(
@@ -20,6 +22,23 @@ export async function POST(
                 status: 400,
             },
         );
+    }
+
+    const findTask = await prisma.testTask.findFirst({
+        where: {
+            id,
+            theme: {
+                module: {
+                    course: {
+                        userId: user?.id,
+                    },
+                },
+            },
+        },
+    });
+
+    if (!findTask) {
+        return NextResponse.json({ message: "Forbidden" }, { status: 403 });
     }
 
     const { success, data, error } = EditCodeTaskSchema.safeParse(body);
