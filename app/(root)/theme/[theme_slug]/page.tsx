@@ -71,7 +71,14 @@ export default async function TheoryPage({
         include: {
             modules: {
                 include: {
-                    themes: true,
+                    themes: {
+                        orderBy: {
+                            order: "asc",
+                        },
+                    },
+                },
+                orderBy: {
+                    order: "asc",
                 },
             },
         },

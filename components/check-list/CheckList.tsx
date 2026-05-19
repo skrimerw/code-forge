@@ -241,8 +241,7 @@ export default function CheckList({
                         onClick={unpublish}
                         disabled={
                             unpublishing ||
-                            loadingChecklist ||
-                            validOptionsCount !== totalOptionsCount
+                            loadingChecklist
                         }
                     >
                         <div className="relative">
