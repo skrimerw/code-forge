@@ -182,6 +182,7 @@ export default async function StatsPage() {
         }
     }
 
+
     makeActivityData(codeTaskSolutions);
     makeActivityData(testTaskSolutions);
 
