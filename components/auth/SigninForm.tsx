@@ -79,7 +79,10 @@ export default function SigninForm({ className }: Props) {
                         placeholder="Введите ваш email"
                     />
                     <div className="relative">
-                        <Link href={"/password-reset"} className="absolute top-0 right-0 p-0 font-medium text-primary/50 hover:text-primary hover:no-underline">
+                        <Link
+                            href={"/password-reset"}
+                            className="absolute top-0 right-0 p-0 font-medium text-foreground/50 hover:text-primary hover:no-underline"
+                        >
                             Забыли пароль?
                         </Link>
                         <FormInput

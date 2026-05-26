@@ -44,9 +44,15 @@ export default function CodeEditorWrapper({
     return (
         <SuccessModalProvider isSolvedInitial={isSolved}>
             <CodeEditorProvider>
-                <div className={cn("flex gap-4 h-130", className)}>
+                <div
+                    className={cn(
+                        "flex flex-col md:flex-row gap-4 md:h-130",
+                        className,
+                    )}
+                >
                     <SuccessModal />
                     <TaskInfoTabs
+                        className="max-h-80 md:max-h-none"
                         themeTitle={themeTitle}
                         themeContent={themeContent}
                         description={description}
@@ -65,7 +71,7 @@ export default function CodeEditorWrapper({
                         </div>
 
                         {/* Редактор кода */}
-                        <div className="border-2 rounded-md bg-bg-2 h-full w-full overflow-hidden">
+                        <div className="border-2 rounded-md bg-bg-2 h-[400px] md:h-full w-[calc(100%-1px)] overflow-hidden">
                             <CodeTaskEditor variants={variants} />
                         </div>
                     </div>

@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 import mime from "mime";
 import path from "path";
 import z from "zod";
+import { Question } from "@/lib/mock-test";
 
 async function updateCodeTasks(
     themeId: number,
@@ -71,6 +72,33 @@ async function updateTestTasks(
     const newTestTaskIdsSet = new Set();
     const allTestTasks = [];
 
+    const emptyTest: Question[] = [
+        {
+            id: 1,
+            title: "",
+            type: "singular",
+            actualAnswer: 1,
+            answers: [
+                {
+                    id: 1,
+                    label: "",
+                },
+                {
+                    id: 2,
+                    label: "",
+                },
+                {
+                    id: 3,
+                    label: "",
+                },
+                {
+                    id: 4,
+                    label: "",
+                },
+            ],
+        },
+    ];
+
     for (const { difficulty, fakeId, title } of newTestTasks) {
         const testTaskUpserted = await prisma.testTask.upsert({
             where: {
@@ -80,7 +108,7 @@ async function updateTestTasks(
                 difficulty: difficulty as Difficulty,
                 title: title,
                 themeId: themeId,
-                body: "",
+                body: emptyTest,
             },
             update: {
                 difficulty: difficulty as Difficulty,
@@ -185,7 +213,7 @@ export async function PUT(
             try {
                 await rm(path.join("./public", oldUrl));
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
         }
 

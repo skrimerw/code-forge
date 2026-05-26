@@ -28,6 +28,7 @@ export default function ColorThemeBtn({ className }: Props) {
             onClick={changeTheme}
             variant={"ghost"}
             className={cn("group p-0! size-10! w-auto", className)}
+            title="Сменить тему"
         >
             <span className="group-hover:rotate-15 transition-transform duration-[350ms]">
                 {theme === "light" ? (

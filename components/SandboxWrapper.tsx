@@ -12,38 +12,40 @@ import SandboxLocalStorageHandler from "./SandboxLocalStorageHandler";
 import { SuccessModalProvider } from "@/contexts/useSuccessModal";
 
 export default function SandboxWrapper() {
-  const initialValue = useMemo(() => {
-    if (typeof window !== "undefined") {
-      const code = window.localStorage.getItem("sandbox.code");
+    const initialValue = useMemo(() => {
+        if (typeof window !== "undefined") {
+            const code = window.localStorage.getItem("sandbox.code");
 
-      return code === null ? undefined : code;
-    }
+            return code === null ? undefined : code;
+        }
 
-    return "";
-  }, []);
+        return "";
+    }, []);
 
-  return (
-    <SuccessModalProvider isSolvedInitial={true}>
-      <CodeEditorProvider>
-        <SandboxLocalStorageHandler />
-        <div className={cn("flex gap-4 h-130")}>
-          <Output className="max-w-sm w-full h-[calc(100%-56px)] mt-auto border-2 rounded-md overflow-hidden transition-colors bg-white dark:bg-bg-2" />
+    return (
+        <SuccessModalProvider isSolvedInitial={true}>
+            <CodeEditorProvider>
+                <SandboxLocalStorageHandler />
+                <div className="flex flex-col md:flex-row gap-4 md:h-130">
+                    <Output className="max-h-[250px] md:max-h-none md:max-w-sm md:min-w-[300px] w-full md:w-[40%] h-[calc(100%-56px)] mt-auto border-2 rounded-md transition-colors bg-bg-2" />
 
-          <div className="flex flex-col gap-4 w-full">
-            {/* Кнопки над редактором кода */}
-            <div className="flex justify-between items-center">
-              <RunCodeBtn apiEndpoint="/api/editor/run" />
+                    <div className="flex flex-col gap-4 w-full">
+                        {/* Кнопки над редактором кода */}
+                        <div className="flex justify-between items-center">
+                            <RunCodeBtn apiEndpoint="/api/editor/run" />
 
-              <LanguageSelector availableLangs={availableLanguages} />
-            </div>
+                            <LanguageSelector
+                                availableLangs={availableLanguages}
+                            />
+                        </div>
 
-            {/* Редактор кода */}
-            <div className="border-2 rounded-md bg-white dark:bg-bg-2 h-full w-full overflow-hidden">
-              <CodeEditor initialValue={initialValue} />
-            </div>
-          </div>
-        </div>
-      </CodeEditorProvider>
-    </SuccessModalProvider>
-  );
+                        {/* Редактор кода */}
+                        <div className="border-2 rounded-md bg-bg-2 h-[400px] md:h-full w-[calc(100%-1px)] overflow-hidden">
+                            <CodeEditor initialValue={initialValue} />
+                        </div>
+                    </div>
+                </div>
+            </CodeEditorProvider>
+        </SuccessModalProvider>
+    );
 }

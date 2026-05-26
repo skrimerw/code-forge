@@ -50,7 +50,7 @@ export default function ResultScreen({ className }: Props) {
                         <div className="flex items-end gap-2">
                             <Gauge percentage={getPercentage()} />
                             <p className="font-semibold">
-                                {getPercentage().toLocaleString("ru-RU", {
+                                {getPercentage().toLocaleString("en-US", {
                                     maximumFractionDigits: 2,
                                 })}
                                 %

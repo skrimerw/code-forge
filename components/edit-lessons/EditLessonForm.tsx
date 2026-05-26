@@ -47,20 +47,22 @@ export default function EditLessonForm({
     });
 
     async function onSubmit(data: EditLessonType) {
-        console.log(data);
-
         try {
             setLoading(true);
             const { data: respData } = await axios.put(
                 `/api/themes/${initialData.id}`,
                 {
                     ...data,
-                    codeTasks: JSON.stringify(data.codeTasks.filter(
-                        (task) => !deletedIds.includes(task.fakeId),
-                    )),
-                    testTasks: JSON.stringify(data.testTasks.filter(
-                        (task) => !deletedTestIds.includes(task.fakeId),
-                    )),
+                    codeTasks: JSON.stringify(
+                        data.codeTasks.filter(
+                            (task) => !deletedIds.includes(task.fakeId),
+                        ),
+                    ),
+                    testTasks: JSON.stringify(
+                        data.testTasks.filter(
+                            (task) => !deletedTestIds.includes(task.fakeId),
+                        ),
+                    ),
                 },
                 {
                     headers: {
@@ -71,6 +73,7 @@ export default function EditLessonForm({
 
             form.reset({
                 ...respData,
+                logo: respData.imageUrl,
                 codeTasks: respData.codeTasks.map((task: CodeTask) => ({
                     ...task,
                     fakeId: task.id,
@@ -160,7 +163,13 @@ export default function EditLessonForm({
 
                 <Button
                     type="button"
-                    onClick={form.handleSubmit(onSubmit)}
+                    onClick={() => {
+                        window.scrollTo({
+                            top: form.formState.errors["logo"]?.ref?.offsetTop,
+                        });
+
+                        form.handleSubmit(onSubmit)();
+                    }}
                     disabled={loading}
                     className="w-fit px-7"
                 >

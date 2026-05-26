@@ -62,9 +62,12 @@ export default function CourseCard({
                 className,
             )}
         >
-            <Link href={`/my-courses/${id}/description`} className="absolute inset-0 z-0" />
+            <Link
+                href={`/my-courses/${id}/description`}
+                className="absolute inset-0 z-0"
+            />
             <div className="flex items-center gap-3 w-full">
-                <div className="flex items-center size-16 rounded-md overflow-hidden object-cover">
+                <div className="flex flex-none items-center size-16 rounded-md overflow-hidden object-cover">
                     {imageUrl ? (
                         <img
                             className="object-cover size-full"
@@ -77,14 +80,14 @@ export default function CourseCard({
                 </div>
                 <div className="flex flex-col mb-2">
                     <Link
-                        href={`/my-courses/${id}`}
+                        href={`/my-courses/${id}/description`}
                         className="font-medium hover:underline hover:opacity-60 z-10 relative mb-1.5"
                     >
                         {title}
                     </Link>
                     <Status status={status} />
                 </div>
-                <div className="flex gap-3 mt-auto ml-auto text-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+                <div className="absolute right-3 bottom-2 flex gap-3 mt-auto ml-auto text-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible">
                     <Link
                         className="relative z-1 hover:underline text-blue-500 dark:text-blue-500/80"
                         href={`/my-courses/${id}/description`}

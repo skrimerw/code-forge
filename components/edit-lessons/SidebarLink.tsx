@@ -19,8 +19,8 @@ export default function SidebarLink({ order, label, url, className }: Props) {
         <div
             className={cn(
                 "ml-5",
-                pathname.includes(url + "/") ||
-                    (pathname === url && "text-blue-500"),
+                (pathname.includes(url + "/") || pathname === url) &&
+                    "text-blue-500",
                 className,
             )}
         >

@@ -44,7 +44,7 @@ export default function TaskInfoTabs({
     return (
         <div
             className={cn(
-                "flex flex-col gap-4 max-w-sm w-full h-full",
+                "flex flex-col gap-4 md:max-w-sm min-w-[300px] w-full md:w-[40%] h-full",
                 className,
             )}
         >

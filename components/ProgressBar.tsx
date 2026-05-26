@@ -18,7 +18,7 @@ export default function ProgressBar({ progress, className }: Props) {
                 ></span>
             </div>
             <span>
-                {progress.toLocaleString("ru-RU", {
+                {progress.toLocaleString("en-US", {
                     maximumFractionDigits: 2,
                 })}
                 %

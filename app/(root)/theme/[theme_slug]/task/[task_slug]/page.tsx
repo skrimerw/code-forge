@@ -69,7 +69,7 @@ export default async function CodeEditorPage({
 
     const course = task.theme.module.course;
     const successPercent = (successRate.success_rate * 100).toLocaleString(
-        "ru-RU",
+        "en-US",
         {
             maximumFractionDigits: 2,
         },
@@ -115,19 +115,21 @@ export default async function CodeEditorPage({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div className="my-10 flex items-center gap-3">
-                <DifficultyBadge
-                    className="text-base border-2 px-3 w-[90px]"
-                    difficulty={task.difficulty}
-                />
-                <h1 className="flex items-center gap-3 text-3xl font-semibold">
-                    {task.title}
+            <div className="my-10 flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="flex gap-4 items-center">
+                    <DifficultyBadge
+                        className="text-sm md:text-base border-2 px-3 w-[90px] h-fit"
+                        difficulty={task.difficulty}
+                    />
+                    <h1 className="flex items-center gap-3 text-xl md:text-2xl lg:text-3xl font-semibold">
+                        {task.title}
 
-                    {isSolved && <Check />}
-                </h1>
+                        {isSolved && <Check className="flex-none" />}
+                    </h1>
+                </div>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <div className="ml-auto mr-4 flex items-center gap-1 font-medium w-fit">
+                        <div className="sm:ml-auto mr-4 flex items-center gap-1 font-medium w-fit">
                             <Target
                                 className="text-foreground"
                                 size={18}

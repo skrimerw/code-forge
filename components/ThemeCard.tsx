@@ -26,10 +26,11 @@ export default function ThemeCard({
     return (
         <div
             className={cn(
-                "flex flex-col gap-4 w-full basis-1/3 bg-bg-2 p-4 pb-6 rounded-md shadow-[0_0_4px_0_rgba(0,0,0,0.1)]",
+                "relative flex flex-col gap-2.5 sm:gap-4 w-full basis-1/3 bg-bg-2 p-3 sm:p-4 sm:pb-6 rounded-md shadow-sm hover:shadow-md transition-shadow",
                 className,
             )}
         >
+            <Link href={`/theme/${slug}`} className="absolute inset-0" />
             <div className="flex items-center aspect-2/1 rounded-md overflow-hidden">
                 {imageUrl ? (
                     <img
@@ -41,13 +42,23 @@ export default function ThemeCard({
                     <CourseCover />
                 )}
             </div>
-            <h3 className="font-medium text-xl">{title}</h3>
+            <Link
+                href={`/theme/${slug}`}
+                className="relative z-1 hover:underline w-fit"
+            >
+                <h3 className="font-medium text-xl">{title}</h3>
+            </Link>
             <div>
                 <ProgressBar progress={progress} />
-                <p className="text-typography-secondary">{description}</p>
+                <p className="text-typography-secondary text-[15px] sm:text-base">
+                    {description}
+                </p>
             </div>
             <Button asChild>
-                <Link href={`/theme/${slug}`} className="group gap-0 mt-auto">
+                <Link
+                    href={`/theme/${slug}`}
+                    className="relative z-1 group h-9 sm:h-10 gap-0 mt-auto"
+                >
                     <span>Перейти</span>
                     <ChevronRight className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>

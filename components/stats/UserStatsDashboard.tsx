@@ -48,7 +48,7 @@ export default function UserStatsDashboard({ data, className }: Props) {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <StatCard
                         title="Общий прогресс"
-                        value={`${data.totalPercent.toLocaleString("ru-RU", {
+                        value={`${data.totalPercent.toLocaleString("en-US", {
                             maximumFractionDigits: 2,
                         })}%`}
                         solved={data.solvedTotal}
@@ -57,7 +57,7 @@ export default function UserStatsDashboard({ data, className }: Props) {
                     />
                     <StatCard
                         title="Тесты"
-                        value={`${data.testsPercent.toLocaleString("ru-RU", {
+                        value={`${data.testsPercent.toLocaleString("en-US", {
                             maximumFractionDigits: 2,
                         })}%`}
                         solved={data.solvedTests}
@@ -66,7 +66,7 @@ export default function UserStatsDashboard({ data, className }: Props) {
                     />
                     <StatCard
                         title="Задачи на код"
-                        value={`${data.codingPercent.toLocaleString("ru-RU", {
+                        value={`${data.codingPercent.toLocaleString("en-US", {
                             maximumFractionDigits: 2,
                         })}%`}
                         solved={data.solvedCoding}

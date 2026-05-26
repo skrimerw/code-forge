@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useTestTask } from "./context/useTestTask";
-import { cn } from "@/lib/utils";
 
 interface Props {
     className?: string;
@@ -21,7 +20,7 @@ export default function StepProgressbar({ className }: Props) {
                             width: `${(
                                 (step / totalSteps) *
                                 100
-                            ).toLocaleString("ru-RU", {
+                            ).toLocaleString("en-US", {
                                 maximumFractionDigits: 2,
                             })}%`,
                         }}

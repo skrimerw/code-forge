@@ -60,7 +60,7 @@ export default function ProfileBtn({ session, className }: Props) {
             >
                 <DropdownMenuItem asChild>
                     <Link href={"/stats"}>
-                        <ChartColumnBigIcon className="size-5!" />
+                        <ChartColumnBigIcon className="size-5! text-foreground" />
                         <span className="text-base">Прогресс</span>
                     </Link>
                 </DropdownMenuItem>

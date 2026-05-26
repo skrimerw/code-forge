@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import ColorThemeBtn from "@/components/ColorThemeBtn";
 import Logo from "@/components/Logo";
 import Link from "next/link";
 import React from "react";
@@ -12,6 +13,7 @@ export default async function AuthLayout({
 
     return (
         <main className="flex min-h-screen justify-center">
+            <ColorThemeBtn className="fixed left-5 top-5 border border-border shadow-xs bg-bg-1" />
             <div className="py-20 ml-auto w-1/2 flex flex-col items-center">
                 {session?.user ? (
                     <Link href={"/"}>

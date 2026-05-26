@@ -63,7 +63,7 @@ export default function RunCodeBtn({ apiEndpoint, className }: Props) {
     return (
         <Button
             className={cn(
-                "h-10 bg-easy-foreground dark:bg-[#448751] text-white hover:bg-easy-foreground/80 shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]",
+                "h-10 bg-easy-foreground dark:bg-[#448751] dark:hover:bg-[#509d60] text-white dark:text-white hover:bg-easy-foreground/80 shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]",
                 className,
             )}
             disabled={loading}

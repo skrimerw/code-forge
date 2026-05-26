@@ -141,7 +141,7 @@ export default async function TheoryPage({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <h1 className="text-3xl font-semibold my-10">{theme.title}</h1>
+            <h1 className="text-3xl font-semibold my-5 sm:my-10">{theme.title}</h1>
             <div className="flex gap-14 w-full">
                 <div className="article-content w-full">
                     <article
@@ -152,11 +152,11 @@ export default async function TheoryPage({
                     ></article>
                     <section
                         aria-label="tasks"
-                        className="py-10 border-t border-b mt-10"
+                        className="py-5 sm:py-10 border-t border-b mt-10"
                     >
                         <h2 id="tasks"></h2>
                         {theme.testTasks.length > 0 && (
-                            <div className="mb-6">
+                            <div className="mb-3 sm:mb-6">
                                 <h3 className="font-medium text-xl mb-3">
                                     Тестовые задания
                                 </h3>
@@ -244,10 +244,10 @@ export default async function TheoryPage({
                             </div>
                         )}
                     </section>
-                    <div className="grid grid-cols-2 gap-4 items-center justify-between mt-7">
+                    <div className="grid grid-cols-2 gap-4 items-center justify-between mt-4 sm:mt-7">
                         {prev && (
                             <Link
-                                className="mr-auto col-start-1 w-full group flex items-center gap-3 transition-colors rounded-lg py-6 px-5 hover:bg-secondary max-w-xs"
+                                className="mr-auto col-start-1 w-full group flex items-center gap-3 transition-colors rounded-lg p-3 sm:py-6 sm:px-5 hover:bg-secondary max-w-xs"
                                 href={`/theme/${prev.slug}`}
                             >
                                 <ChevronLeft className="size-6!" />
@@ -263,7 +263,7 @@ export default async function TheoryPage({
                         )}
                         {next && (
                             <Link
-                                className="ml-auto col-start-2 w-full group flex items-center justify-end gap-3 transition-colors rounded-lg py-6 px-5 hover:bg-secondary max-w-xs"
+                                className="ml-auto col-start-2 w-full group flex items-center justify-end gap-3 transition-colors rounded-lg p-3 sm:py-6 sm:px-5 hover:bg-secondary max-w-xs"
                                 href={`/theme/${next.slug}`}
                             >
                                 <div className="flex flex-col">
@@ -279,7 +279,7 @@ export default async function TheoryPage({
                         )}
                     </div>
                 </div>
-                <TableOfContents headings={links} />
+                <TableOfContents className="hidden lg:flex" headings={links} />
             </div>
         </Container>
     );

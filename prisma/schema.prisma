@@ -29,6 +29,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  ratings   Rating[]
 }
 
 model VerificationCode {
@@ -66,6 +67,8 @@ model Course {
   modules Module[]
   user    User     @relation(fields: [userId], references: [id])
   userId  Int
+
+  ratings Rating[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -187,6 +190,23 @@ model TestTaskSolution {
   updatedAt DateTime @updatedAt
 
   @@unique([userId, testTaskId])
+}
+
+model Rating {
+  id Int @id @default(autoincrement())
+
+  rating Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([courseId, userId])
 }
 
 enum CourseStatus {

@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import Container from "@/components/Container";
-import RatingPicker from "@/components/RatingPicker";
-import RatingStar from "@/components/RatingStar";
+import CourseRating from "@/components/CourseRating";
 import ThemeCard from "@/components/ThemeCard";
 import {
     Breadcrumb,
@@ -11,9 +10,9 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { RatingProvider } from "@/contexts/useRating";
 import prisma from "@/prisma/prisma-client";
 import { Prisma } from "@prisma/client";
-import { Star } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -109,7 +108,25 @@ export default async function CoursePage({
         }, 0);
     }
 
-    const RATING = 3.5;
+    const course = modules[0].course;
+
+    const { _avg: avgRating, _count: reviewsCount } =
+        await prisma.rating.aggregate({
+            _avg: {
+                rating: true,
+            },
+            _count: true,
+            where: {
+                courseId: course.id,
+            },
+        });
+
+    const userRating = await prisma.rating.findFirst({
+        where: {
+            courseId: course.id,
+            userId: session?.user.id,
+        },
+    });
 
     return (
         <Container>
@@ -125,56 +142,60 @@ export default async function CoursePage({
                     <BreadcrumbSeparator className="size-3" />
                     <BreadcrumbItem>
                         <BreadcrumbPage className="text-base">
-                            {modules[0].course.title}
+                            {course.title}
                         </BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
             <div
-                className={`flex justify-between my-10 bg-[url(${modules[0].course.imageUrl})]`}
+                className={`flex flex-col sm:flex-row justify-between gap-2.5 sm:gap-5 lg:gap-10 mt-10 md:my-10`}
             >
-                <div className="max-w-3xl">
-                    <h1 className="font-semibold text-4xl mb-2">
-                        {modules[0].course.title}
-                    </h1>
-                    <p className="text-typography-secondary">
-                        {modules[0].course.description}
-                    </p>
+                <div className="flex gap-3 md:gap-5">
+                    <div className="flex-none size-22 md:size-24 lg:size-32 rounded-md overflow-hidden shadow-md">
+                        <img
+                            src={course.imageUrl || ""}
+                            className="object-cover size-full"
+                        />
+                    </div>
+
+                    <div className="max-w-3xl">
+                        <h1 className="font-semibold text-xl md:text-3xl lg:text-4xl mb-2">
+                            {course.title}
+                        </h1>
+                        <p className="hidden md:block text-typography-secondary">
+                            {course.description}
+                        </p>
+                    </div>
                 </div>
-                <div className="flex flex-col items-end">
-                    <span className="flex gap-2.5 items-center font-bold text-lg">
-                        <div className="flex">
-                            {Array.from({ length: 5 }).map((_, i) => {
-                                return (
-                                    <RatingStar
-                                        key={i}
-                                        fillPercentage={
-                                            i + 1 <= RATING
-                                                ? 100
-                                                : (1 - (i + 1 - RATING)) * 100
-                                        }
-                                    />
-                                );
-                            })}
-                        </div>
-                        {RATING}
-                    </span>
-                    <span className="text-typography-secondary text-sm">
-                        168 оценок
-                    </span>
-                    
-                    <RatingPicker className="mt-4" />
-                </div>
+                <RatingProvider
+                    initialRating={{
+                        rating: avgRating.rating || 0,
+                        reviewsCount,
+                    }}
+                >
+                    <CourseRating
+                        className="w-full items-center sm:items-end sm:w-[215px]"
+                        userRating={userRating?.rating || 0}
+                        courseId={course.id}
+                    />
+                </RatingProvider>
+            </div>
+
+            <div className="mb-5">
+                <h2 className="font-semibold text-xl">О чем курс</h2>
+                <p className="block md:hidden text-typography-secondary text-[15px] md:text-base">
+                    {course.description}
+                </p>
             </div>
 
             <div className="flex flex-col gap-16">
                 {modules.map(({ id, themes, title }) => {
                     return (
                         <section key={id}>
-                            <h2 className="mb-5 text-2xl font-semibold">
+                            <h2 className="mb-2.5 md:mb-5 text-lg md:text-2xl font-medium md:font-semibold">
                                 {title}
                             </h2>
-                            <div className="grid grid-cols-4 gap-4">
+                            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 {themes.map(
                                     ({
                                         id,

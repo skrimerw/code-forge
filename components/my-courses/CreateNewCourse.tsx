@@ -57,7 +57,7 @@ export default function CreateNewCourse({ className }: Props) {
             }}
         >
             <DialogTrigger asChild className={className}>
-                <Button>
+                <Button className="h-fit">
                     <PlusCircle />
                     Создать курс
                 </Button>

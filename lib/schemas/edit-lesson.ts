@@ -10,7 +10,7 @@ export const EditLessonSchema = z.object({
         .refine((file) => {
             return file.size <= 5 * 1024 * 1024;
         }, "Размер файла не должен превышать 5MB")
-        .or(z.string()),
+        .or(z.string("asd")),
     title: z.string().nonempty("Придумайте название темы"),
     description: z
         .string()

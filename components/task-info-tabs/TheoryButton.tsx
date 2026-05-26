@@ -74,7 +74,7 @@ export default function TheoryButton({ title, content, className }: Props) {
             </DialogTrigger>
             <DialogContent
                 showCloseButton={false}
-                className="overflow-hidden h-[calc(100dvh-80px)] w-[calc(100dvw-80px)] max-w-4xl! p-0"
+                className="rounded-none sm:rounded-md overflow-hidden h-dvh w-screen sm:h-[calc(100dvh-80px)] sm:w-[calc(100dvw-80px)] max-w-4xl! p-0"
             >
                 <DialogTitle className="absolute" />
                 <DialogDescription className="absolute"></DialogDescription>
@@ -83,7 +83,7 @@ export default function TheoryButton({ title, content, className }: Props) {
                 </DialogClose>
                 <div
                     onScroll={handleScrollContent}
-                    className="dialog-content overflow-auto p-6 pb-16 scroll-smooth"
+                    className="dialog-content overflow-auto p-3 sm:p-6 pb-16 scroll-smooth"
                 >
                     <h1 className="text-3xl font-semibold my-8">{title}</h1>
 

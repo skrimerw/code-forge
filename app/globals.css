@@ -233,7 +233,12 @@ html:has(body.dark) {
 
 .article-container img {
     margin: 0 auto;
-    width: 100%;
+    width: 100% !important;
+}
+
+.article-container figure {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 .article-container *:first-child {
@@ -289,7 +294,7 @@ html:has(body.dark) {
 }
 
 .ck-button:focus {
-    @apply dark:ring-3! dark:ring-[#203c5c]!
+    @apply dark:ring-3! dark:ring-[#203c5c]!;
 }
 
 :is(.ck.ck-splitbutton.ck-splitbutton_open, .ck.ck-splitbutton:hover)
@@ -305,8 +310,19 @@ html:has(body.dark) {
     @apply dark:border-border!;
 }
 
+.ck-label {
+    @apply bg-bg-2!;
+}
+
 .ck-content,
 .ck-sticky-panel__content,
-.ck-toolbar {
+.ck-toolbar,
+.ck-dialog,
+.ck-form__header,
+.ck-input {
     @apply bg-bg-2! text-foreground! dark:border-border!;
+}
+
+body[data-scroll-locked="1"] .navigation-panel {
+    margin-right: 15px;
 }

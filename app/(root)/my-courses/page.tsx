@@ -16,7 +16,7 @@ export default async function MyCoursesPage() {
     });
 
     return (
-        <Container className="py-16">
+        <Container className="py-8 sm:py-16">
             <CacheHandler />
             {courses.length === 0 ? (
                 <div className="flex flex-col items-center max-w-3xl mx-auto">
@@ -32,7 +32,7 @@ export default async function MyCoursesPage() {
             ) : (
                 <div className="max-w-3xl">
                     <div className="flex w-full mb-10 justify-between">
-                        <h1 className="font-semibold text-4xl">Мои курсы</h1>
+                        <h1 className="font-semibold text-3xl sm:text-4xl">Мои курсы</h1>
                         <CreateNewCourse />
                     </div>
                     <div className="flex flex-col gap-2">

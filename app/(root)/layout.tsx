@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import NavigationPanel from "@/components/NavigationPanel";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -20,6 +21,7 @@ export default async function Layout({ children }: Props) {
             <Header />
             <main className="h-full">{children}</main>
             <Footer />
+            <NavigationPanel />
         </>
     );
 }
