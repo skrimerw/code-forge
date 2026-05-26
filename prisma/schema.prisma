@@ -80,7 +80,7 @@ model Module {
   title String
   order Int
 
-  course   Course  @relation(fields: [courseId], references: [id])
+  course   Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId Int
   themes   Theme[]
 
@@ -98,7 +98,7 @@ model Theme {
   order       Int
   slug        String @unique
 
-  module   Module @relation(fields: [moduleId], references: [id])
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId Int
 
   codeTasks CodeTask[]
@@ -116,7 +116,7 @@ model CodeTask {
   difficulty  Difficulty
   slug        String     @unique
 
-  theme   Theme @relation(fields: [themeId], references: [id])
+  theme   Theme @relation(fields: [themeId], references: [id], onDelete: Cascade)
   themeId Int
 
   variants CodeTaskVariant[]
@@ -165,7 +165,7 @@ model TestTask {
   difficulty Difficulty
   body       Json
 
-  theme   Theme @relation(fields: [themeId], references: [id])
+  theme   Theme @relation(fields: [themeId], references: [id], onDelete: Cascade)
   themeId Int
 
   testTaskSolutions TestTaskSolution[]

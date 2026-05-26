@@ -81,7 +81,7 @@ export default function EditCourseForm({ className }: Props) {
                     label="Краткое описание"
                     placeholder="Введите краткое описание"
                     defaultValue={course.description || ""}
-                    className="[&>div>textarea]:min-h-[150px]"
+                    className="[&>div>textarea]:min-h-[220px] [&>div>textarea]:max-h-[220px]"
                 />
 
                 <Button disabled={loading}>
