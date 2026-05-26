@@ -6,28 +6,27 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 interface Props {
-    order: string;
-    url: string;
-    label: string;
-    className?: string;
+  order: string;
+  url: string;
+  label: string;
+  className?: string;
 }
 
 export default function SidebarLink({ order, label, url, className }: Props) {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-    return (
-        <div
-            className={cn(
-                "ml-5",
-                pathname.includes(url + "/") ||
-                    (pathname === url && "text-blue-500"),
-                className,
-            )}
-        >
-            <Link href={url} className="hover:opacity-70 transition-opacity">
-                <span className="font-mono mr-2 text-sm">{order}</span>
-                {label}
-            </Link>
-        </div>
-    );
+  return (
+    <div
+      className={cn(
+        "ml-5",
+        (pathname.includes(url + "/") || pathname === url) && "text-blue-500",
+        className
+      )}
+    >
+      <Link href={url} className="hover:opacity-70 transition-opacity">
+        <span className="font-mono mr-2 text-sm">{order}</span>
+        {label}
+      </Link>
+    </div>
+  );
 }

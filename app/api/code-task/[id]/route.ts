@@ -24,7 +24,7 @@ export async function POST(
         );
     }
 
-    const findTask = await prisma.testTask.findFirst({
+    const findTask = await prisma.codeTask.findFirst({
         where: {
             id,
             theme: {
