@@ -2,6 +2,15 @@ import { Difficulty } from "@prisma/client";
 import z from "zod";
 
 export const EditLessonSchema = z.object({
+    logo: z
+        .instanceof(File)
+        .refine((file) => {
+            return file.type.startsWith("image/");
+        }, "Выберите изображение")
+        .refine((file) => {
+            return file.size <= 5 * 1024 * 1024;
+        }, "Размер файла не должен превышать 5MB")
+        .or(z.string()),
     title: z.string().nonempty("Придумайте название темы"),
     description: z
         .string()

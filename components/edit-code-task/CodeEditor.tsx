@@ -30,7 +30,7 @@ export default function CodeEditor({
         <div className={className}>
             <Label
                 className="text-base mb-1.5 w-fit"
-                onClick={() => console.log(editorRef.current?.view?.focus())}
+                onClick={() => editorRef.current?.view?.focus()}
             >
                 {label}
             </Label>

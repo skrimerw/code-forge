@@ -49,7 +49,12 @@ export default function ResultScreen({ className }: Props) {
                         </h3>
                         <div className="flex items-end gap-2">
                             <Gauge percentage={getPercentage()} />
-                            <p className="font-semibold">{getPercentage()}%</p>
+                            <p className="font-semibold">
+                                {getPercentage().toLocaleString("ru-RU", {
+                                    maximumFractionDigits: 2,
+                                })}
+                                %
+                            </p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-1">
@@ -76,11 +81,7 @@ export default function ResultScreen({ className }: Props) {
                         {showAnswers ? "Скрыть" : "Показать"} ответы
                     </Button>
                 </div>
-                {
-                    showAnswers && (
-                        <CorrectAnswers className="mt-8" />
-                    )
-                }
+                {showAnswers && <CorrectAnswers className="mt-8" />}
             </div>
         )
     );

@@ -62,7 +62,7 @@ export default function CourseCard({
                 className,
             )}
         >
-            <Link href={`/my-courses/${id}`} className="absolute inset-0 z-0" />
+            <Link href={`/my-courses/${id}/description`} className="absolute inset-0 z-0" />
             <div className="flex items-center gap-3 w-full">
                 <div className="flex items-center size-16 rounded-md overflow-hidden object-cover">
                     {imageUrl ? (
@@ -87,7 +87,7 @@ export default function CourseCard({
                 <div className="flex gap-3 mt-auto ml-auto text-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible">
                     <Link
                         className="relative z-1 hover:underline text-blue-500 dark:text-blue-500/80"
-                        href={`/my-courses/${id}`}
+                        href={`/my-courses/${id}/description`}
                     >
                         Описание
                     </Link>
@@ -111,7 +111,7 @@ export default function CourseCard({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                            <Link href={`/my-courses/${id}`}>
+                            <Link href={`/my-courses/${id}/description`}>
                                 <Edit className="text-foreground" />
                                 Редактировать
                             </Link>

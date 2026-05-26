@@ -11,44 +11,51 @@ type Link = {
 
 export async function getTableOfContentsFromHTML(html: string) {
     const toc: Link[] = [];
-
     const containerId = `article-${Date.now()}`;
-    const document = new JSDOM(`<div id=${containerId}>${html}<div>`).window
+    const document = new JSDOM(`<div id=${containerId}>${html}</div>`).window
         .document;
 
-    const h2s = document.querySelectorAll("h2");
+    const container = document.getElementById(containerId) as HTMLDivElement;
+    const h2s = Array.from(container.querySelectorAll("h2"));
 
-    h2s.forEach((h2, i) => {
+    const sections: HTMLElement[] = [];
+
+    h2s.forEach((h2) => {
         const id = `heading-${randomBytes(8).toString("hex")}`;
-
-        const section = h2.closest("section");
-
-        section?.setAttribute("aria-label", id);
-
         h2.id = id;
 
         toc.push({
             id,
-            text: h2.textContent.trim(),
+            text: h2.textContent?.trim() || "",
         });
 
-        const h3s = h2.parentElement?.querySelectorAll("h3");
+        const section = document.createElement("section");
+        section.setAttribute("aria-label", id);
 
-        h3s?.forEach((h3) => {
-            const h3_id = `heading-${randomBytes(8).toString("hex")}`;
+        const elementsToMove: Element[] = [h2];
 
-            h3.id = h3_id;
+        let nextEl = h2.nextElementSibling;
+        while (nextEl) {
+            if (nextEl.tagName === "H2") break;
 
-            toc[i].links = [];
+            elementsToMove.push(nextEl);
+            nextEl = nextEl.nextElementSibling;
+        }
 
-            toc[i].links.push({
-                id: h3_id,
-                text: h3.textContent.trim(),
-            });
+        elementsToMove.forEach((el) => {
+            section.appendChild(el.cloneNode(true));
+            el.remove();
         });
+
+        sections.push(section);
     });
 
-    const article = document.getElementById(containerId);
+    sections.forEach((section) => {
+        container.appendChild(section);
+    });
 
-    return { toc, html: article?.innerHTML };
+    return {
+        toc,
+        html: container.innerHTML,
+    };
 }

@@ -17,7 +17,11 @@ export default function SidebarLink({ url, label, className }: Props) {
     return (
         <Link
             href={url}
-            className={cn("rounded-sm p-2 px-4 -ml-3 hover:bg-blue-500/10", className, pathname === url && "text-blue-500")}
+            className={cn(
+                "rounded-sm p-2 px-4 -ml-3 hover:bg-blue-500/10",
+                className,
+                pathname.includes(url) && "text-blue-500",
+            )}
         >
             {label}
         </Link>

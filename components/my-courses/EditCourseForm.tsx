@@ -12,11 +12,8 @@ import FormTextarea from "../form/FormTextarea";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useCourseData } from "@/contexts/useCourseData";
-
-export const EditCourseSchema = z.object({
-    title: z.string().nonempty("Пожалуйста введите название"),
-    description: z.string().optional(),
-});
+import FileInput from "../form/FileInput";
+import { EditCourseSchema, EditeCourseType } from "@/lib/schemas/course";
 
 interface Props {
     className?: string;
@@ -29,18 +26,24 @@ export default function EditCourseForm({ className }: Props) {
     const form = useForm({
         resolver: zodResolver(EditCourseSchema),
         defaultValues: {
+            logo: course.imageUrl || "",
             description: course.description || "",
             title: course.title,
         },
     });
 
-    async function onSubmit(data: z.infer<typeof EditCourseSchema>) {
+    async function onSubmit(data: EditeCourseType) {
         try {
             setLoading(true);
 
             const { data: respData } = await axios.put(
                 `/api/courses/${course.id}`,
                 data,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                },
             );
 
             setCourse(respData);
@@ -60,6 +63,13 @@ export default function EditCourseForm({ className }: Props) {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className={cn("flex flex-col gap-4", className)}
             >
+                <FileInput
+                    name="logo"
+                    label="Логотип"
+                    description="Загрузите логотип курса"
+                    accept="image/*"
+                    defaultValue={course.imageUrl}
+                />
                 <FormInput
                     name="title"
                     label="Название"

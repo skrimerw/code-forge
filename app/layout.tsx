@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
-import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
 import { Theme, ThemeProvider } from "@/contexts/useTheme";
 import { cookies } from "next/headers";
 import "./globals.css";
 import ToastWrapper from "@/components/ToastWrapper";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -40,18 +40,20 @@ export default async function RootLayout({
             <body
                 className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-bg-1 min-h-screen grid grid-rows-[auto_1fr_auto] ${theme === "light" ? "" : "dark"}`}
             >
-                <ThemeProvider initialTheme={theme}>
-                    <SessionProvider>
-                        {children}
-                        <ToastWrapper />
-                        <NextTopLoader
-                            showSpinner={false}
-                            color="var(--top-loader)"
-                            height={2}
-                            showForHashAnchor={false}
-                        />
-                    </SessionProvider>
-                </ThemeProvider>
+                <TooltipProvider>
+                    <ThemeProvider initialTheme={theme}>
+                        <SessionProvider>
+                            {children}
+                            <ToastWrapper />
+                            <NextTopLoader
+                                showSpinner={false}
+                                color="var(--top-loader)"
+                                height={2}
+                                showForHashAnchor={false}
+                            />
+                        </SessionProvider>
+                    </ThemeProvider>
+                </TooltipProvider>
             </body>
         </html>
     );

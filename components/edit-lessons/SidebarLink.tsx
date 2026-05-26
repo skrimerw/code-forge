@@ -19,11 +19,12 @@ export default function SidebarLink({ order, label, url, className }: Props) {
         <div
             className={cn(
                 "ml-5",
-                pathname.includes(url) && "text-blue-500",
+                pathname.includes(url + "/") ||
+                    (pathname === url && "text-blue-500"),
                 className,
             )}
         >
-            <Link href={url}>
+            <Link href={url} className="hover:opacity-70 transition-opacity">
                 <span className="font-mono mr-2 text-sm">{order}</span>
                 {label}
             </Link>

@@ -14,6 +14,8 @@ import { EditLessonSchema, EditLessonType } from "@/lib/schemas/edit-lesson";
 import axios from "axios";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import TaskList from "./TaskList";
+import FormEditor from "../form/FormEditor";
+import FileInput from "../form/FileInput";
 
 interface Props {
     testTasks: TestTask[];
@@ -35,6 +37,7 @@ export default function EditLessonForm({
     const form = useForm({
         resolver: zodResolver(EditLessonSchema),
         defaultValues: {
+            logo: initialData.imageUrl,
             title: initialData.title,
             description: initialData.description,
             content: initialData.content,
@@ -48,16 +51,21 @@ export default function EditLessonForm({
 
         try {
             setLoading(true);
-            const { data: respData } = await axios.post(
+            const { data: respData } = await axios.put(
                 `/api/themes/${initialData.id}`,
                 {
                     ...data,
-                    codeTasks: data.codeTasks.filter(
+                    codeTasks: JSON.stringify(data.codeTasks.filter(
                         (task) => !deletedIds.includes(task.fakeId),
-                    ),
-                    testTasks: data.testTasks.filter(
+                    )),
+                    testTasks: JSON.stringify(data.testTasks.filter(
                         (task) => !deletedTestIds.includes(task.fakeId),
-                    ),
+                    )),
+                },
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
                 },
             );
 
@@ -91,6 +99,13 @@ export default function EditLessonForm({
                     className,
                 )}
             >
+                <FileInput
+                    name="logo"
+                    description="Загрузите логотип темы"
+                    label="Логотип"
+                    accept="image/*"
+                    defaultValue={initialData.imageUrl}
+                />
                 <FormInput
                     name="title"
                     label="Название"
@@ -105,12 +120,10 @@ export default function EditLessonForm({
                     defaultValue={initialData.description}
                     className="[&>div>textarea]:max-h-[350px]"
                 />
-                <FormTextarea
+                <FormEditor
                     name="content"
                     label="Текст статьи"
-                    placeholder="Введите текст статьи"
-                    defaultValue={initialData.content}
-                    className="[&>div>textarea]:max-h-[350px]"
+                    className="article-content-editor w-full"
                 />
 
                 <div className="mt-10">

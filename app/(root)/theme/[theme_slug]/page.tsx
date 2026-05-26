@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import TableOfContents from "@/components/TableOfContents";
 import TaskCard from "@/components/TaskCard";
 import TestTaskCard from "@/components/TestTaskCard";
+import DOMPurify from "dompurify";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -13,12 +14,15 @@ import {
 } from "@/components/ui/breadcrumb";
 import { getTableOfContentsFromHTML } from "@/lib/getToC";
 import { TestBody } from "@/lib/mock-test";
+import { getThemeCodeTasksSuccessRate } from "@/lib/queries/success-rate-code-tasks";
+import { getThemeTestTasksSuccessRate } from "@/lib/queries/success-rate-test-tasks";
 import prisma from "@/prisma/prisma-client";
 import { Theme } from "@prisma/client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
+import { JSDOM } from "jsdom";
 
 export default async function TheoryPage({
     params,
@@ -64,6 +68,9 @@ export default async function TheoryPage({
         notFound();
     }
 
+    const successRateCodeTasks = await getThemeCodeTasksSuccessRate(theme.id);
+    const successRateTestTasks = await getThemeTestTasksSuccessRate(theme.id);
+
     const course = await prisma.course.findFirst({
         where: {
             id: theme.module.courseId,
@@ -71,7 +78,14 @@ export default async function TheoryPage({
         include: {
             modules: {
                 include: {
-                    themes: true,
+                    themes: {
+                        orderBy: {
+                            order: "asc",
+                        },
+                    },
+                },
+                orderBy: {
+                    order: "asc",
                 },
             },
         },
@@ -94,7 +108,9 @@ export default async function TheoryPage({
         id: "tasks",
         text: "Задания",
     });
-
+    const window = new JSDOM("").window;
+    const DOMPurify2 = DOMPurify(window);
+    
     return (
         <Container>
             <Breadcrumb>
@@ -126,12 +142,12 @@ export default async function TheoryPage({
                 </BreadcrumbList>
             </Breadcrumb>
             <h1 className="text-3xl font-semibold my-10">{theme.title}</h1>
-            <div className="flex gap-14">
-                <div className="article-content">
+            <div className="flex gap-14 w-full">
+                <div className="article-content w-full">
                     <article
                         className="article-container"
                         dangerouslySetInnerHTML={{
-                            __html: html || "",
+                            __html: DOMPurify2.sanitize(html || ""),
                         }}
                     ></article>
                     <section
@@ -160,6 +176,12 @@ export default async function TheoryPage({
                                                     testBody={body as TestBody}
                                                     difficulty={difficulty}
                                                     title={title}
+                                                    successRate={
+                                                        successRateTestTasks.find(
+                                                            (task) =>
+                                                                task.id === id,
+                                                        ) as any
+                                                    }
                                                     isSolved={
                                                         testTaskSolutions?.[0]
                                                             ?.isSolved
@@ -192,6 +214,12 @@ export default async function TheoryPage({
                                                     url={`/theme/${theme_slug}/task/${slug}`}
                                                     difficulty={difficulty}
                                                     title={title}
+                                                    successRate={
+                                                        successRateCodeTasks.find(
+                                                            (task) =>
+                                                                task.id === id,
+                                                        ) as any
+                                                    }
                                                     isSolved={
                                                         variants.find(
                                                             ({

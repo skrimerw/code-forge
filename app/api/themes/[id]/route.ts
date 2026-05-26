@@ -1,8 +1,13 @@
+import { saveEditorImages, storeFile } from "@/actions/save-editor-images";
 import { EditLessonSchema, EditLessonType } from "@/lib/schemas/edit-lesson";
 import { toSlug } from "@/lib/toSlug";
 import prisma from "@/prisma/prisma-client";
-import { CodeTask, Difficulty, Prisma, TestTask, Theme } from "@prisma/client";
+import { CodeTask, Difficulty, TestTask } from "@prisma/client";
+import { randomBytes } from "crypto";
+import { rm } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
+import mime from "mime";
+import path from "path";
 import z from "zod";
 
 async function updateCodeTasks(
@@ -100,11 +105,11 @@ async function updateTestTasks(
     return allTestTasks;
 }
 
-export async function POST(
+export async function PUT(
     req: NextRequest,
     ctx: RouteContext<"/api/themes/[id]">,
 ) {
-    const body = await req.json();
+    const formData = await req.formData();
     const id = Number((await ctx.params).id);
 
     if (isNaN(id)) {
@@ -117,6 +122,28 @@ export async function POST(
             },
         );
     }
+
+    const findTheme = await prisma.theme.findFirst({
+        where: {
+            id,
+        },
+    });
+
+    if (!findTheme) {
+        return NextResponse.json(
+            { message: "This record doesn't exist" },
+            { status: 400 },
+        );
+    }
+
+    const body = {
+        logo: formData.get("logo"),
+        title: formData.get("title"),
+        description: formData.get("description"),
+        content: formData.get("content"),
+        codeTasks: JSON.parse(formData.get("codeTasks")?.toString() || ""),
+        testTasks: JSON.parse(formData.get("testTasks")?.toString() || ""),
+    };
 
     const { success, data, error } = EditLessonSchema.safeParse(body);
 
@@ -131,11 +158,51 @@ export async function POST(
 
     const { codeTasks, testTasks, ...themeData } = data;
 
+    const parsedHtml = await saveEditorImages(themeData.content);
+
+    let iconPath = "";
+
+    if (data.logo instanceof File) {
+        const ext = mime.getExtension(data.logo.type);
+        const fileName = `${randomBytes(16).toString("hex")}.${ext}`;
+
+        if (!data.logo.type.startsWith("image/")) {
+            return NextResponse.json(
+                { message: "icon must be an image" },
+                { status: 400 },
+            );
+        }
+
+        await storeFile(
+            "./public/uploads/themes",
+            fileName,
+            Buffer.from(await data.logo.arrayBuffer()),
+        );
+
+        const oldUrl = findTheme.imageUrl;
+
+        if (oldUrl) {
+            try {
+                await rm(path.join("./public", oldUrl));
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        iconPath = "/uploads/themes/" + fileName;
+    }
+
+    if (typeof data.logo === "string") {
+        iconPath = data.logo;
+    }
+
+    const { logo, ...updateData } = themeData;
+
     const updatedTheme = await prisma.theme.update({
         where: {
             id,
         },
-        data: themeData,
+        data: { ...updateData, imageUrl: iconPath, content: parsedHtml },
         include: {
             codeTasks: true,
             testTasks: true,

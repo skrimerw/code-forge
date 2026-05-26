@@ -6,6 +6,9 @@ import SidebarLink from "./SidebarLink";
 import CourseCover from "../icons/CourseCover";
 import { useCourseData } from "@/contexts/useCourseData";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import Unpublish from "./Unpublish";
 
 interface Props {
     className?: string;
@@ -37,12 +40,24 @@ export default function Sidebar({ className }: Props) {
                 </div>
                 <h2 className="font-semibold mt-5">{title}</h2>
                 <Status status={status} className="mt-1" />
-                <ul className="flex flex-col mt-10">
+                {status === "PUBLISHED" && <Unpublish />}
+                {status === "IN_PROGRESS" && (
+                    <Button
+                        asChild
+                        variant={"outline"}
+                        className="py-0 h-9 mt-4 border-blue-500 text-blue-500 bg-transparent hover:text-blue-700 hover:border-blue-700"
+                    >
+                        <Link href={`/my-courses/${id}/check-list`}>
+                            Опубликовать
+                        </Link>
+                    </Button>
+                )}
+                <ul className="flex flex-col mt-4">
                     <li className="w-full">
                         <SidebarLink
                             className="w-full! active:w-full block"
                             label="Описание"
-                            url={`/my-courses/${id}`}
+                            url={`/my-courses/${id}/description`}
                         />
                     </li>
                     <li className="w-full">

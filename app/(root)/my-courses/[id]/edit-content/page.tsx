@@ -1,4 +1,5 @@
 import ContentEditor from "@/components/my-courses/ContentEditor";
+import { notFound } from "next/navigation";
 import React from "react";
 
 export default async function EditContentPage({
@@ -7,6 +8,10 @@ export default async function EditContentPage({
     params: Promise<{ id: string }>;
 }) {
     const id = (await params).id;
+
+    if (isNaN(Number(id))) {
+        notFound();
+    }
 
     return (
         <div>

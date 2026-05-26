@@ -15,11 +15,15 @@ export default async function Layout({
     children: React.ReactNode;
     params: Promise<{ id: string }>;
 }) {
-    const id = (await params).id;
+    const id = Number((await params).id);
+
+    if (isNaN(id)) {
+        notFound();
+    }
 
     const course = await prisma.course.findFirst({
         where: {
-            id: Number(id),
+            id: id,
         },
     });
 

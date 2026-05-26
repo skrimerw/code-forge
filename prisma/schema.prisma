@@ -136,8 +136,6 @@ model CodeTaskVariant {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([lang, test])
 }
 
 model CodeTaskSolution {

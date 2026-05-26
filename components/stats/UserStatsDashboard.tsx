@@ -48,21 +48,27 @@ export default function UserStatsDashboard({ data, className }: Props) {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <StatCard
                         title="Общий прогресс"
-                        value={`${data.totalPercent}%`}
+                        value={`${data.totalPercent.toLocaleString("ru-RU", {
+                            maximumFractionDigits: 2,
+                        })}%`}
                         solved={data.solvedTotal}
                         total={data.totalTasks}
                         color="blue"
                     />
                     <StatCard
                         title="Тесты"
-                        value={`${data.testsPercent}%`}
+                        value={`${data.testsPercent.toLocaleString("ru-RU", {
+                            maximumFractionDigits: 2,
+                        })}%`}
                         solved={data.solvedTests}
                         total={data.totalTests}
                         color="green"
                     />
                     <StatCard
                         title="Задачи на код"
-                        value={`${data.codingPercent}%`}
+                        value={`${data.codingPercent.toLocaleString("ru-RU", {
+                            maximumFractionDigits: 2,
+                        })}%`}
                         solved={data.solvedCoding}
                         total={data.totalCoding}
                         color="purple"
@@ -74,9 +80,7 @@ export default function UserStatsDashboard({ data, className }: Props) {
                         Динамика решений
                     </h2>
                     <PeriodSelector period={period} setPeriod={setPeriod} />
-                    <ActivityChart
-                        data={data.activityData[period]}
-                    />
+                    <ActivityChart data={data.activityData[period]} />
                 </div>
             </div>
         </div>

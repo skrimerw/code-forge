@@ -10,8 +10,14 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { getCodeTaskSuccessRate } from "@/lib/queries/success-rate-code-tasks";
 import prisma from "@/prisma/prisma-client";
-import { Check } from "lucide-react";
+import { Check, Target } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -55,12 +61,19 @@ export default async function CodeEditorPage({
         notFound();
     }
 
+    const successRate = await getCodeTaskSuccessRate(task.id);
+
     const isSolved = task.variants.find((variant) =>
         variant.codeTaskSolutions.find((solution) => solution.isSolved),
     );
 
     const course = task.theme.module.course;
-
+    const successPercent = (successRate.success_rate * 100).toLocaleString(
+        "ru-RU",
+        {
+            maximumFractionDigits: 2,
+        },
+    );
     return (
         <Container>
             <Breadcrumb>
@@ -112,8 +125,26 @@ export default async function CodeEditorPage({
 
                     {isSolved && <Check />}
                 </h1>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <div className="ml-auto mr-4 flex items-center gap-1 font-medium w-fit">
+                            <Target
+                                className="text-foreground"
+                                size={18}
+                                strokeWidth={1.5}
+                            />
+                            {successPercent}%{" "}
+                            <span className="font-normal">из</span>{" "}
+                            {successRate.total_solutions}
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="w-fit max-w-[250px] text-center">
+                        {successPercent}% пользователей из{" "}
+                        {successRate.total_solutions}, взявших это задание,
+                        успешно решили его.
+                    </TooltipContent>
+                </Tooltip>
             </div>
-
             <CodeEditorWrapper
                 themeTitle={task.theme.title}
                 themeContent={task.theme.content}

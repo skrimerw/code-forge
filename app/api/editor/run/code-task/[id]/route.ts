@@ -3,7 +3,7 @@ import z from "zod";
 import redisClient from "@/lib/redis";
 import prisma from "@/prisma/prisma-client";
 import { Language } from "@prisma/client";
-import { Output, QueueCodeTaskJob, TestRunResult, TestSuite } from "@/types";
+import { Output, QueueCodeTaskJob, TestRunResult } from "@/types";
 import { auth } from "@/auth";
 import { hasTestsPassed } from "@/lib/utils";
 
@@ -102,12 +102,18 @@ export async function POST(
             }
         }
 
-        const tests = JSON.parse(result.tests as unknown as string)
+        const tests = JSON.parse(result.tests as unknown as string);
         const allTestsPassed = hasTestsPassed(tests);
         const isSolved =
             !result.stderr && !tests.length ? false : allTestsPassed;
 
-        if (codeTaskVariant.codeTaskSolutions.length) {
+        const solutions = await prisma.codeTaskSolution.findMany({
+            where: {
+                codeTaskVariantId: codeTaskVariant.id,
+            },
+        });
+
+        if (solutions.length) {
             await prisma.codeTaskSolution.update({
                 data: {
                     isSolved,

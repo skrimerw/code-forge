@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../node_modules/ckeditor5/dist/ckeditor5.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -175,6 +176,10 @@
 
     --scrollbar-thumb: #555;
     --scrollbar-track: #222;
+    --ck-color-text: #eaeaea;
+    --ck-button-hover-background: #555 !important;
+    --ck-color-list-background: var(--bg-2) !important;
+    --ck-focus-outer-shadow-geometry: #cfe5ff40 !important;
 }
 
 @layer base {
@@ -257,4 +262,51 @@ html:has(body.dark) {
     stroke: #59b36b;
     stroke-width: 30;
     stroke-linecap: round;
+}
+
+.article-content-editor .ck-editor__editable {
+    max-height: 500px;
+}
+
+.ck-content * {
+    all: revert;
+    @apply font-geist-sans text-foreground;
+}
+
+.ck-balloon-panel {
+    display: none !important;
+}
+
+.ck-editor__top {
+    color: red !important;
+}
+
+.ck-button:hover,
+.ck-dropdown__panel,
+.ck-on,
+.ck-toolbar__separator {
+    @apply dark:bg-[#2b2b2b]!;
+}
+
+.ck-button:focus {
+    @apply dark:ring-3! dark:ring-[#203c5c]!
+}
+
+:is(.ck.ck-splitbutton.ck-splitbutton_open, .ck.ck-splitbutton:hover)
+    > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover) {
+    @apply dark:bg-[#2b2b2b]!;
+}
+
+.ck:has(.ck-insert-table-dropdown__grid) {
+    @apply dark:bg-[#2b2b2b]!;
+}
+
+.ck-dropdown__panel {
+    @apply dark:border-border!;
+}
+
+.ck-content,
+.ck-sticky-panel__content,
+.ck-toolbar {
+    @apply bg-bg-2! text-foreground! dark:border-border!;
 }

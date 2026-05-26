@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
 import Container from "@/components/Container";
+import RatingPicker from "@/components/RatingPicker";
+import RatingStar from "@/components/RatingStar";
 import ThemeCard from "@/components/ThemeCard";
 import {
     Breadcrumb,
@@ -11,6 +13,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import prisma from "@/prisma/prisma-client";
 import { Prisma } from "@prisma/client";
+import { Star } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -21,6 +24,10 @@ export default async function CoursePage({
 }) {
     const session = await auth();
     const id = Number((await params).id);
+
+    if (isNaN(id)) {
+        notFound();
+    }
 
     const modules = await prisma.module.findMany({
         where: {
@@ -102,6 +109,8 @@ export default async function CoursePage({
         }, 0);
     }
 
+    const RATING = 3.5;
+
     return (
         <Container>
             <Breadcrumb>
@@ -121,13 +130,41 @@ export default async function CoursePage({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div className="max-w-3xl my-10">
-                <h1 className="font-semibold text-4xl mb-2">
-                    {modules[0].course.title}
-                </h1>
-                <p className="text-typography-secondary">
-                    {modules[0].course.description}
-                </p>
+            <div
+                className={`flex justify-between my-10 bg-[url(${modules[0].course.imageUrl})]`}
+            >
+                <div className="max-w-3xl">
+                    <h1 className="font-semibold text-4xl mb-2">
+                        {modules[0].course.title}
+                    </h1>
+                    <p className="text-typography-secondary">
+                        {modules[0].course.description}
+                    </p>
+                </div>
+                <div className="flex flex-col items-end">
+                    <span className="flex gap-2.5 items-center font-bold text-lg">
+                        <div className="flex">
+                            {Array.from({ length: 5 }).map((_, i) => {
+                                return (
+                                    <RatingStar
+                                        key={i}
+                                        fillPercentage={
+                                            i + 1 <= RATING
+                                                ? 100
+                                                : (1 - (i + 1 - RATING)) * 100
+                                        }
+                                    />
+                                );
+                            })}
+                        </div>
+                        {RATING}
+                    </span>
+                    <span className="text-typography-secondary text-sm">
+                        168 оценок
+                    </span>
+                    
+                    <RatingPicker className="mt-4" />
+                </div>
             </div>
 
             <div className="flex flex-col gap-16">

@@ -90,7 +90,6 @@ export default function TableOfContents({ className, headings }: Props) {
                 </div>
                 <ul className="table-of-contents-list flex flex-col gap-2 text-typography-secondary">
                     {headings.map(({ id, text }) => {
-                        console.log(active);
                         return (
                             <li
                                 key={id}

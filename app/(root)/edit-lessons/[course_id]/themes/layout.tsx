@@ -37,7 +37,7 @@ export default async function Layout({
 
     return (
         <Container className="flex py-0 h-full">
-            <aside className="border-r h-full max-w-[250px] w-full">
+            <aside className="flex-none border-r h-full max-w-[250px] w-full">
                 <div className="sticky top-0 max-h-[calc(100dvh)] overflow-auto py-4 pr-4">
                     <h2 className="flex font-bold mb-5">
                         <Link
