@@ -65,7 +65,7 @@ export default function SigninForm({ className }: Props) {
     }
 
     return (
-        <div className="flex flex-col gap-5 max-w-sm w-full">
+        <div className="flex flex-col gap-5 w-full max-w-sm">
             <SigninVerifiedAlert />
             <FormProvider {...form}>
                 <form

@@ -22,11 +22,11 @@ export default function ContentSecondLevel({
     return (
         <div
             className={cn(
-                "flex items-center gap-6 py-3.5 pl-5 pr-5 bg-bg-2",
+                "flex items-center gap-3 sm:gap-6 py-3.5 px-3 sm:px-5 bg-bg-2",
                 className,
             )}
         >
-            <div className="flex items-center size-10 rounded-sm overflow-hidden object-cover">
+            <div className="flex flex-none items-center size-10 rounded-sm overflow-hidden object-cover">
                 {imageUrl ? (
                     <img
                         className="object-cover size-full"
@@ -43,7 +43,12 @@ export default function ContentSecondLevel({
                 </span>
                 {title}
             </h3>
-            <Button className="ml-auto" variant={"ghost"} asChild>
+            <Button
+                className="ml-auto size-8 sm:size-10"
+                variant={"ghost"}
+                title="Редактировать"
+                asChild
+            >
                 <Link href={`/edit-lessons/${courseId}/themes/${id}`}>
                     <Edit />
                 </Link>

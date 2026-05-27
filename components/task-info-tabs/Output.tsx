@@ -46,7 +46,7 @@ export default function Output({ className }: Props) {
     return (
         <div
             className={cn(
-                "border-2 h-full rounded-md transition-colors overflow-y-auto",
+                "border-2 h-full rounded-md transition-colors overflow-auto",
                 output?.code === 1 && "border-error",
                 allTestsPassed && "border-easy-foreground",
                 className,

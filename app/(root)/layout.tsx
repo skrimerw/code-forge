@@ -20,7 +20,7 @@ export default async function Layout({ children }: Props) {
         <>
             <Header />
             <main className="h-full">{children}</main>
-            <Footer />
+            <Footer className="hidden sm:block" />
             <NavigationPanel />
         </>
     );

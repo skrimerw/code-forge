@@ -11,6 +11,7 @@ export default function ToastWrapper() {
             position="top-center"
             draggable={true}
             stacked={true}
+            draggablePercent={40}
             autoClose={2000}
             limit={1}
             theme={theme}

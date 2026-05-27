@@ -26,8 +26,8 @@ export default function SandboxWrapper() {
         <SuccessModalProvider isSolvedInitial={true}>
             <CodeEditorProvider>
                 <SandboxLocalStorageHandler />
-                <div className="flex flex-col md:flex-row gap-4 md:h-130">
-                    <Output className="max-h-[250px] md:max-h-none md:max-w-sm md:min-w-[300px] w-full md:w-[40%] h-[calc(100%-56px)] mt-auto border-2 rounded-md transition-colors bg-bg-2" />
+                <div className="grid md:flex flex-col md:flex-row gap-4 md:h-130">
+                    <Output className="max-h-[250px] md:max-h-none md:max-w-sm md:min-w-[300px] w-full md:w-[40%] h-full md:h-[calc(100%-56px)] mt-auto border-2 rounded-md transition-colors bg-bg-2" />
 
                     <div className="flex flex-col gap-4 w-full">
                         {/* Кнопки над редактором кода */}

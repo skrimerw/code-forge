@@ -55,6 +55,7 @@ export default function Sidebar({ className }: Props) {
                 <ul className="flex flex-col mt-4">
                     <li className="w-full">
                         <SidebarLink
+                            matcher={["/my-courses/[id]/description"]}
                             className="w-full! active:w-full block"
                             label="Описание"
                             url={`/my-courses/${id}/description`}
@@ -62,6 +63,10 @@ export default function Sidebar({ className }: Props) {
                     </li>
                     <li className="w-full">
                         <SidebarLink
+                            matcher={[
+                                "/my-courses/[id]/content",
+                                "/my-courses/[id]/edit-content",
+                            ]}
                             className="w-full! active:w-full block"
                             label="Содержание"
                             url={`/my-courses/${id}/content`}
@@ -69,6 +74,7 @@ export default function Sidebar({ className }: Props) {
                     </li>
                     <li className="w-full">
                         <SidebarLink
+                            matcher={["/my-courses/[id]/check-list"]}
                             label="Чек-лист"
                             className="w-full! active:w-full block"
                             url={`/my-courses/${id}/check-list`}

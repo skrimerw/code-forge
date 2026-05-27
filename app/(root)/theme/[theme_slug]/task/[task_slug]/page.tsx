@@ -75,7 +75,7 @@ export default async function CodeEditorPage({
         },
     );
     return (
-        <Container>
+        <Container className="pb-24">
             <Breadcrumb>
                 <BreadcrumbList className="gap-1!">
                     <BreadcrumbItem>

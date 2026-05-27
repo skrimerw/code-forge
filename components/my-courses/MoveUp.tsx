@@ -14,12 +14,12 @@ export default function MoveUp({ moveFn, className }: Props) {
             variant={"ghost"}
             type="button"
             className={cn(
-                "p-0 size-7! duration-[0ms] text-primary/50 dark:text-white/50",
+                "p-0 size-5! duration-[0ms] text-primary/50 dark:text-white/50 rounded-xs",
                 className,
             )}
             onClick={moveFn}
         >
-            <ArrowUp />
+            <ArrowUp className="size-4.5!" />
         </Button>
     );
 }

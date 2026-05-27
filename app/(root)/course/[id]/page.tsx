@@ -129,7 +129,7 @@ export default async function CoursePage({
     });
 
     return (
-        <Container>
+        <Container className="pb-24 ">
             <Breadcrumb>
                 <BreadcrumbList className="gap-1!">
                     <BreadcrumbItem>
@@ -181,9 +181,9 @@ export default async function CoursePage({
                 </RatingProvider>
             </div>
 
-            <div className="mb-5">
+            <div className="block md:hidden mb-5">
                 <h2 className="font-semibold text-xl">О чем курс</h2>
-                <p className="block md:hidden text-typography-secondary text-[15px] md:text-base">
+                <p className="text-typography-secondary text-[15px] md:text-base">
                     {course.description}
                 </p>
             </div>
@@ -192,7 +192,7 @@ export default async function CoursePage({
                 {modules.map(({ id, themes, title }) => {
                     return (
                         <section key={id}>
-                            <h2 className="mb-2.5 md:mb-5 text-lg md:text-2xl font-medium md:font-semibold">
+                            <h2 className="mb-2.5 md:mb-5 text-xl font-semibold md:text-2xl font-medium md:font-semibold">
                                 {title}
                             </h2>
                             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

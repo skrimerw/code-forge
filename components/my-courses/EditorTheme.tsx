@@ -1,7 +1,7 @@
 import { Draggable } from "@hello-pangea/dnd";
 import React, { SetStateAction } from "react";
 import { Button } from "../ui/button";
-import { GripVertical, X } from "lucide-react";
+import { Edit, GripVertical, X } from "lucide-react";
 import { Controller, useFieldArray, UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
@@ -63,7 +63,7 @@ export default function EditorTheme({
                         className={className}
                     >
                         {deletedIds.includes(fakeId) ? (
-                            <div className="flex justify-between px-5 py-3">
+                            <div className="flex justify-between px-3 sm:px-5 py-2 sm:py-3">
                                 <p className="text-primary/50 dark:text-white/60">
                                     Тема «
                                     <span className="font-bold">
@@ -87,113 +87,122 @@ export default function EditorTheme({
                                 </Button>
                             </div>
                         ) : (
-                            <div className="relative group flex items-center gap-2 px-5 py-2.5 bg-bg-2 transition-shadow">
-                                <Button
-                                    {...provided.dragHandleProps}
-                                    variant={"ghost"}
-                                    className="p-0 size-7! text-primary/50 dark:text-white/50 cursor-grab active:cursor-grabbing"
-                                    asChild
-                                >
-                                    <span>
-                                        <GripVertical />
-                                    </span>
-                                </Button>
-                                <div className="flex items-center gap-5 w-full">
-                                    <div className="flex items-center flex-none size-16 overflow-hidden object-cover">
-                                        {imageUrl ? (
-                                            <img
-                                                className="object-cover size-full"
-                                                src={imageUrl}
-                                                alt="Preview"
-                                            />
-                                        ) : (
-                                            <CourseCover />
-                                        )}
-                                    </div>
-                                    <div className="flex items-center gap-2 w-full">
-                                        <span className="text-black/40 dark:text-white/40 text-sm font-mono">
-                                            {index + 1}.{j + 1}
-                                        </span>
-                                        <Controller
-                                            name={`modules.${index}.themes.${j}.title`}
-                                            render={({ fieldState }) => {
-                                                const errorMsg =
-                                                    fieldState.error?.message;
-                                                return (
-                                                    <div className="w-full relative">
-                                                        <Input
-                                                            className={cn(
-                                                                "text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30 dark:focus-visible:ring-white/50",
-                                                                errorMsg &&
-                                                                    "focus-visible:ring-red-600",
-                                                            )}
-                                                            {...form.register(
-                                                                `modules.${index}.themes.${j}.title`,
-                                                            )}
-                                                        />
-                                                        <span
-                                                            className={cn(
-                                                                "text-sm text-red-600",
-                                                            )}
-                                                        >
-                                                            {errorMsg}
-                                                        </span>
-                                                    </div>
-                                                );
-                                            }}
-                                        />
-                                        {fields.length > 1 && (
-                                            <div className="absolute -right-[28px] flex flex-col justify-center">
-                                                {j > 0 && (
-                                                    <MoveUp
-                                                        className="text-primary/50 dark:text-white/50 p-0 size-7! opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-[0ms]"
-                                                        moveFn={() => {
-                                                            move(j, j - 1);
-                                                        }}
-                                                    />
-                                                )}
-                                                {j < fields.length - 1 && (
-                                                    <MoveDown
-                                                        className="text-primary/50 dark:text-white/50 p-0 size-7! opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-[0ms]"
-                                                        moveFn={() =>
-                                                            move(j, j + 1)
-                                                        }
-                                                    />
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                {fakeId !== -1 && (
+                            <div className="relative group flex flex-col min-[500px]:flex-row items-center gap-1 min-[500px]:gap-2 px-3 sm:px-5 py-2.5 bg-bg-2 transition-shadow">
+                                <div className="flex gap-2 items-center w-full">
                                     <Button
-                                        type="button"
-                                        variant={"secondary"}
+                                        {...provided.dragHandleProps}
+                                        variant={"ghost"}
+                                        className="p-0 size-7! text-primary/50 dark:text-white/50 cursor-grab active:cursor-grabbing"
                                         asChild
                                     >
-                                        <Link
-                                            href={`/edit-lessons/${courseId}/themes/${fakeId}`}
-                                        >
-                                            Редактировать
-                                        </Link>
+                                        <span>
+                                            <GripVertical />
+                                        </span>
                                     </Button>
-                                )}
-                                <Button
-                                    type="button"
-                                    className="h-fit"
-                                    variant={"ghost"}
-                                    onClick={() => {
-                                        if (fakeId !== -1) {
-                                            setDeletedIds((prev) => [
-                                                ...prev,
-                                                fakeId,
-                                            ]);
-                                        } else {
-                                            remove(j);
-                                        }
-                                    }}
-                                >
-                                    <X />
-                                </Button>
+                                    <div className="flex items-center gap-3 sm:gap-5 w-full">
+                                        <div className="flex items-center flex-none size-12 sm:size-16 overflow-hidden object-cover">
+                                            {imageUrl ? (
+                                                <img
+                                                    className="object-cover size-full"
+                                                    src={imageUrl}
+                                                    alt="Preview"
+                                                />
+                                            ) : (
+                                                <CourseCover />
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-2 w-full">
+                                            <span className="text-black/40 dark:text-white/40 text-xs sm:text-sm font-mono">
+                                                {index + 1}.{j + 1}
+                                            </span>
+                                            <Controller
+                                                name={`modules.${index}.themes.${j}.title`}
+                                                render={({ fieldState }) => {
+                                                    const errorMsg =
+                                                        fieldState.error?.message;
+                                                    return (
+                                                        <div className="w-full relative">
+                                                            <Input
+                                                                className={cn(
+                                                                    "px-2 sm:px-3 h-8 sm:h-11 text-base sm:text-lg w-full border-0 shadow-none bg-transparent  hover:bg-black/3 focus-visible:bg-black/3 ring-1 ring-black/15 min-[500px]:ring-transparent focus-visible:ring-1 focus-visible:ring-black/30 dark:focus-visible:ring-white/50",
+                                                                    errorMsg &&
+                                                                        "focus-visible:ring-red-600",
+                                                                )}
+                                                                {...form.register(
+                                                                    `modules.${index}.themes.${j}.title`,
+                                                                )}
+                                                            />
+                                                            <span
+                                                                className={cn(
+                                                                    "text-sm text-red-600",
+                                                                )}
+                                                            >
+                                                                {errorMsg}
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                }}
+                                            />
+                                            {fields.length > 1 && (
+                                                <div className="absolute -right-5 hidden sm:flex flex-col justify-center">
+                                                    {j > 0 && (
+                                                        <MoveUp
+                                                            className="text-primary/50 dark:text-white/50 p-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-[0ms]"
+                                                            moveFn={() => {
+                                                                move(j, j - 1);
+                                                            }}
+                                                        />
+                                                    )}
+                                                    {j < fields.length - 1 && (
+                                                        <MoveDown
+                                                            className="text-primary/50 dark:text-white/50 p-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-[0ms]"
+                                                            moveFn={() =>
+                                                                move(j, j + 1)
+                                                            }
+                                                        />
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 ml-auto">
+                                    {fakeId !== -1 && (
+                                        <Button
+                                            type="button"
+                                            variant={"secondary"}
+                                            className="size-9 sm:size-11.5 lg:size-fit"
+                                            title="Редактировать"
+                                            asChild
+                                        >
+                                            <Link
+                                                href={`/edit-lessons/${courseId}/themes/${fakeId}`}
+                                            >
+                                                <Edit className="inline lg:hidden" />
+                                                <span className="hidden lg:inline">
+                                                    Редактировать
+                                                </span>
+                                            </Link>
+                                        </Button>
+                                    )}
+                                    <Button
+                                        type="button"
+                                        className="size-9 sm:size-11.5"
+                                        variant={"ghost"}
+                                        onClick={() => {
+                                            if (fakeId !== -1) {
+                                                setDeletedIds((prev) => [
+                                                    ...prev,
+                                                    fakeId,
+                                                ]);
+                                            } else {
+                                                remove(j);
+                                            }
+                                        }}
+                                    >
+                                        <X />
+                                    </Button>
+                                </div>
                             </div>
                         )}
                     </div>

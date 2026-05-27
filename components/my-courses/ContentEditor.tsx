@@ -170,7 +170,7 @@ export default function ContentEditor({ courseId, className }: Props) {
                             </div>
                         )}
                         {fields.length > 0 && (
-                            <div className="pb-20">
+                            <div className="sm:pb-20">
                                 <Button
                                     type="button"
                                     onClick={appendNewModule}
@@ -183,12 +183,12 @@ export default function ContentEditor({ courseId, className }: Props) {
                         )}
                     </>
                 )}
-                <div className="fixed bg-bg-2 bottom-0 left-0 right-0 shadow-[0_0px_10px_0_rgba(0,0,0,0.1)]">
-                    <Container className="flex pb-4">
+                <div className="h-fit save-panel fixed bg-bg-2 top-0 sm:translate-y-[calc(100dvh-100%)] left-0 right-0 shadow-[0_0px_10px_0_rgba(0,0,0,0.1)]">
+                    <Container className="flex gap-4 pb-4">
                         <Button
                             type="button"
                             onClick={form.handleSubmit(onSubmit)}
-                            className="ml-auto"
+                            className="basis-1/2 sm:basis-0 sm:w-fit ml-auto"
                             disabled={saving || loading}
                         >
                             {saving ? (
@@ -201,11 +201,11 @@ export default function ContentEditor({ courseId, className }: Props) {
                         <Button
                             disabled={saving || loading}
                             variant={"outline"}
-                            className="ml-4"
+                            className="basis-[calc(50%-16px)] sm:basis-0 sm:w-fit"
                             asChild
                         >
                             <Link href={`/my-courses/${courseId}/content`}>
-                                Вернуться к просмотру
+                                К содержанию
                             </Link>
                         </Button>
                     </Container>

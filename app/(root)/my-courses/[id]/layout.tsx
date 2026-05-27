@@ -1,9 +1,7 @@
 import Container from "@/components/Container";
-import CourseCover from "@/components/icons/CourseCover";
 import Sidebar from "@/components/my-courses/Sidebar";
-import SidebarLink from "@/components/my-courses/SidebarLink";
-import Status from "@/components/my-courses/Status";
 import { CourseDataProvider } from "@/contexts/useCourseData";
+import { SidebarProvider } from "@/contexts/useMyCoursesSidebar";
 import prisma from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -35,9 +33,11 @@ export default async function Layout({
         <Container className="p-0 h-full">
             <CourseDataProvider initialData={course}>
                 <div className="flex h-full">
-                    <Sidebar className="mr-auto w-full ml-0" />
+                    <Sidebar className="hidden lg:block mr-auto w-full ml-0" />
 
-                    <div className="p-5 pl-10 pr-0 w-full">{children}</div>
+                    <div className="p-5 pb-24 sm:pb-5 px-3 sm:px-0 lg:pl-10 w-full">
+                        <SidebarProvider>{children}</SidebarProvider>
+                    </div>
                 </div>
             </CourseDataProvider>
         </Container>

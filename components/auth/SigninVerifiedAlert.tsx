@@ -9,11 +9,11 @@ export default function SigninVerifiedAlert() {
     useEffect(() => {
         async function readCookie() {
             if (window) {
-                const msgCookie = await window.cookieStore.get(
+                const msgCookie = await window.cookieStore?.get(
                     "signin_verificated_message",
                 );
 
-                if (msgCookie?.value) {
+                if (msgCookie) {
                     setIsVisible(true);
                 }
             }

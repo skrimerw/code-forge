@@ -24,7 +24,7 @@ export default async function MyCoursesPage() {
                         className="h-[144px] mb-16 rounded-2xl"
                         src="/img/new-course.png"
                     />
-                    <p className="text-xl font-medium mb-5">
+                    <p className="text-xl font-medium mb-5 text-center">
                         У вас пока нет курсов, создайте первый
                     </p>
                     <CreateNewCourse />

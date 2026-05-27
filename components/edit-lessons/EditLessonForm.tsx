@@ -98,7 +98,7 @@ export default function EditLessonForm({
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className={cn(
-                    "flex flex-col gap-4 w-full max-w-3xl",
+                    "flex flex-col gap-4 w-full lg:max-w-3xl",
                     className,
                 )}
             >

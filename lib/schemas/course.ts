@@ -13,8 +13,8 @@ export const EditCourseSchema = z.object({
             return file.type.startsWith("image/");
         }, "Выберите изображение")
         .refine((file) => {
-            return file.size <= 5 * 1024 * 1024;
-        }, "Размер файла не должен превышать 5MB")
+            return file.size <= 15 * 1024 * 1024;
+        }, "Размер файла не должен превышать 15MB")
         .or(z.string()),
     title: z.string().nonempty("Пожалуйста введите название"),
     description: z.string().optional(),

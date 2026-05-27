@@ -323,6 +323,18 @@ html:has(body.dark) {
     @apply bg-bg-2! text-foreground! dark:border-border!;
 }
 
-body[data-scroll-locked="1"] .navigation-panel {
+/* body[data-scroll-locked="1"] .save-panel {
     margin-right: 15px;
+} */
+
+@media (max-width: 600px) {
+    .ͼ1 .cm-content {
+        white-space: initial;
+    }
+}
+
+.Toastify__toast-container--top-center {
+    top:15px;
+    left: 50%;
+    transform: translateX(-50%);
 }

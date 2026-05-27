@@ -1,4 +1,5 @@
 import ContentFirstLevel from "@/components/my-courses/ContentFirstLevel";
+import OpenSheet from "@/components/my-courses/OpenSheet";
 import { Button } from "@/components/ui/button";
 import prisma from "@/prisma/prisma-client";
 import Link from "next/link";
@@ -28,7 +29,10 @@ export default async function ContentPage({
 
     return (
         <div>
-            <h1 className="text-3xl font-medium mb-6">Программа курса</h1>
+            <h1 className="text-3xl font-medium mb-4">
+                <OpenSheet className="mr-2" />
+                Программа курса
+            </h1>
             {content.length === 0 ? (
                 <>
                     <p className="mb-6">

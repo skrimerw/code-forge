@@ -46,7 +46,7 @@ export default function ThemeCard({
                 href={`/theme/${slug}`}
                 className="relative z-1 hover:underline w-fit"
             >
-                <h3 className="font-medium text-xl">{title}</h3>
+                <h3 className="font-medium text-lg md:text-xl">{title}</h3>
             </Link>
             <div>
                 <ProgressBar progress={progress} />

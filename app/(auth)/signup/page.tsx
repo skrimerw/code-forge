@@ -8,7 +8,7 @@ import { SignUpSchema, SignUpSchemaType } from "@/lib/schemas/auth";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MoveLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -61,7 +61,11 @@ export default function SignupPage() {
                     Назад
                 </Button>
             )}
-            <div className={cn("grid grid-cols-1 transition-all duration-300 w-full")}>
+            <div
+                className={cn(
+                    "grid grid-cols-1 transition-all duration-300 w-full",
+                )}
+            >
                 <div
                     className={cn(
                         "flex flex-col items-center col-start-1 col-end-2 row-start-1 row-end-2 transition-all duration-500 w-full mx-auto",
@@ -70,12 +74,11 @@ export default function SignupPage() {
                             : "opacity-0 invisible translate-y-5",
                     )}
                     style={{
-                        transitionDelay:
-                            step === "signup" ? "500ms" : "0ms",
+                        transitionDelay: step === "signup" ? "500ms" : "0ms",
                     }}
                 >
-                    <div className="flex flex-col gap-1 mb-16">
-                        <h1 className="font-semibold text-[32px] text-center">
+                    <div className="flex flex-col gap-1 mb-10 sm:mb-16">
+                        <h1 className="font-semibold text-3xl sm:text-[32px] text-center">
                             Добро пожаловать!
                         </h1>
                         <h2 className="text-center text-typography-secondary font-normal">

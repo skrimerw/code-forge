@@ -63,7 +63,7 @@ export default function Themes({
             {show && (
                 <div
                     className={cn(
-                        "border ml-10 py-2 border-t-0 bg-bg-2",
+                        "border ml-5 sm:ml-10 py-2 border-t-0 bg-bg-2",
                         className,
                     )}
                 >
@@ -111,12 +111,13 @@ export default function Themes({
                             )}
                         </Droppable>
                     </DragDropContext>
-                    <div className="flex gap-5 px-5 py-2.5">
-                        <div className="size-16 overflow-hidden object-cover flex-none">
+                    <div className="flex gap-2 sm:gap-5 px-3 sm:px-5 py-1 sm:py-2.5">
+                        <div className="size-12 sm:size-16 overflow-hidden object-cover flex-none">
                             <CourseCover className="size-full" />
                         </div>
                         <Input
                             value={newTheme}
+                            className="h-9 sm:h-fit"
                             onChange={(e) => setNewTheme(e.target.value)}
                             placeholder="Введите название новой темы и нажмите Enter"
                             onKeyDown={(e) => {
@@ -130,13 +131,15 @@ export default function Themes({
                             }}
                         />
                         <Button
-                            className="h-fit"
+                            className="size-9 sm:size-fit"
                             type="button"
                             onClick={appendNewTheme}
                             disabled={newTheme.length === 0}
                         >
                             <PlusCircle />
-                            Создать тему
+                            <span className="hidden sm:inline">
+                                Создать тему
+                            </span>
                         </Button>
                     </div>
                 </div>

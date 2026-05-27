@@ -1,4 +1,5 @@
 import EditLessonForm from "@/components/edit-lessons/EditLessonForm";
+import OpenSheet from "@/components/edit-lessons/OpenSheet";
 import prisma from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -40,7 +41,10 @@ export default async function EditThemePage({
 
     return (
         <div className="w-full">
-            <h1 className="text-3xl font-medium mb-6">Настройки темы</h1>
+            <h1 className="text-3xl font-medium mb-6">
+                <OpenSheet className="mr-2" />
+                Настройки темы
+            </h1>
 
             <EditLessonForm
                 initialData={theme}

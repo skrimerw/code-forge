@@ -43,7 +43,7 @@ export default function EditorModule({
     return (
         <div className={className}>
             {deletedIds.includes(fakeId) ? (
-                <div className="flex justify-between items-center gap-4 p-5 border border-l-4 bg-bg-2">
+                <div className="flex justify-between items-center gap-4 p-4 sm:p-5 border border-l-4 bg-bg-2">
                     <p className="text-primary/50 dark:text-white/60">
                         Модуль «
                         <span className="font-bold">
@@ -66,8 +66,8 @@ export default function EditorModule({
                 </div>
             ) : (
                 <div>
-                    <div className="relative flex items-center gap-4 p-5 border border-l-4 bg-bg-2">
-                        <span className="text-3xl font-medium">{i + 1}</span>
+                    <div className="relative flex items-center gap-2.5 sm:gap-4 p-3 sm:p-5 border border-l-4 bg-bg-2">
+                        <span className="text-2xl sm:text-3xl font-medium">{i + 1}</span>
                         <Controller
                             name={`modules.${i}.title`}
                             render={({ fieldState }) => {
@@ -77,7 +77,7 @@ export default function EditorModule({
                                         <Input
                                             defaultValue={title}
                                             className={cn(
-                                                "text-xl",
+                                                "text-lg sm:text-xl h-9 sm:h-11",
                                                 errorMsg &&
                                                     "border-red-600 focus-visible:border-red-600 focus-visible:ring-red-200",
                                             )}
@@ -99,6 +99,7 @@ export default function EditorModule({
                         <Button
                             type="button"
                             variant={"ghost"}
+                            className="size-9 sm:size-11.5"
                             onClick={() => {
                                 if (fakeId !== -1) {
                                     setDeletedIds((prev) => [...prev, fakeId]);
@@ -111,7 +112,7 @@ export default function EditorModule({
                         </Button>
 
                         {fields.length > 1 && (
-                            <div className="absolute -right-7 flex flex-col justify-center h-[84px]">
+                            <div className="absolute -right-5 flex-col justify-center h-[84px] hidden sm:flex">
                                 {i > 0 && (
                                     <MoveUp moveFn={() => move(i, i - 1)} />
                                 )}

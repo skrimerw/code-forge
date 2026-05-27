@@ -12,7 +12,7 @@ import {
 import DifficultyBadge from "../DifficultyBadge";
 import { Difficulty } from "@prisma/client";
 import Link from "next/link";
-import { PlusCircle, X } from "lucide-react";
+import { Edit, PlusCircle, X } from "lucide-react";
 import CourseCover from "../icons/CourseCover";
 import { EditLessonType } from "@/lib/schemas/edit-lesson";
 import { toast } from "react-toastify";
@@ -91,10 +91,10 @@ export default function TaskList({
                         return (
                             <div
                                 key={id}
-                                className="flex items-center border shadow-xs rounded-md bg-bg-2 p-2 pl-5"
+                                className="flex items-center border shadow-xs rounded-md bg-bg-2 p-1 sm:p-2 pl-3 sm:pl-5"
                             >
                                 {deletedIds.includes(fakeId) ? (
-                                    <div className="flex justify-between items-center gap-4 py-2.5 pr-3 w-full">
+                                    <div className="flex justify-between items-center gap-4 p-1.5 sm:py-2.5 sm:pr-3 w-full">
                                         <p className="text-primary/50 dark:text-white/60">
                                             Задание «
                                             <span className="font-bold">
@@ -121,8 +121,8 @@ export default function TaskList({
                                         </Button>
                                     </div>
                                 ) : (
-                                    <div className="flex gap-3 w-full items-center">
-                                        <span className="font-mono mr-1">
+                                    <div className="flex gap-2 sm:gap-3 w-full items-center">
+                                        <span className="font-mono">
                                             {i + 1}.
                                         </span>
                                         <Controller
@@ -131,11 +131,11 @@ export default function TaskList({
                                                 const errorMsg =
                                                     fieldState.error?.message;
                                                 return (
-                                                    <div className="w-full relative mr-4">
+                                                    <div className="w-full relative">
                                                         <Input
                                                             defaultValue={title}
                                                             className={cn(
-                                                                "text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30",
+                                                                "h-9 sm:h-fit text-base sm:text-lg w-full border-0 shadow-none bg-transparent hover:bg-black/3 focus-visible:bg-black/3 focus-visible:ring-1 focus-visible:ring-black/30",
                                                                 errorMsg &&
                                                                     "focus-visible:ring-red-600",
                                                             )}
@@ -195,12 +195,16 @@ export default function TaskList({
                                             <Button
                                                 type="button"
                                                 variant={"secondary"}
+                                                className="size-9 sm:size-fit"
                                                 asChild
                                             >
                                                 <Link
                                                     href={`${pathname}/${editUrl}/${fakeId}`}
                                                 >
-                                                    Редактировать
+                                                    <Edit className="sm:hidden" />
+                                                    <span className="hidden sm:inline">
+                                                        Редактировать
+                                                    </span>
                                                 </Link>
                                             </Button>
                                         )}
@@ -217,7 +221,7 @@ export default function TaskList({
                                             }}
                                             type="button"
                                             variant={"ghost"}
-                                            className="size-10.5! p-0"
+                                            className="size-9 sm:size-10.5! p-0"
                                         >
                                             <X />
                                         </Button>
@@ -228,12 +232,13 @@ export default function TaskList({
                     })
                 )}
             </div>
-            <div className="flex gap-5">
-                <div className="size-16 overflow-hidden object-cover flex-none">
+            <div className="flex gap-2.5 sm:gap-5">
+                <div className="size-12 sm:size-16 overflow-hidden object-cover flex-none">
                     <CourseCover className="size-full" />
                 </div>
                 <Input
                     value={newCodeTask}
+                    className="h-10.5 sm:h-fit"
                     onChange={(e) => setNewCodeTask(e.target.value)}
                     placeholder="Введите название нового задания и нажмите Enter"
                     onKeyDown={(e) => {
@@ -253,7 +258,7 @@ export default function TaskList({
                     disabled={newCodeTask.length === 0}
                 >
                     <PlusCircle />
-                    Создать задание
+                    <span className="hidden sm:inline">Создать задание</span>
                 </Button>
             </div>
         </div>

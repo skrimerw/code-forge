@@ -15,6 +15,7 @@ import { EditTestTaskSchema, EditTestTaskType } from "@/lib/schemas/test-task";
 import DifficultyDropdown from "../DifficultyDropdown";
 import { Question } from "@/lib/mock-test";
 import TestBuilder from "./TestBuilder";
+import OpenSheet from "../edit-lessons/OpenSheet";
 
 interface Props {
     themeTitle: string;
@@ -55,18 +56,21 @@ export default function EditTestTaskForm({
 
     return (
         <div>
-            <Link
-                href={".."}
-                className="flex items-center hover:underline gap-2 mb-5 w-fit"
-            >
-                <ArrowLeft size={18} /> {themeTitle}
-            </Link>
-            <FormProvider  {...form}>
+            <div className="flex items-center mb-5">
+                <OpenSheet className="mr-2" />
+                <Link
+                    href={".."}
+                    className="flex items-center hover:underline gap-2 w-fit"
+                >
+                    <ArrowLeft size={18} /> {themeTitle}
+                </Link>
+            </div>
+            <FormProvider {...form}>
                 <form
                     className={cn("flex flex-col gap-4 max-w-3xl", className)}
                     onSubmit={form.handleSubmit(onSubmit)}
                 >
-                    <div className="flex gap-4 items-end w-full">
+                    <div className="flex flex-col items-start sm:flex-row gap-4 sm:items-end w-full">
                         <FormInput
                             name="title"
                             defaultValue={task.title}

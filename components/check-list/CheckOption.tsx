@@ -21,29 +21,35 @@ export default function CheckOption({
     className,
 }: Props) {
     return (
-        <div className={cn("flex gap-2", className)}>
-            {isValid ? (
-                <Check
-                    className="text-green-600 flex-none mt-0.5"
-                    strokeWidth={2.5}
-                    size={18}
-                />
-            ) : (
-                <X
-                    className="text-rose-600 flex-none mt-0.5"
-                    strokeWidth={2.5}
-                    size={18}
-                />
-            )}
-            <div className="max-w-md">
-                <h3 className="font-medium text-[15px]">{title}</h3>
-                <p className="text-typography-secondary text-[13px] leading-[120%]">
-                    {description}
-                </p>
+        <div className={cn("flex flex-col sm:flex-row gap-2", className)}>
+            <div className="flex gap-2">
+                {isValid ? (
+                    <Check
+                        className="text-green-600 flex-none mt-0.5"
+                        strokeWidth={2.5}
+                        size={18}
+                    />
+                ) : (
+                    <X
+                        className="text-rose-600 flex-none mt-0.5"
+                        strokeWidth={2.5}
+                        size={18}
+                    />
+                )}
+                <div className="max-w-md">
+                    <h3 className="font-medium text-[15px]">{title}</h3>
+                    <p className="text-typography-secondary text-[13px] leading-[120%]">
+                        {description}
+                    </p>
+                </div>
             </div>
             <Link
                 href={link}
-                className={cn("ml-auto text-[15px] leading-[115%] text-blue-500 underline underline-offset-4 dark:text-blue-700 hover:text-blue-600 h-fit", isValid && "text-blue-500/50 dark:text-blue-700/50 dark:hover:text-blue-600")}
+                className={cn(
+                    "text-end mr-auto sm:mr-0 sm:ml-auto text-[15px] leading-[115%] text-blue-500 underline underline-offset-4 dark:text-blue-700 hover:text-blue-600 h-fit",
+                    isValid &&
+                        "text-blue-500/50 dark:text-blue-700/50 dark:hover:text-blue-600",
+                )}
             >
                 {linkLabel}
             </Link>

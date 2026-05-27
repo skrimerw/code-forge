@@ -26,7 +26,7 @@ export default function ContentFirstLevel({
                 </h2>
             </div>
             {themes.length > 0 && (
-                <div className="ml-10 border border-l-4 border-t-0 divide-y">
+                <div className="ml-5 sm:ml-10 border border-l-4 border-t-0 divide-y">
                     {themes.map((theme) => {
                         const { id } = theme;
                         return (

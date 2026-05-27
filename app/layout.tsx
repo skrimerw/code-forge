@@ -38,22 +38,20 @@ export default async function RootLayout({
     return (
         <html lang="ru">
             <body
-                className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-bg-1 min-h-screen grid grid-rows-[1fr_auto] sm:grid-rows-[auto_1fr_auto] ${theme === "light" ? "" : "dark"}`}
+                className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-bg-1 min-h-svh grid grid-rows-[1fr_auto] sm:grid-rows-[auto_1fr_auto] ${theme === "light" ? "" : "dark"}`}
             >
-                <TooltipProvider>
-                    <ThemeProvider initialTheme={theme}>
-                        <SessionProvider>
-                            {children}
-                            <ToastWrapper />
-                            <NextTopLoader
-                                showSpinner={false}
-                                color="var(--top-loader)"
-                                height={2}
-                                showForHashAnchor={false}
-                            />
-                        </SessionProvider>
-                    </ThemeProvider>
-                </TooltipProvider>
+                <ThemeProvider initialTheme={theme}>
+                    <SessionProvider>
+                        <TooltipProvider>{children}</TooltipProvider>
+                        <ToastWrapper />
+                        <NextTopLoader
+                            showSpinner={false}
+                            color="var(--top-loader)"
+                            height={2}
+                            showForHashAnchor={false}
+                        />
+                    </SessionProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

@@ -140,7 +140,7 @@ export default function FileInput({
                         <img src={fileUrl} className="object-contain" />
                         <button
                             type="button"
-                            className="opacity-0 group-hover:opacity-100 absolute top-1 right-1 shadow-none p-1.5 rounded-full bg-black/40 h-fit text-white group-hover:bg-black/40 cursor-pointer hover:bg-black/60 transition-all duration-300 active:translate-y-[1px]"
+                            className="opacity-100 lg:opacity-0 group-hover:opacity-100 absolute top-1 right-1 shadow-none p-1.5 rounded-full bg-black/40 h-fit text-white group-hover:bg-black/40 cursor-pointer hover:bg-black/60 transition-all duration-300 active:translate-y-[1px]"
                             onClick={removeFile}
                         >
                             <X size={16} />

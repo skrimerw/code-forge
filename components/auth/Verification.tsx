@@ -69,7 +69,7 @@ export default function Verification({ email, password, className }: Props) {
                 {Array.from({ length: 6 }).map((_, i) => {
                     return (
                         <InputOTPGroup key={i}>
-                            <InputOTPSlot index={i} />
+                            <InputOTPSlot className="w-11 h-12 sm:w-14 sm:h-16" index={i} />
                         </InputOTPGroup>
                     );
                 })}

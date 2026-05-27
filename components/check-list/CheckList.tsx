@@ -148,7 +148,7 @@ export default function CheckList({
                     <h2 className="font-medium text-lg mb-1.5">
                         Структура и содержание
                     </h2>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-8 sm:gap-4">
                         {structureValues.map(
                             (
                                 {
@@ -204,7 +204,7 @@ export default function CheckList({
                     </div>
                 </div>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                     className="gap-0 mt-10 px-8"
                     onClick={publish}
@@ -237,7 +237,7 @@ export default function CheckList({
                 {course.status === "PUBLISHED" && (
                     <Button
                         variant={"destructive"}
-                        className="gap-0 mt-10 px-8 bg-red-500 hover:red-700"
+                        className="gap-0 sm:mt-10 px-8 bg-red-500 hover:red-700"
                         onClick={unpublish}
                         disabled={
                             unpublishing ||
