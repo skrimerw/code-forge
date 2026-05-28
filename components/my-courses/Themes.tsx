@@ -117,7 +117,7 @@ export default function Themes({
                         </div>
                         <Input
                             value={newTheme}
-                            className="h-9 sm:h-fit"
+                            className="h-9 sm:h-11"
                             onChange={(e) => setNewTheme(e.target.value)}
                             placeholder="Введите название новой темы и нажмите Enter"
                             onKeyDown={(e) => {
