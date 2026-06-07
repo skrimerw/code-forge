@@ -18,7 +18,7 @@ export default async function Home() {
   });
 
   return (
-    <Container className="py-8 sm:py-16">
+    <Container className="py-8 pb-24 sm:py-16">
       <div className="max-w-3xl mb-5 sm:mb-10">
         <h1 className="font-semibold text-3xl sm:text-4xl">Новые курсы</h1>
       </div>

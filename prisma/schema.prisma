@@ -41,8 +41,6 @@ model VerificationCode {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([email, code])
 }
 
 model PasswordResetToken {
@@ -72,6 +70,8 @@ model Course {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([title, description])
 }
 
 model Module {
@@ -86,6 +86,8 @@ model Module {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([title])
 }
 
 model Theme {
@@ -106,6 +108,8 @@ model Theme {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([title, description])
 }
 
 model CodeTask {
@@ -123,6 +127,8 @@ model CodeTask {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([title, description])
 }
 
 model CodeTaskVariant {
@@ -172,6 +178,8 @@ model TestTask {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([title])
 }
 
 model TestTaskSolution {
